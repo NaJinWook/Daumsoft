@@ -15,17 +15,14 @@ public class DBConnection {
 	
 	public DBConnection() { // DB 연결 확인
 		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url,user,pwd);
+			Class.forName(driver); // Driver에 Load
+			conn = DriverManager.getConnection(url,user,pwd); // DB 접속 정보를 넘겨줌
 			conn.setAutoCommit(false); // 자동 commit 막음
-			if(conn != null) {
-				System.out.println("DB 접속 성공");
-			}
 		} catch(ClassNotFoundException e) {
 			System.out.println("Driver Load 실패");
 			e.printStackTrace();
 		} catch(SQLException e) {
-			System.out.println("DB 접속 실패");
+			System.out.println("DB 관련 예외 발생");
 			e.printStackTrace();
 		}
 	}

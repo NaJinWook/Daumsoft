@@ -10,19 +10,20 @@ import org.json.simple.JSONObject;
 
 public class ParseClass {
 	// DB -> TSV 파일 생성
+	// 매개변수로 컬럼명, 데이터, 정렬값을 받아온다
 	public void fileTSV(String[] columnName, List<String[]> allRowsData, String sort) {
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter("C:\\Users\\Daumsoft\\Downloads\\"+sort+"_doc.tsv", false));
-			bw.write(columnName[0]+"\t"+columnName[1]+"\t"+columnName[2]);
+			bw.write(columnName[0]+"\t"+columnName[1]+"\t"+columnName[2]); // 컬럼명을 상단에 넣기 위함
 			bw.newLine();
-			for(String[] str : allRowsData) {
+			for(String[] str : allRowsData) { // 리스트에 담긴 데이터를 String 배열로 꺼내오기 위함
 				//System.out.println(str[0]+"\t"+str[1]+"\t"+str[2]);
-				bw.write(str[0]+"\t"+str[1]+"\t"+str[2]);
-				bw.newLine();
+				bw.write(str[0]+"\t"+str[1]+"\t"+str[2]); // 반복문을 통해 하나씩 데이터를 입력
+				bw.newLine(); // 개행
 			}
-			bw.flush();
-			bw.close();
+			bw.flush(); // 버퍼의 내용을 사용자가 원할 때 출력하여 비움
+			bw.close(); // auto-flush
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -34,19 +35,19 @@ public class ParseClass {
 	public void formatData(String[] columnName, List<String[]> allRowsData, String type) {
 		BufferedWriter bw = null;
 		try {
-			if(type.equals("tag") || type.equals("TAG")) {
+			if(type.equals("tag") || type.equals("TAG")) { // type 매개변수가 tag면 txt 확장명으로 저장
 				type = "txt"; // 파일 저장 형식 txt로 하기 위해 값을 변경
 				bw = new BufferedWriter(new FileWriter("C:\\Users\\Daumsoft\\Downloads\\Tconvert_doc."+type, false));
-				for(String[] str : allRowsData) {
+				for(String[] str : allRowsData) { // 리스트에 담긴 데이터를 String 배열로 꺼내오기 위함
 					bw.write("^[START]"+"\n"+"["+columnName[0]+"]"+"\n"+str[0]+"\n"+"["+columnName[1]+"]"+"\n"+str[1]+"\n"+"["+columnName[2]+"]"+"\n"+str[2]+"\n"+"^[END]");
-					bw.newLine();
+					bw.newLine(); // 개행
 				}
-				bw.flush();
-				bw.close();
-			} else if(type.equals("json") || type.equals("JSON")) {
+				bw.flush(); // 버퍼의 내용을 사용자가 원할 때 출력하여 비움
+				bw.close(); // auto-flush
+			} else if(type.equals("json") || type.equals("JSON")) { // type 매겨변수가 json이면 json 확장명으로 저장
 				JSONObject jsonObject = new JSONObject(); // 최종 완성될 JSONObject 선언(전체)
 				JSONArray jsonArray = new JSONArray(); // JSON 정보를 담을 Array 선언
-				for(String[] str : allRowsData) {
+				for(String[] str : allRowsData) { // 리스트에 담긴 데이터를 String 배열로 꺼내오기 위함
 					JSONObject data = new JSONObject(); // 하나의 정보가 들어갈 JSONObject 선언
 					// 데이터 입력
 					data.put(columnName[0], str[0]);

@@ -1,8 +1,6 @@
 package com.daumsoft.test1;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,18 +21,15 @@ public class DataAccess {
 	private BufferedReader br = null; // 파일 읽기 위함
 	private FileReader fr = null; // 파일 읽기 위함
 	
-	public void settingReadParser() {
-		tsvSet = new TsvParserSettings();
-		tsv = new TsvParser(tsvSet);
-	}
-	
 	// TSV -> DB에 넣기
 	public void insert() {
+		long start = System.currentTimeMillis(); // 프로그램 시작 시간
 		DBConnection dbConnect = new DBConnection(); // DB 연결 객체 생성
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		settingReadParser(); // 데이터 읽기전에 파서 셋팅
+		tsvSet = new TsvParserSettings(); // 데이터 읽기전에 파서 셋팅
+		tsv = new TsvParser(tsvSet); // 데이터 읽기전에 파서 셋팅
 		
 		try {
 			fr = new FileReader("C:\\doc.tsv"); // 지정된 경로의 TSV 읽기
@@ -73,6 +68,9 @@ public class DataAccess {
 			if (pstmt != null) { try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } } 
 			if (conn != null) { try { conn.close(); } catch (SQLException e) { e.printStackTrace(); } }
 		}
+		long end = System.currentTimeMillis(); // 프로그램 종료 시간
+		System.out.println("========================================================");
+		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
 	}
 	
 	// DB에 접속하여 데이터 조회
@@ -149,6 +147,7 @@ public class DataAccess {
 	
 	// Tagged text File -> 파싱하여 doc2 table에 넣기
 	public void tagParsing() {
+		long start = System.currentTimeMillis(); // 프로그램 시작 시간
 		DBConnection dbConnect = new DBConnection(); //DB 연결 객체 생성
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -204,5 +203,8 @@ public class DataAccess {
 			if (pstmt != null) { try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } } 
 			if (conn != null) { try { conn.close(); } catch (SQLException e) { e.printStackTrace(); } }
 		}
+		long end = System.currentTimeMillis(); // 프로그램 종료 시간
+		System.out.println("========================================================");
+		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
 	}
 }

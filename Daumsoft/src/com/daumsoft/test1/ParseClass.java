@@ -12,6 +12,7 @@ public class ParseClass {
 	// DB -> TSV 파일 생성
 	// 매개변수로 컬럼명, 데이터, 정렬값을 받아온다
 	public void fileTSV(String[] columnName, List<String[]> allRowsData, String sort) {
+		long start = System.currentTimeMillis(); // 프로그램 시작 시간
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter("C:\\Users\\Daumsoft\\Downloads\\"+sort+"_doc.tsv", false));
@@ -29,10 +30,14 @@ public class ParseClass {
 		} finally {
 			if (bw != null) { try { bw.close(); } catch (IOException e) { e.printStackTrace(); } } 
 		}
+		long end = System.currentTimeMillis(); // 프로그램 종료 시간
+		System.out.println("========================================================");
+		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
 	}
 	
 	// DB -> Tagged type, Json type format하여 file 형태로 출력
 	public void formatData(String[] columnName, List<String[]> allRowsData, String type) {
+		long start = System.currentTimeMillis(); // 프로그램 시작 시간
 		BufferedWriter bw = null;
 		try {
 			if(type.equals("tag") || type.equals("TAG")) { // type 매개변수가 tag면 txt 확장명으로 저장
@@ -66,5 +71,8 @@ public class ParseClass {
 		} finally {
 			if (bw != null) { try { bw.close(); } catch (IOException e) { e.printStackTrace(); } } 
 		}
+		long end = System.currentTimeMillis(); // 프로그램 종료 시간
+		System.out.println("========================================================");
+		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
 	}
 }

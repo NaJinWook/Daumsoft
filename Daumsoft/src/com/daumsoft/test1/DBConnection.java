@@ -22,7 +22,7 @@ public class DBConnection {
 			System.out.println("Driver Load 실패");
 			e.printStackTrace();
 		} catch(SQLException e) {
-			System.out.println("DB 관련 예외 발생");
+			System.out.println("데이터베이스 관련 예외 발생");
 			e.printStackTrace();
 		}
 	}

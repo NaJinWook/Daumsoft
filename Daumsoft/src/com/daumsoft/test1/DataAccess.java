@@ -43,7 +43,10 @@ public class DataAccess {
 		try {
 			conn = dbConnect.conn; // DB 접속
 			if(conn != null) {
-				System.out.println("DOC TABLE에 데이터 INSERT 중...");
+				System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+				System.out.println("  □□□□□□□□□□□□□□□□□□□ 데이터베이스 접속 성공! □□□□□□□□□□□□□□□□□□□");
+				System.out.println("===========================================================");
+				System.out.println("  ■■■■■■■■■■■■■ DOC Table에 Data INSERT 중... ■■■■■■■■■■■■■");
 				pstmt = conn.prepareStatement("insert into doc values (?,?,?)");
 				for(int i=1; i<allRowsData.size(); i++) { // 175,799가 될 때 까지
 					pstmt.setInt(1, Integer.parseInt(allRowsData.get(i)[0]));
@@ -62,14 +65,15 @@ public class DataAccess {
 				pstmt.close();
 			}
 		} catch(SQLException e) {
-			System.out.println("DB 관련 예외 발생");
+			System.out.println("데이터베이스 관련 예외 발생!");
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) { try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } } 
 			if (conn != null) { try { conn.close(); } catch (SQLException e) { e.printStackTrace(); } }
 		}
 		long end = System.currentTimeMillis(); // 프로그램 종료 시간
-		System.out.println("========================================================");
+		System.out.println("===========================================================");
+		System.out.println("1) File to DB");
 		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
 	}
 	
@@ -83,7 +87,6 @@ public class DataAccess {
 		try {
 			allRowsData = new ArrayList<String[]>();
 			conn = dbConnect.conn;
-			System.out.println("Data 가져오는 중...");
 			stmt = conn.createStatement();
 			
 			// asc로 입력받으면 오름차순 실행, desc로 입력받으면 내림차순 실행
@@ -104,7 +107,7 @@ public class DataAccess {
 					}
 				}
 		} catch(SQLException e) {
-			System.out.println("DB 관련 예외 발생");
+			System.out.println("데이터베이스 관련 예외 발생");
 			e.printStackTrace();
 		} finally { 
 			if (rs != null) { try { rs.close(); } catch (SQLException e) { e.printStackTrace(); } } 
@@ -123,7 +126,6 @@ public class DataAccess {
 		String[] columnName = new String[3]; // 컬럼명을 담아올 String 배열 객체 생성
 		try {
 			conn = dbConnect.conn;
-			System.out.println("Colum Name 가져오는중...");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select column_name from information_schema.columns where table_schema='test' and TABLE_NAME='doc'");
 			if(conn != null) {
@@ -135,7 +137,7 @@ public class DataAccess {
 				}
 			}
 		} catch(SQLException e) {
-			System.out.println("DB 관련 예외 발생");
+			System.out.println("데이터베이스 관련 예외 발생");
 			e.printStackTrace();
 		} finally { 
 			if (rs != null) { try { rs.close(); } catch (SQLException e) { e.printStackTrace(); } } 
@@ -146,7 +148,7 @@ public class DataAccess {
 	}
 	
 	// Tagged text File -> 파싱하여 doc2 table에 넣기
-	public void tagParsing() {
+	public void tagParsing(String tagFileName) {
 		long start = System.currentTimeMillis(); // 프로그램 시작 시간
 		DBConnection dbConnect = new DBConnection(); //DB 연결 객체 생성
 		Connection conn = null;
@@ -155,7 +157,7 @@ public class DataAccess {
 		List<String[]> allRowsData = new ArrayList<String[]>();
 		String[] strArr = null;
 		try {
-			fr = new FileReader("C:\\Users\\Daumsoft\\Downloads\\Tconvert_doc.txt");
+			fr = new FileReader("C:\\Users\\Daumsoft\\Downloads\\"+tagFileName+".txt");
 			br = new BufferedReader(fr);
 			String str = "";
 			strArr = new String[3];
@@ -174,7 +176,7 @@ public class DataAccess {
 			}
 			conn = dbConnect.conn;
 			if(conn != null) {
-				System.out.println("DOC2 TABLE에 데이터 INSERT 중...");
+				System.out.println("  ■■■■■■■■■■■■■ DOC2 Table에 Data INSERT 중...■■■■■■■■■■■■■");
 				pstmt = conn.prepareStatement("insert into doc2 values (?,?,?)");
 				for(String[] data : allRowsData) {
 					//System.out.println(data[0] +"\t"+ data[1]+"\t"+ data[2]);
@@ -204,7 +206,9 @@ public class DataAccess {
 			if (conn != null) { try { conn.close(); } catch (SQLException e) { e.printStackTrace(); } }
 		}
 		long end = System.currentTimeMillis(); // 프로그램 종료 시간
-		System.out.println("========================================================");
+		System.out.println("===========================================================");
+		System.out.println("3) File to DB");
 		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 	}
 }

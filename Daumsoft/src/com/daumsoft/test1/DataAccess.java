@@ -75,6 +75,7 @@ public class DataAccess {
 		System.out.println("===========================================================");
 		System.out.println("1) File to DB");
 		System.out.println("실행 시간 : " + ( end - start) / 1000.0 + "초");
+		System.out.println("===========================================================");
 	}
 	
 	// DB에 접속하여 데이터 조회

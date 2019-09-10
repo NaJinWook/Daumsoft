@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class ParseClass {
+	// Tagged Format File(txt) 파일 생성 후 doc2 Table에 데이터 입력하기 위해 파일명을 동일하게 지정
 	public String tagFileName() {
 		String tagfile = "TConvert_doc";
 		return tagfile;
@@ -18,6 +19,11 @@ public class ParseClass {
 	public void fileTSV(String[] columnName, List<String[]> allRowsData, String sort) {
 		long start = System.currentTimeMillis(); // 프로그램 시작 시간
 		BufferedWriter bw = null;
+		if(sort == "asc" || sort == "ASC") {
+			System.out.println("<><><><><><><><><><오름차순으로 파일을 저장합니다!><><><><><><><><><>");
+		} else if(sort == "desc" || sort == "DESC") {
+			System.out.println("<><><><><><><><><><내림차순으로 파일을 저장합니다!><><><><><><><><><>");
+		}
 		try {
 			bw = new BufferedWriter(new FileWriter("C:\\Users\\Daumsoft\\Downloads\\"+sort+"_doc.tsv", false));
 			bw.write(columnName[0]+"\t"+columnName[1]+"\t"+columnName[2]); // 컬럼명을 상단에 넣기 위함

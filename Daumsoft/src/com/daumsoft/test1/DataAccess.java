@@ -16,8 +16,6 @@ import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 
 public class DataAccess {
-	private TsvParserSettings tsvSet = null; // TSV 읽기 파일 셋팅 객체
-	private TsvParser tsv = null; // TSV 읽기 파서 객체
 	private BufferedReader br = null; // 파일 읽기 위함
 	private FileReader fr = null; // 파일 읽기 위함
 	
@@ -28,8 +26,8 @@ public class DataAccess {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		tsvSet = new TsvParserSettings(); // 데이터 읽기전에 파서 셋팅
-		tsv = new TsvParser(tsvSet); // 데이터 읽기전에 파서 셋팅
+		TsvParserSettings tsvSet = new TsvParserSettings(); // TSV 읽기 파일 셋팅 객체
+		TsvParser tsv = new TsvParser(tsvSet); // TSV 읽기 파서 객체
 		
 		try {
 			fr = new FileReader("C:\\doc.tsv"); // 지정된 경로의 TSV 읽기
@@ -38,6 +36,7 @@ public class DataAccess {
 		}
 		br = new BufferedReader(fr);
 		List<String[]> allRowsData = tsv.parseAll(br);
+		
 		// List : 전체 라인 수
 		// String[] : 각각의 컬럼 0~2 존재
 		try {
@@ -128,7 +127,8 @@ public class DataAccess {
 		try {
 			conn = dbConnect.conn;
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select column_name from information_schema.columns where table_schema='test' and TABLE_NAME='doc'");
+			rs = stmt.executeQuery("select column_name from information_schema.columns "
+					+ "where table_schema='test' and TABLE_NAME='doc'");
 			if(conn != null) {
 				int i=0;
 				while(rs.next()) {

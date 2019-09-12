@@ -53,7 +53,10 @@ public class ParseClass {
 		try {
 				bw = new BufferedWriter(new FileWriter("C:\\Users\\Daumsoft\\Downloads\\"+tagFileName+".txt", false));
 				for(String[] str : allRowsData) { // 리스트에 담긴 데이터를 String 배열로 꺼내오기 위함
-					bw.write("^[START]"+"\n"+"["+columnName[0]+"]"+"\n"+str[0]+"\n"+"["+columnName[1]+"]"+"\n"+str[1]+"\n"+"["+columnName[2]+"]"+"\n"+str[2]+"\n"+"^[END]");
+					bw.write("^[START]"+"\n"+"["+columnName[0]+"]"+"\n"+str[0]+"\n"
+											+"["+columnName[1]+"]"+"\n"+str[1]+"\n"
+											+"["+columnName[2]+"]"+"\n"+str[2]+"\n"
+							+"^[END]");
 					bw.newLine(); // 개행
 				}
 				bw.flush(); // 버퍼의 내용을 사용자가 원할 때 출력하여 비움

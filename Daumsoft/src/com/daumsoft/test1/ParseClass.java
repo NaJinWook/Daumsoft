@@ -62,10 +62,10 @@ public class ParseClass {
 				bw.flush(); // 버퍼의 내용을 사용자가 원할 때 출력하여 비움
 				bw.close(); // auto-flush
 				
-				JSONObject jsonObject = new JSONObject(); // 최종 완성될 JSONObject 선언(전체)
-				JSONArray jsonArray = new JSONArray(); // JSON 정보를 담을 Array 선언
+				JSONObject jsonObject = new JSONObject(); // 중괄호로 감싸 대괄호의 이름을 정의하는 최종 완성될 JSONObject 선언(전체)
+				JSONArray jsonArray = new JSONArray(); // 대괄호 정의 []
 				for(String[] str : allRowsData) { // 리스트에 담긴 데이터를 String 배열로 꺼내오기 위함
-					JSONObject data = new JSONObject(); // 하나의 정보가 들어갈 JSONObject 선언
+					JSONObject data = new JSONObject(); // 중괄호 안에 정보가 들어갈 JSONObject 선언
 					// 데이터 입력
 					data.put(columnName[0], str[0]);
 					data.put(columnName[1], str[1]);

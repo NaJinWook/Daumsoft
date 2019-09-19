@@ -1,0 +1,251 @@
+body{
+  background-color: rgb(157, 206, 255);
+}
+#top{
+  background-color: rgb(34, 49, 63);
+  width: 100%;
+  height: 100px;
+}
+#mid{
+  width: 100%;
+  min-height: 800px;
+  background-color: rgb(157, 206, 255);
+}
+#footer{
+  background-color: rgb(34, 49, 63);
+  width: 100%;
+  height: 100px;
+}
+#logo{
+  width: 300px;
+  height: 60px;
+  margin-left: calc(50% - 150px);
+  margin-top: 20px;
+}
+
+#footer p{
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  line-height: 100px;
+}
+#contents_box{
+  height: 750px;
+  width: 1000px;
+  margin-left: calc(50% - 500px);
+  margin-top: 50px;
+  background-color: white;
+}
+#info{
+  font-weight: bold;
+  background-color: rgb(34, 49, 63);
+  color: white;
+  line-height: 50px;
+  padding-left: 20px;
+  height: 50px;
+}
+#bbs{
+  width: 800px;
+  min-height: 450px;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+.bbs_title{
+  margin-top: 30px;
+  height: 10px;
+  background-color: silver;
+  border-top: 3px solid black;
+  border-bottom: 2px solid gray;
+  padding: 10px;
+  font-weight: bold;
+}
+.bbs_contents{
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid silver;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bbs_content a{
+  color: #333333;
+  text-decoration: none;
+}
+.paging{
+  width:100%;
+  height:50px;
+  text-align:center;
+  padding-top: 50px;
+}
+.paging a{
+  color: #333333;
+  text-decoration: none;
+}
+.pg_btn{
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  width: 30px;
+  height: 30px;
+}
+.search_section{
+  text-align: center;
+  height: 70px;
+}
+#sbox{
+  height: 30px;
+  width: 120px;
+  border: 1px solid #999999;
+  border-radius: 4px 4px;
+}
+#search_keyword{
+  height: 20px;
+  width: 300px;
+  border: 1px solid #999999;
+  border-radius: 4px 4px;
+  padding: 5px;
+}
+#search_btn{
+  border: 1px solid #c6c6c6;
+  border-radius: 4px 4px;
+  background-color: #f8f8f8;
+  color: #333333;
+  width: 50px;
+  height: 28px;
+  cursor: pointer;
+}
+#bbs_btn{
+  width: 100%;
+  height: 70px;
+  font-weight: bold;
+  margin-top: 47px;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px 4px;
+  background-color: rgb(59, 157, 255);
+  font-size: 30px;
+}
+#bbs_btn a{
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+.bbs_contents a{
+  text-decoration: none;
+  color: black;
+}
+#write_btn{
+  width: 100px;
+  height: 30px;
+  font-weight: bold;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px 4px;
+  background-color: rgb(213, 7, 15);
+  font-size: 15px;
+  margin-left: 700px;
+  margin-bottom: 10px;
+
+}
+#write_btn a{
+  text-decoration: none;
+  color: white;
+}
+
+/* 아래부터는 글쓰기 */
+#title_section{
+  padding: 20px 0;
+  text-align: left;
+  border: 1px solid silver;
+  background-color:rgb(243, 243, 243);
+}
+#title{
+  width: 650px;
+  height: 30px;
+  padding-left: 10px;
+  margin-left: 20px;
+}
+#contents_section{
+  background-color:rgb(243, 243, 243);
+  padding: 20px 0;
+  border: 1px solid silver;
+}
+#contents{
+  resize: none;
+  width: 750px;
+  height: 300px;
+  margin-left: 20px;
+}
+#writer_section{
+  background-color: silver;
+  padding: 20px 0;
+}
+#writer{
+  width: 140px;
+  height: 30px;
+  padding-left: 10px;
+  margin-left: 630px;
+}
+#btn_section{
+  padding: 20px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid silver;
+}
+#write_commit, #update_commit{
+  background-color: #5BB75B;
+  color: #ffffff;
+  background-image: linear-gradient(to bottom, #62C462, #51A351);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  padding: 4px 12px;
+  border-radius: 4px 4px;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+}
+#write_cancel, #update_cancel{
+  background-color: #F5F5F5;
+  color: #333333;
+  background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #B3B3B3;
+  padding: 4px 12px;
+  border-radius: 4px 4px;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+}
+
+/* 현재 보고 있는 페이지 */
+#curTitle{
+  border: 1px solid silver;
+  height: 30px;
+}
+#curName{
+  border: 1px solid silver;
+  height: 30px;
+}
+#curInfo{
+  border: 1px solid silver;
+  height: 30px;
+}
+#info_date{
+  text-align: right;
+  font-size: 13px;
+}
+#curOption{
+  border: 1px solid silver;
+  height: 30px;
+  line-height: 27px;
+}
+#curContents{
+  height: 300px;
+  border: 1px solid silver;
+  padding: 5px;
+}
+#option_btn{
+  text-align: right;
+}
+#file_upload{
+  margin-top: 10px;
+  background-color: silver;
+  height: 100px;
+}

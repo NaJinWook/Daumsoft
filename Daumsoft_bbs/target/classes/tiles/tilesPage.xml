@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+   <definition name="baseLayout"  template="/WEB-INF/views/common/layout.jsp">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+
+   <definition name="board/home" extends="baseLayout">
+      <put-attribute name="title" value="메인페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/board/home.jsp" />
+   </definition>
+
+   <definition name="board/list" extends="baseLayout">
+      <put-attribute name="title" value="게시판리스트" />
+      <put-attribute name="body" value="/WEB-INF/views/board/list.jsp" />
+   </definition>
+
+   <definition name="board/write" extends="baseLayout">
+      <put-attribute name="title" value="게시글쓰기" />
+      <put-attribute name="body" value="/WEB-INF/views/board/write.jsp" />
+   </definition>
+   
+   <definition name="board/read" extends="baseLayout">
+      <put-attribute name="title" value="게시글읽기" />
+      <put-attribute name="body" value="/WEB-INF/views/board/read.jsp" />
+   </definition>
+   
+   <definition name="board/edit" extends="baseLayout">
+      <put-attribute name="title" value="게시글읽기" />
+      <put-attribute name="body" value="/WEB-INF/views/board/edit.jsp" />
+   </definition>
+</tiles-definitions>

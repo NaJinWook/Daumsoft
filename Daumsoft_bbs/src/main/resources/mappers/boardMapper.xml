@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="board">
+	<!-- 게시물 목록 페이징 없음 -->
+	<select id="list" resultType="com.ds.bbs.model.board.dto.BoardDTO">
+		select * 
+		from bbs
+		where delYn = 'N'
+		order by bno desc
+	</select>
+	
+	<!-- 게시글 쓰기 -->
+	<insert id="write" parameterType="com.ds.bbs.model.board.dto.BoardDTO">
+		insert into bbs (title, contents, writer) 
+		values (#{title}, #{contents}, #{writer})
+	</insert>
+	
+	<!-- 게시글 읽기 -->
+	<select id="read" parameterType="int" resultType="com.ds.bbs.model.board.dto.BoardDTO">
+		select bno, title, contents, writer, regDate, editDate
+		from bbs
+		where bno = #{bno}
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="com.ds.bbs.model.board.dto.BoardDTO">
+		update bbs
+		set title = #{title}, contents = #{contents}, writer = #{writer}, editDate = (select now())
+		where bno = #{bno}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		update bbs
+		set delYn = 'Y'
+		where bno = #{bno}
+	</delete>
+	
+	<!--ㅡㅡㅡㅡㅡㅡㅡㅡ페이징 처리ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	<!-- 게시물 총 갯수 구하기 -->
+	<select id="count" resultType="int">
+		select count(bno)
+		from bbs
+	</select>
+	
+	<select id="listPage" parameterType="hashMap" resultType="com.ds.bbs.model.board.dto.BoardDTO">
+		select *
+		from bbs
+		where (
+		<choose>
+			<when test="search_option == 'all' ">
+				title like concat('%',#{keyword},'%') 
+				or contents like concat('%',#{keyword},'%') 
+				or writer like concat('%',#{keyword},'%')
+			</when>
+			<otherwise>
+				${search_option} like concat('%',#{keyword},'%')
+			</otherwise>
+		</choose>
+		)
+		and delYn = 'N'
+		order by bno desc
+		limit #{startNum}, #{postNum}
+	</select>
+</mapper>

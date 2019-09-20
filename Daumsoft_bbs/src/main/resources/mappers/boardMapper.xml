@@ -42,28 +42,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--ㅡㅡㅡㅡㅡㅡㅡㅡ페이징 처리ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
 	<!-- 게시물 총 갯수 구하기 -->
-	<select id="count" resultType="int">
-		select count(bno)
+	<select id="count" parameterType="hashMap" resultType="int">
+		select count(*)
 		from bbs
+		where (
+		<include refid="search" />
+		)
+		and delYn = 'N'
 	</select>
 	
 	<select id="listPage" parameterType="hashMap" resultType="com.ds.bbs.model.board.dto.BoardDTO">
 		select *
 		from bbs
 		where (
-		<choose>
-			<when test="search_option == 'all' ">
-				title like concat('%',#{keyword},'%') 
-				or contents like concat('%',#{keyword},'%') 
-				or writer like concat('%',#{keyword},'%')
-			</when>
-			<otherwise>
-				${search_option} like concat('%',#{keyword},'%')
-			</otherwise>
-		</choose>
+		<include refid="search" />
 		)
 		and delYn = 'N'
 		order by bno desc
 		limit #{startNum}, #{postNum}
 	</select>
+	
+	<!-- 검색 옵션 -->
+	<sql id="search">
+		<choose>
+			<when test="search_option == 'all' ">
+				title like concat('%',#{keyword},'%') 
+				or contents like concat('%',#{keyword},'%')
+			</when>
+			<otherwise>
+				${search_option} like concat('%',#{keyword},'%')
+			</otherwise>
+		</choose>
+	</sql>
 </mapper>

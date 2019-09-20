@@ -53,8 +53,11 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int count() throws Exception {
-		return sqlSession.selectOne("board.count");
+	public int count(String search_option, String keyword) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search_option", search_option);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("board.count", map);
 	}
 	
 }

@@ -10,6 +10,6 @@ public interface BoardService {
 	public BoardDTO read(int bno) throws Exception; // 게시글 읽기
 	public void update(BoardDTO dto) throws Exception; // 게시글 수정
 	public void delete(int bno) throws Exception; // 게시글 삭제
-	
-	public int count() throws Exception;
+	//public int count() throws Exception;
+	public int count(String search_option, String keyword) throws Exception;
 }

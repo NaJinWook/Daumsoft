@@ -44,9 +44,13 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.delete(bno);
 	}
 
+	/*
+	 * @Override public int count() throws Exception { return boardDao.count(); }
+	 */
+
 	@Override
-	public int count() throws Exception {
-		return boardDao.count();
+	public int count(String search_option, String keyword) throws Exception {
+		return boardDao.count(search_option, keyword);
 	}
 
 }

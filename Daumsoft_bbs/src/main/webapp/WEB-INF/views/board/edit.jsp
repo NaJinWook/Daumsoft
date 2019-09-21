@@ -30,7 +30,7 @@
 			history.back();
 		});
 		$("#list_back").click(function() {
-			history.go(-2);
+			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}";
 		});
 	});
 </script>
@@ -40,15 +40,15 @@
 	<div id="bbs">
 		<form name="updateForm" method="post" action="/board/update">
 			<div id="title_section">
-				<input type="text" id="title" name="title" maxlength="25"
+				<input type="text" id="title" name="title" maxlength="45"
 					placeholder="제목을 입력하세요" value="${dto.title}" autocomplete="off" />
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents">${dto.contents}</textarea>
 			</div>
 			<div id="writer_section">
-				<input type="text" id="writer" name="writer" size="10"
-					placeholder="이름을 입력하세요" maxlength="8" value="${dto.writer}"
+				<input type="text" id="writer" name="writer"
+					placeholder="이름을 입력하세요" maxlength="7" value="${dto.writer}"
 					autocomplete="off" />
 			</div>
 			<div id="btn_section">
@@ -56,6 +56,9 @@
 				<button type="button" id="update_commit">수정</button>
 				<button type="button" id="update_cancel">취소</button>
 				<input type="hidden" name="bno" value="${dto.bno}" />
+				<input type="hidden" name="curPage" value="${curPage}" />
+				<input type="hidden" name="search_option" value="${search_option}" />
+				<input type="hidden" name="keyword" value="${keyword}" />
 			</div>
 		</form>
 	</div>

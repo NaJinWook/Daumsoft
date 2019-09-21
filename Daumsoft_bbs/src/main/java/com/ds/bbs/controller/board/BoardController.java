@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,7 +55,6 @@ public class BoardController {
 		map.put("search_option", search_option);
 		map.put("keyword", keyword);
 		map.put("pager", pager);
-		// map.put("pageNum", pageNum);
 		map.put("curPage", curPage);
 		mav.addObject("map", map);
 		return mav;
@@ -62,7 +62,12 @@ public class BoardController {
 
 	// 게시글 쓰기 페이지 이동
 	@RequestMapping(value = "write", method = RequestMethod.GET)
-	public String write() throws Exception {
+	public String write(@RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage,
+			@RequestParam(value = "search_option", required = false, defaultValue = "all") String search_option,
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) throws Exception {
+		model.addAttribute("curPage", curPage);
+		model.addAttribute("search_option", search_option);
+		model.addAttribute("keyword", keyword);
 		return "board/write";
 	}
 
@@ -100,7 +105,13 @@ public class BoardController {
 
 	// 게시글 수정 페이지 이동
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public ModelAndView modify(@RequestParam(value = "bno") int bno, ModelAndView mav) throws Exception {
+	public ModelAndView modify(@RequestParam(value = "bno") int bno, 
+			@RequestParam(value = "curPage") int curPage,
+			@RequestParam(value = "search_option") String search_option,
+			@RequestParam(value = "keyword") String keyword, Model model, ModelAndView mav) throws Exception {
+		model.addAttribute("curPage", curPage);
+		model.addAttribute("search_option", search_option);
+		model.addAttribute("keyword", keyword);
 		BoardDTO dto = null;
 		dto = boardService.read(bno);
 		dto.setTitle(decoding(dto.getTitle()));
@@ -113,7 +124,12 @@ public class BoardController {
 
 	// 게시글 수정
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(BoardDTO dto, HttpServletRequest request) throws Exception {
+	public String update(BoardDTO dto, @RequestParam(value = "bno") int bno, 
+			@RequestParam(value = "curPage") int curPage,
+			@RequestParam(value = "search_option") String search_option,
+			@RequestParam(value = "keyword") String keyword,
+			HttpServletRequest request) throws Exception {
+		String enc_keyword = URLEncoder.encode(keyword, "UTF-8");
 		String title = request.getParameter("title");
 		String contents = request.getParameter("contents");
 		String writer = request.getParameter("writer");
@@ -121,7 +137,7 @@ public class BoardController {
 		dto.setContents(encoding(contents));
 		dto.setWriter(encoding(writer));
 		boardService.update(dto);
-		return "redirect:/board/read?bno=" + dto.getBno();
+		return "redirect:/board/read?bno="+bno+"&curPage="+curPage+"&search_option="+search_option+"&keyword="+enc_keyword;
 	}
 
 	// 게시글 삭제

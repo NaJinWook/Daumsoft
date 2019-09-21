@@ -7,11 +7,9 @@
 <%@ include file="../include/comm.jsp"%>
 <script>
 	$(function() {
-		$("#list_btn")
-				.click(
-						function() {
-							location.href = "/board/list?curPage=${map.curPage}&search_option=${map.search_option}&keyword=${map.keyword}";
-						});
+		$("#list_btn").click(function() {
+			location.href = "/board/list?curPage=${map.curPage}&search_option=${map.search_option}&keyword=${map.keyword}";
+		});
 		$("#edit_btn").click(function() {
 			document.editForm.submit();
 		});
@@ -20,7 +18,6 @@
 				document.removeForm.submit();
 			}
 		});
-
 	});
 </script>
 </head>
@@ -60,6 +57,10 @@
 		</div>
 		<form name="editForm" action="/board/edit" method="post">
 			<input type="hidden" name="bno" value="${map.dto.bno}" />
+			<input type="hidden" name="bno" value="${map.dto.bno}" />
+			<input type="hidden" name="curPage" value="${map.curPage}" />
+			<input type="hidden" name="search_option" value="${map.search_option}" />
+			<input type="hidden" name="keyword" value="${map.keyword}" />
 		</form>
 		<form name="removeForm" action="/board/delete" method="post">
 			<input type="hidden" name="bno" value="${map.dto.bno}" />

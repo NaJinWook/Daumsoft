@@ -16,6 +16,9 @@
 			}
 			document.searchForm.submit();
 		});
+		$("#write_btn").click(function() {
+			document.writeForm.submit();
+		});
 	});
 	function list(page) {
 		location.href = "${path}/board/list?curPage=" + page
@@ -27,19 +30,21 @@
 <body>
 	<div id="info"><a href="/board/list">자유게시판</a></div>
 	<div id="bbs">
-		<span style="font-size: 13px; padding-left: 5px;">${map.count}개의
-			게시물이 있습니다.</span>
-		<button type="button" id="write_btn">
-			<a href="/board/write">글 작성</a>
-		</button>
+		<span style="font-size: 13px; padding-left: 5px;">${map.count}개의 게시물이 있습니다.</span>
+		<button type="button" id="write_btn">글 작성</button>
+		<form name="writeForm" action="/board/write">
+			<input type="hidden" name="curPage" value="${map.curPage}"/>
+			<input type="hidden" name="search_option" value="${map.search_option}"/>
+			<input type="hidden" name="keyword" value="${map.keyword}"/>
+		</form>
 		<c:if test="${map.count != 0}">
 		<table>
 			<thead>
 				<tr>
 					<th class="bbs_title" scope="col" width="10%">번호</th>
 					<th class="bbs_title" scope="col" width="45%">제목</th>
-					<th class="bbs_title" scope="col" width="20%">작성자</th>
-					<th class="bbs_title" scope="col" width="15%">등록일</th>
+					<th class="bbs_title" scope="col" width="15%">작성자</th>
+					<th class="bbs_title" scope="col" width="20%">등록일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -49,8 +54,8 @@
 						<td class="bbs_contents" scope="col" width="45%"><a
 							href="/board/read?bno=${list.bno}&curPage=${map.curPage}&search_option=${map.search_option}&keyword=${map.keyword}">${list.title}</a>
 						</td>
-						<td class="bbs_contents" scope="col" width="20%">${list.writer}</td>
-						<td class="bbs_contents" scope="col" width="15%"><fmt:formatDate
+						<td class="bbs_contents" scope="col" width="15%">${list.writer}</td>
+						<td class="bbs_contents" scope="col" width="20%"><fmt:formatDate
 								pattern="yyyy-MM-dd HH:mm:ss" value="${list.regDate}" /></td>
 					</tr>
 				</c:forEach>
@@ -97,7 +102,7 @@
 			</button>
 		</c:if>
 	</div>
-	<form name="searchForm" action="${path}/board/list">
+	<form name="searchForm" action="/board/list">
 		<div class="search_section">
 			<select id="sbox" name="search_option">
 				<option value="all"

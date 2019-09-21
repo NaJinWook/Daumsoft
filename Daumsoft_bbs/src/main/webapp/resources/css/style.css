@@ -35,7 +35,7 @@ body {
 }
 
 #contents_box {
-	height: 750px;
+	min-height: 750px;
 	width: 1000px;
 	margin-left: calc(50% - 500px);
 	margin-top: 50px;
@@ -87,6 +87,17 @@ body {
 	text-decoration: none;
 }
 
+table {
+	table-layout: fixed;
+	width: 800px;
+}
+
+td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .paging {
 	width: 100%;
 	height: 50px;
@@ -105,12 +116,37 @@ body {
 	width: 30px;
 	height: 30px;
 }
-.prev_next_btn{
-	
+
+.prev_next_btn {
+	background-color: black;
+	border: 1px solid #ddd;
+	border-radius: 4px 4px;
 }
-.start_end_btn{
-	
+
+.prev_next_btn a {
+	color: white;
 }
+
+.start_end_btn {
+	background-color: #ddd;
+	border: 1px solid #ddd;
+	border-radius: 4px 4px;
+}
+
+#list_back {
+	background-color: #F5F5F5;
+	color: #333333;
+	background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #B3B3B3;
+	padding: 4px 12px;
+	border-radius: 4px 4px;
+	border-style: solid;
+	border-width: 1px;
+	cursor: pointer;
+}
+
 .search_section {
 	text-align: center;
 	height: 70px;
@@ -173,14 +209,11 @@ body {
 	font-size: 15px;
 	margin-left: 700px;
 	margin-bottom: 10px;
-}
-
-#write_btn a {
-	text-decoration: none;
 	color: white;
+	cursor: pointer;
 }
 
-/* 아래부터는 글쓰기 */
+/*  븘 옒遺  꽣 뒗 湲  벐湲  */
 #title_section {
 	padding: 20px 0;
 	text-align: left;
@@ -254,7 +287,7 @@ body {
 	cursor: pointer;
 }
 
-/* 현재 보고 있는 페이지 */
+/* 글 읽기 */
 #curTitle {
 	border: 1px solid silver;
 	height: 30px;

@@ -27,7 +27,7 @@
 			document.sendForm.submit();
 		});
 		$("#write_cancel").click(function() {
-			history.back();
+			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}";
 		});
 	});
 </script>
@@ -37,15 +37,15 @@
 	<div id="bbs">
 		<form name="sendForm" method="post" action="/board/insert">
 			<div id="title_section">
-				<input type="text" id="title" name="title" maxlength="25"
+				<input type="text" id="title" name="title" maxlength="45"
 					placeholder="제목을 입력하세요" autocomplete="off" />
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents"></textarea>
 			</div>
 			<div id="writer_section">
-				<input type="text" id="writer" name="writer" size="10"
-					placeholder="이름을 입력하세요" maxlength="8" autocomplete="off" />
+				<input type="text" id="writer" name="writer"
+					placeholder="이름을 입력하세요" maxlength="7" autocomplete="off" />
 			</div>
 			<div id="btn_section">
 				<button type="button" id="write_commit">등록</button>

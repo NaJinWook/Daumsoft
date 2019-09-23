@@ -35,7 +35,7 @@
 <body>
 	<div id="info">게시글 쓰기</div>
 	<div id="bbs">
-		<form name="sendForm" method="post" action="/board/insert">
+		<form name="sendForm" method="post" action="/board/insert" enctype="multipart/form-data">
 			<div id="title_section">
 				<input type="text" id="title" name="title" maxlength="45"
 					placeholder="제목을 입력하세요" autocomplete="off" />
@@ -44,8 +44,11 @@
 				<textarea id="contents" name="contents"></textarea>
 			</div>
 			<div id="writer_section">
+				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
+				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
+				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
 				<input type="text" id="writer" name="writer"
-					placeholder="이름을 입력하세요" maxlength="7" autocomplete="off" />
+					placeholder="이름을 입력하세요" maxlength="7" autocomplete="off" style="display:inline"/>
 			</div>
 			<div id="btn_section">
 				<button type="button" id="write_commit">등록</button>

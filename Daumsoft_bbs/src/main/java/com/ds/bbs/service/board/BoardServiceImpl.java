@@ -1,6 +1,7 @@
 package com.ds.bbs.service.board;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ds.bbs.model.board.dao.BoardDAO;
 import com.ds.bbs.model.board.dto.BoardDTO;
+import com.ds.bbs.model.board.dto.FileDTO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -43,14 +45,36 @@ public class BoardServiceImpl implements BoardService {
 	public void delete(int bno) throws Exception {
 		boardDao.delete(bno);
 	}
-
-	/*
-	 * @Override public int count() throws Exception { return boardDao.count(); }
-	 */
-
+	
 	@Override
 	public int count(String search_option, String keyword) throws Exception {
 		return boardDao.count(search_option, keyword);
+	}
+
+	@Override
+	public void fileUpload(FileDTO f_dto) throws Exception {
+		boardDao.fileUpload(f_dto);
+	}
+
+	@Override
+	public List<FileDTO> f_read(int bno) throws Exception {
+		return boardDao.f_read(bno);
+	}
+
+	// 첨부파일 한건의 정보를 가져온다.
+	@Override
+	public FileDTO selectFile(int fileNo) throws Exception {
+		return boardDao.selectFile(fileNo);
+	}
+
+	@Override
+	public void delFile(Map<String, Object> map) throws Exception {
+		boardDao.delFile(map);
+	}
+
+	@Override
+	public void delete2(int bno) throws Exception {
+		boardDao.delete2(bno);
 	}
 
 }

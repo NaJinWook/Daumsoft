@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.ds.bbs.model.board.dto.BoardDTO;
+import com.ds.bbs.model.board.dto.FileDTO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -51,6 +52,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public void delete(int bno) throws Exception {
 		sqlSession.delete("board.delete", bno);
 	}
+	
+	// 게시글 삭제시 첨부파일도 같이 삭제
+	@Override
+	public void delete2(int bno) throws Exception {
+		sqlSession.delete("board.delete2", bno);
+	}
 
 	@Override
 	public int count(String search_option, String keyword) throws Exception {
@@ -58,6 +65,27 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("search_option", search_option);
 		map.put("keyword", keyword);
 		return sqlSession.selectOne("board.count", map);
+	}
+
+	@Override
+	public void fileUpload(FileDTO f_dto) throws Exception {
+		sqlSession.insert("board.upload", f_dto);
+	}
+
+	@Override
+	public List<FileDTO> f_read(int bno) throws Exception {
+		return sqlSession.selectList("board.f_read", bno);
+	}
+
+	// 첨부파일 한건의 정보를 가져온다.
+	@Override
+	public FileDTO selectFile(int fileNo) throws Exception {
+		return sqlSession.selectOne("board.selectFile", fileNo);
+	}
+
+	@Override
+	public void delFile(Map<String, Object> map) throws Exception {
+		sqlSession.update("board.delFile", map);
 	}
 	
 }

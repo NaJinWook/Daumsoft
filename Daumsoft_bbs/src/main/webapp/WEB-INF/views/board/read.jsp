@@ -20,6 +20,14 @@
 		});
 	});
 </script>
+<style>
+	#file_icon{
+		width:20px;
+		height:20px;
+		padding-top: 5px;
+		padding-left: 5px;
+	}
+</style>
 </head>
 <body>
 	<div id="info">${map.dto.bno}</div>
@@ -69,7 +77,16 @@
 			<input type="hidden" name="keyword" value="${map.keyword}" />
 		</form>
 		<div id="curContents">${map.dto.contents}</div>
-		<div id="file_upload"></div>
+		<div id="file_upload">
+		<c:forEach items="${map.f_dto}" var="list">
+			<div>
+				<a href="/fileDownload.do?fileNo=${list.fileNo}">
+					<img src="../../resources/img/file_icon.PNG" id="file_icon"/>
+				${list.fileName}
+				</a>
+			</div>
+		</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

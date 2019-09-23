@@ -26,19 +26,41 @@
 			}
 			document.updateForm.submit();
 		});
+		$("#delBtn_0").click(function(e){
+			e.preventDefault();
+			fn_delFile($(this));
+			fn_fileAdd();
+		});
+		$("#delBtn_1").click(function(e){
+			e.preventDefault();
+			fn_delFile($(this));
+			fn_fileAdd();
+		});
+		$("#delBtn_2").click(function(e){
+			e.preventDefault();
+			fn_delFile($(this));
+			fn_fileAdd();
+		});
 		$("#update_cancel").click(function() {
 			history.back();
 		});
 		$("#list_back").click(function() {
 			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}";
 		});
+		function fn_delFile(obj){
+			obj.parent().remove();
+		}
+		function fn_fileAdd(){
+			var str = "<input type='file' id='uploadFile' name='uploadFile' style='padding-left:5px;display:block;'/>";
+			$("#file_add").append(str);
+		}
 	});
 </script>
 </head>
 <body>
 	<div id="info">${dto.bno}</div>
 	<div id="bbs">
-		<form name="updateForm" method="post" action="/board/update">
+		<form name="updateForm" method="post" action="/board/update" enctype="multipart/form-data">
 			<div id="title_section">
 				<input type="text" id="title" name="title" maxlength="45"
 					placeholder="제목을 입력하세요" value="${dto.title}" autocomplete="off" />
@@ -47,9 +69,19 @@
 				<textarea id="contents" name="contents">${dto.contents}</textarea>
 			</div>
 			<div id="writer_section">
+				<c:forEach items="${f_dto}" var="file" varStatus="status">
+				<div id="file_add"></div>
+				<div>
+					${file.fileName}
+					<button type="button" id="delBtn_${status.index}">삭제</button>
+					<input type="hidden" name="fileNo" value="${file.fileNo}" />
+				</div>
+				</c:forEach>
+				<c:forEach var="i" begin="1" end="${loop}">
+					<input type="file" id="uploadFile" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
+				</c:forEach>
 				<input type="text" id="writer" name="writer"
-					placeholder="이름을 입력하세요" maxlength="7" value="${dto.writer}"
-					autocomplete="off" />
+					placeholder="이름을 입력하세요" maxlength="7" value="${dto.writer}" autocomplete="off" />
 			</div>
 			<div id="btn_section">
 				<button type="button" id="list_back">돌아가기</button>

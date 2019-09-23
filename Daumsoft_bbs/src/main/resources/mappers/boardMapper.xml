@@ -6,33 +6,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="board">
 	<!-- 게시물 목록 페이징 없음 -->
-	<select id="list" resultType="com.ds.bbs.model.board.dto.BoardDTO">
-		select * 
+	<select id="list"
+		resultType="com.ds.bbs.model.board.dto.BoardDTO">
+		select *
 		from bbs
 		where delYn = 'N'
 		order by bno desc
 	</select>
-	
+
 	<!-- 게시글 쓰기 -->
-	<insert id="write" parameterType="com.ds.bbs.model.board.dto.BoardDTO">
-		insert into bbs (title, contents, writer) 
+	<insert id="write"
+		parameterType="com.ds.bbs.model.board.dto.BoardDTO">
+		insert into bbs (title, contents, writer)
 		values (#{title}, #{contents}, #{writer})
 	</insert>
-	
+
 	<!-- 게시글 읽기 -->
-	<select id="read" parameterType="int" resultType="com.ds.bbs.model.board.dto.BoardDTO">
+	<select id="read" parameterType="int"
+		resultType="com.ds.bbs.model.board.dto.BoardDTO">
 		select bno, title, contents, writer, regDate, editDate
-		from bbs
+		from
+		bbs
 		where bno = #{bno}
 	</select>
 	
+	<!-- 게시글에 넘겨줄 첨부파일 읽기 -->
+	<select id="f_read" parameterType="int" resultType="com.ds.bbs.model.board.dto.FileDTO">
+		select * from bbs_fileStore where bno=#{bno} and fileDelYn = 'N'
+	</select>
+	
+	<!-- 첨부파일 한건의 정보를 가져온다. -->
+	<select id="selectFile" parameterType="int" resultType="com.ds.bbs.model.board.dto.FileDTO">
+		select * from bbs_fileStore where fileNo=#{fileNo}
+	</select>
+
 	<!-- 게시글 수정 -->
-	<update id="update" parameterType="com.ds.bbs.model.board.dto.BoardDTO">
+	<update id="update"
+		parameterType="com.ds.bbs.model.board.dto.BoardDTO">
 		update bbs
-		set title = #{title}, contents = #{contents}, writer = #{writer}, editDate = (select now())
+		set title = #{title}, contents = #{contents},
+		writer = #{writer}, editDate = (select now())
 		where bno = #{bno}
 	</update>
-	
+
 	<!-- 게시글 삭제 -->
 	<delete id="delete" parameterType="int">
 		update bbs
@@ -40,7 +56,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where bno = #{bno}
 	</delete>
 	
-	<!--ㅡㅡㅡㅡㅡㅡㅡㅡ페이징 처리ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	<!-- 게시글 삭제시 첨부파일도 삭제하기 위한 쿼리  -->
+	<delete id="delete2" parameterType="int">
+		update bbs_fileStore SET fileDelYn = 'Y'
+		where bno = #{bno}
+	</delete>
+	
+	<!-- 게시글 첨부파일 삭제 -->
+	<delete id="delFile" parameterType="hashMap">
+		update bbs_fileStore SET fileDelYn = 'Y'
+		WHERE bno = #{bno} and fileNo NOT IN
+		<foreach collection="fileNos" item="fileNo" index="index" separator="," open="(" close=")">
+			${fileNo}
+		</foreach>
+	</delete>
+
+	<!--ㅡㅡㅡㅡㅡㅡㅡㅡ페이징 처리ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	<!-- 게시물 총 갯수 구하기 -->
 	<select id="count" parameterType="hashMap" resultType="int">
 		select count(*)
@@ -50,8 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 		and delYn = 'N'
 	</select>
-	
-	<select id="listPage" parameterType="hashMap" resultType="com.ds.bbs.model.board.dto.BoardDTO">
+
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.ds.bbs.model.board.dto.BoardDTO">
 		select *
 		from bbs
 		where (
@@ -61,12 +93,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by bno desc
 		limit #{startNum}, #{postNum}
 	</select>
-	
+
 	<!-- 검색 옵션 -->
 	<sql id="search">
 		<choose>
 			<when test="search_option == 'all' ">
-				title like concat('%',#{keyword},'%') 
+				title like concat('%',#{keyword},'%')
 				or contents like concat('%',#{keyword},'%')
 			</when>
 			<otherwise>
@@ -74,4 +106,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 	</sql>
+
+	<insert id="upload" parameterType="com.ds.bbs.model.board.dto.FileDTO">
+		INSERT INTO bbs_fileStore (bno, saveName, fileName, filePath, fileSize, fileUserName) VALUES
+		((SELECT COUNT(*) FROM bbs), #{saveName}, #{fileName}, #{filePath}, #{fileSize}, #{fileUserName});
+	</insert>
 </mapper>

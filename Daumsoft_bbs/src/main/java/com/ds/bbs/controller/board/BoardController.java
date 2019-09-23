@@ -41,14 +41,10 @@ public class BoardController {
 			@RequestParam(value = "search_option", required = false, defaultValue = "all") String search_option,
 			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, ModelAndView mav)
 			throws Exception {
-		// 게시물 총 갯수
-		int count = boardService.count(search_option, keyword);
+		int count = boardService.count(search_option, keyword); // 총 게시물 수
 		Pager pager = new Pager(count, curPage);
-		// 게시물 총 갯수 / 한페이지 출력 갯수 = 하단에 표현될 페이지 번호 개수
-		// int pageNum = (int) Math.ceil((double) count / (double) postNum);
-		// 출력할 게시물
-		int start = pager.getPageBegin();
-		int postNum = pager.getPageEnd();
+		int start = pager.getPageBegin(); // 시작점
+		int postNum = pager.getPageEnd(); // 출력할 게시물 수
 
 		List<BoardDTO> list = null;
 		list = boardService.list(start, postNum, search_option, keyword);
@@ -161,7 +157,7 @@ public class BoardController {
 	public String update(BoardDTO dto, @RequestParam(value = "bno") int bno,
 			@RequestParam(value = "curPage") int curPage, @RequestParam(value = "search_option") String search_option,
 			@RequestParam(value = "keyword") String keyword, 
-			@RequestParam(value = "fileNo") List<Integer> fileNos, 
+			@RequestParam(value = "fileNo", defaultValue="0") List<Integer> fileNos, 
 			@RequestParam("uploadFile") List<MultipartFile> files, HttpServletRequest request) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String fileName = null;
@@ -181,16 +177,18 @@ public class BoardController {
 		boardService.update(dto);
 		boardService.delFile(map);
 		
-		for (MultipartFile file : files) {
-			if (!file.getOriginalFilename().isEmpty()) {
-				// System.out.println(file.getName() + "그리고 "+file.getOriginalFilename());
-				uuid = UUID.randomUUID();
-				fileName = file.getOriginalFilename();
-				saveName = uuid + "_" + fileName;
-				fileSize = file.getSize();
-				file.transferTo(new File(f_dto.SAVE_FILE_PATH + saveName));
-				f_dto = new FileDTO(saveName, fileName, fileSize, dto.getWriter());
-				boardService.fileUpload(f_dto);
+		if(!files.isEmpty()) {
+			for (MultipartFile file : files) {
+				if (!file.getOriginalFilename().isEmpty()) {
+					// System.out.println(file.getName() + "그리고 "+file.getOriginalFilename());
+					uuid = UUID.randomUUID();
+					fileName = file.getOriginalFilename();
+					saveName = uuid + "_" + fileName;
+					fileSize = file.getSize();
+					file.transferTo(new File(f_dto.SAVE_FILE_PATH + saveName));
+					f_dto = new FileDTO(saveName, fileName, fileSize, dto.getWriter());
+					boardService.fileUpload(f_dto);
+				}
 			}
 		}
 		return "redirect:/board/read?bno=" + bno + "&curPage=" + curPage + "&search_option=" + search_option

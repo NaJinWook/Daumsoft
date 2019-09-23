@@ -13,8 +13,7 @@ public class FileDTO {
 	
 	public FileDTO() {}
 
-	public FileDTO(String saveName, String fileName, long fileSize,
-			String fileUserName) {
+	public FileDTO(String saveName, String fileName, long fileSize, String fileUserName) {
 		this.saveName = saveName;
 		this.fileName = fileName;
 		this.filePath = SAVE_FILE_PATH;

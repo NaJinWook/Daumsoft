@@ -22,9 +22,9 @@ public class FileDownController {
 	
 	@RequestMapping(value = "fileDownload.do")
 	public void fileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		FileDTO f_dto = null;
-	
 		int fileNo = Integer.parseInt(request.getParameter("fileNo"));
+		FileDTO f_dto = null;
+		
 		String fileName = null;
 		String originalName = null;
 		String realFileName = "";

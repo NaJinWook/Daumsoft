@@ -57,10 +57,9 @@
 		</div>
 		<div id="curOption">
 			<div id="option_btn">
-				<input type="button" id="list_btn" value="목록"
-					style="cursor: pointer;" /> <input type="button" id="edit_btn"
-					value="수정" style="cursor: pointer;" /> <input type="button"
-					id="remove_btn" value="삭제" style="cursor: pointer;" />
+				<input type="button" id="list_btn" value="목록" style="cursor: pointer;" /> 
+				<input type="button" id="edit_btn" value="수정" style="cursor: pointer;" />
+				<input type="button" id="remove_btn" value="삭제" style="cursor: pointer;" />
 			</div>
 		</div>
 		<form name="editForm" action="/board/edit" method="post">

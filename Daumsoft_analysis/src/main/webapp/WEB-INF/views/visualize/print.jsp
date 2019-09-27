@@ -42,6 +42,8 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 		// Create chart instance
 		var chart = am4core.create("chartdiv", am4charts.XYChart);
 		chart.scrollbarX = new am4core.Scrollbar();
+		
+		chart.exporting.menu = new am4core.ExportMenu(); // 파일 저장 기능
 	
 		// Add data
 		chart.data = obj;
@@ -59,7 +61,6 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 	
 		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.title.text = "Frequency";
-		
 		valueAxis.renderer.minWidth = 50;
 	
 		// Create series
@@ -108,6 +109,58 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 	     	
 		// 범례, 대부분의 경우 범례를 만들려면 Legend 차트 legend 속성에 인스턴스 만 할당하면 됨
 		chart.legend = new am4charts.Legend();
+		
+		var lineSeries = chart.series.push(new am4charts.LineSeries());
+		lineSeries.name = "Positive";
+		lineSeries.dataFields.valueY = "positive_count";
+		lineSeries.dataFields.categoryX = "register_date";
+	
+		lineSeries.stroke = am4core.color("rgb(59, 157, 255)");
+		lineSeries.strokeWidth = 3;
+		lineSeries.propertyFields.strokeDasharray = "lineDash";
+	 	lineSeries.tooltip.label.textAlign = "middle";
+	 	
+		var lineSeries2 = chart.series.push(new am4charts.LineSeries());
+		lineSeries2.name = "Negative";
+		lineSeries2.dataFields.valueY = "negative_count";
+		lineSeries2.dataFields.categoryX = "register_date";
+		lineSeries2.stroke = am4core.color("#e04400");
+		lineSeries2.strokeWidth = 3;
+		lineSeries2.propertyFields.strokeDasharray = "lineDash";
+		lineSeries2.tooltip.label.textAlign = "middle";
+		
+		var lineSeries3 = chart.series.push(new am4charts.LineSeries());
+		lineSeries3.name = "Neutral";
+		lineSeries3.dataFields.valueY = "neutral_count";
+		lineSeries3.dataFields.categoryX = "register_date";
+		lineSeries3.stroke = am4core.color("#f3e165");
+		lineSeries3.strokeWidth = 3;
+		lineSeries3.propertyFields.strokeDasharray = "lineDash";
+		lineSeries3.tooltip.label.textAlign = "middle";
+			
+	  	var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+	  	bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+	  	//bullet.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+	  	var circle = bullet.createChild(am4core.Circle);
+	  	circle.radius = 4;
+	  	circle.fill = am4core.color("#fff");
+	  	circle.strokeWidth = 3;
+
+	  	var bullet2 = lineSeries2.bullets.push(new am4charts.Bullet());
+	  	bullet2.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+	  	//bullet2.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+	  	var circle2 = bullet2.createChild(am4core.Circle);
+	  	circle2.radius = 4;
+	  	circle2.fill = am4core.color("#fff");
+	  	circle2.strokeWidth = 3;
+
+	  	var bullet3 = lineSeries3.bullets.push(new am4charts.Bullet());
+	  	bullet3.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+	  	//bullet3.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+	  	var circle3 = bullet3.createChild(am4core.Circle);
+	  	circle3.radius = 4;
+	  	circle3.fill = am4core.color("#fff");
+	  	circle3.strokeWidth = 3;
 	}
 	function pieChart(){
 		// Themes begin
@@ -161,8 +214,8 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 	<c:if test="${source == 'insta'}">
 		<div><img src="../../../resources/images/insta_logo.png" class="source_logo"/></div>
 	</c:if>
-	<p style="padding-top:10px;"><span style="font-weight:bold;font-size:30px;font-style:italic;">검색 기간 : ${startDate}~${endDate}</span></p>
-	<p style="padding-top:10px;"><span style="font-weight:bold;font-size:30px;font-style:italic";>연관어추이(감성) 주제어 : <span style="color:red;">${keyword}</span></span></p>
+	<p style="padding-top:10px;"><span style="font-weight:bold;font-size:30px;font-style:italic;">검색 기간 : <span style="color:#e04400;">${startDate} ~ ${endDate}</span></span></p>
+	<p style="padding-top:10px;"><span style="font-weight:bold;font-size:30px;font-style:italic;">연관어추이(감성) 주제어 : <span style="color:rgb(59, 157, 255);">${keyword}</span></span></p>
 	<div id="chartdiv"></div>
 	<div id="chartdiv2"></div>
 </body>

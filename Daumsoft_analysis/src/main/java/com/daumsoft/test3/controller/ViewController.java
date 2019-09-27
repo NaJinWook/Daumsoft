@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,9 +112,13 @@ public class ViewController {
 		    	//model.addAttribute("list", list);
 		    }
 		    returnMap = viewService.select();
+		    Date s_date = new SimpleDateFormat("yyyyMMdd").parse(startDate);
+		    Date e_date = new SimpleDateFormat("yyyyMMdd").parse(endDate);
+		    String fm_startDate = new SimpleDateFormat("yyyy년 MM월 dd일").format(s_date);
+		    String fm_endDate = new SimpleDateFormat("yyyy년 MM월 dd일").format(e_date);
 		    model.addAttribute("source", source);
-		    model.addAttribute("startDate", startDate);
-		    model.addAttribute("endDate", endDate);
+		    model.addAttribute("startDate", fm_startDate);
+		    model.addAttribute("endDate", fm_endDate);
 		    model.addAttribute("keyword", keyword);
 		    model.addAttribute("jsonArray",returnMap.get("jsonArray"));
 		    model.addAttribute("positive_sum", returnMap.get("positive_sum"));

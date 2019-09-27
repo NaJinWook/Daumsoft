@@ -42,4 +42,38 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<!-- Error Page -->
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/throwable</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/exception</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/403</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500</location>
+	</error-page>
+	<error-page>
+		<error-code>503</error-code>
+		<location>/503</location>
+	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/400</location>
+	</error-page>
+	<error-page>
+		<error-code>405</error-code>
+		<location>/405</location>
+	</error-page>
 </web-app>

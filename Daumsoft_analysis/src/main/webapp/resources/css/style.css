@@ -1,0 +1,67 @@
+.layout{
+  text-align:center;
+}
+.search_section{
+  width: 1200px;
+  height: 100px;
+  display: inline-block;
+}
+.logo{
+  text-align: left;
+  height: 100%;
+}
+.search{
+  width: 1000px;
+  height: 1000px;
+}
+#logo{
+  margin-top: 7px;
+  width: 100px;
+  height: 86px;
+  cursor: pointer;
+}
+.select{
+  height: 30px;
+}
+.option{
+  height: 50px;
+  text-align: left;
+  border-top: 1px solid #f1f3f6;
+  padding-top: 5px;
+}
+.keyword{
+  height: 50px;
+  text-align: left;
+}
+#keyword{
+  width: 600px;
+  height: 30px;
+  border: 2px solid rgb(59, 157, 255);
+  padding-left: 10px;
+}
+#search_btn{
+  border: 2px solid rgb(59, 157, 255);
+  background-color: rgb(59, 157, 255);
+  height: 35px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+#search_btn:hover{
+	background-color:rgb(157, 206, 255);
+	border: 2px solid rgb(157, 206, 255);
+}
+#search_btn:active{
+	background-color:rgb(59, 157, 255);
+	border: 2px solid rgb(59, 157, 255);
+}
+#print{
+  width: 1200px;
+  min-height: 500px;
+  text-align: center;
+}
+#startDate, #endDate{
+  width: 80px;
+  height: 25px;
+  text-align: center;
+}

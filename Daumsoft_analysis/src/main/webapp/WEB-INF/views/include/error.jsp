@@ -7,7 +7,6 @@
 <%@ include file="../include/comm.jsp"%>
 <script>
 $(function(){
-	alert('${msg}');
 	$("#logo").click(function(){
 		location.href = "/main"
 	});

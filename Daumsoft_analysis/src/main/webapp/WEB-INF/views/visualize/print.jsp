@@ -55,13 +55,14 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 		categoryAxis.renderer.minGridDistance = 50;
 		categoryAxis.renderer.labels.template.horizontalCenter = "right";
 		categoryAxis.renderer.labels.template.verticalCenter = "middle";
-		categoryAxis.renderer.labels.template.rotation = 270;
+		categoryAxis.renderer.labels.template.rotation = 300;
 		categoryAxis.tooltip.disabled = true;
 		categoryAxis.renderer.minHeight = 110;
-	
+		categoryAxis.fontSize = 11;
 		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.title.text = "Frequency";
 		valueAxis.renderer.minWidth = 50;
+		valueAxis.fontSize = 11;
 	
 		// Create series
 		var series = chart.series.push(new am4charts.ColumnSeries());
@@ -142,7 +143,7 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 	  	bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
 	  	//bullet.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
 	  	var circle = bullet.createChild(am4core.Circle);
-	  	circle.radius = 4;
+	  	circle.radius = 3;
 	  	circle.fill = am4core.color("#fff");
 	  	circle.strokeWidth = 3;
 
@@ -150,7 +151,7 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 	  	bullet2.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
 	  	//bullet2.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
 	  	var circle2 = bullet2.createChild(am4core.Circle);
-	  	circle2.radius = 4;
+	  	circle2.radius = 3;
 	  	circle2.fill = am4core.color("#fff");
 	  	circle2.strokeWidth = 3;
 
@@ -158,7 +159,7 @@ var neutral_sum = <%=request.getAttribute("neutral_sum")%>;
 	  	bullet3.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
 	  	//bullet3.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
 	  	var circle3 = bullet3.createChild(am4core.Circle);
-	  	circle3.radius = 4;
+	  	circle3.radius = 3;
 	  	circle3.fill = am4core.color("#fff");
 	  	circle3.strokeWidth = 3;
 	}

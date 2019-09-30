@@ -37,7 +37,6 @@ public class ViewController {
 	
 	@RequestMapping(value="view", method = RequestMethod.GET)
 	public String view(HttpServletRequest request, Model model) throws Exception {
-		//viewService.delete(); // 초기화
 	    String sns_type = ""; // 소셜미디어 유형
 	    int positive_count = 0; // 긍정 빈도수
 	    int negative_count = 0; // 부정 빈도수
@@ -45,7 +44,6 @@ public class ViewController {
 	    String register_date = ""; // 등록일시
 	    
 	    ViewDTO dto = null;
-	    //List<ViewDTO> list = new ArrayList<ViewDTO>();
 	    
 	    String source = request.getParameter("source");
 	    String startDate = request.getParameter("startDate");
@@ -60,7 +58,7 @@ public class ViewController {
 		int neutral_sum = 0;
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		try {
-			viewService.delete();
+			viewService.delete(); // 초기화
 			is = new URL(url).openStream(); // URL객체로의 스트림 열기
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8")); // 받는 스트림을 버퍼에 저장
 			String str;

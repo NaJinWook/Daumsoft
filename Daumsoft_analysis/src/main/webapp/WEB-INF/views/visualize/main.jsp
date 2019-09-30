@@ -142,7 +142,7 @@
 					</div>
 					<div class="keyword">
 						<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요." autocomplete="off" onkeydown="JavaScript:Enter_Check()"/> 
-						<input type="button" value="검색" id="search_btn" onclick="search();"/>
+						<input type="button" value="검색" id="search_btn" onclick="search()"/>
 					</div>
 					<img src="../../../resources/images/loading.gif" id="loading" style="display: none;margin-left:180px;padding:20px;"/>
 					<div id="print"></div>

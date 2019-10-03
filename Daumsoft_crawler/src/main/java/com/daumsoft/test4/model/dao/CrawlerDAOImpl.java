@@ -44,6 +44,7 @@ public class CrawlerDAOImpl implements CrawlerDAO {
 
 	@Override
 	public int count(int category) throws Exception {
+		System.out.println("여기는 DAOimpl 서비스로부터 받아온 category 값은 : " + category);
 		return sqlSession.selectOne("crawler.count", category);
 	}
 

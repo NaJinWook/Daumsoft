@@ -6,13 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="crawler">
 	<!-- 데이터베이스 전체 게시글 수 -->
-	<select id="count" resultType="int">
-		select count(*) from crawler
+	<select id="count" parameterType="int" resultType="int">
+		select count(*) from crawler where category = #{category}
 	</select>
 	
 	<!-- 최신 기사(게시글) 고유 번호 가져오기 -->
 	<select id="top_idx" resultType="String">
-		select idx from crawler where tno = (select count(*) from crawler)
+		select idx from crawler where tno = (select count(*) from crawler order by idx desc)
 	</select>
 	
 	<!-- DB에 있는 데이터면 나머지 기사(게시글) 업데이트 -->

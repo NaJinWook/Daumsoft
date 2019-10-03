@@ -29,8 +29,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 	
 	@Override
 	public int count(int category) throws Exception {
+		System.out.println("여기는 서비스impl 넘어온 category 값 : " + category);
 		int count = crawlerDao.count(category);
 		//int loop = (int) Math.ceil(count * 1.0 / 15);
+		System.out.println("여기는 서비스impl DAO로부터 데이터 받아온 count 값 : " + count);
 		return count;
 	}
 	

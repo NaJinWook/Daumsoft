@@ -18,25 +18,23 @@ public class CrawlerController {
 	@RequestMapping(value = "/main")
 	public String home() {
 		try {
-//			System.out.println("main이예요");
-//			if(crawlerService.count(1) == 0) {
-//				crawlerService.getData("https://www.insight.co.kr/section/life-style");
-//			}
-//			if(crawlerService.count(2) == 0) {
-//				crawlerService.getData("https://www.insight.co.kr/section/weird-news");
-//			}
-			crawlerService.getData("https://www.insight.co.kr/section/life-style");
+			if(crawlerService.count(1) == 0) {
+				crawlerService.getData("https://www.insight.co.kr/section/life-style");
+			}
+			if(crawlerService.count(2) == 0) {
+				crawlerService.getData("https://www.insight.co.kr/section/weird-news");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "home";
 	}
 	
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/10 * * * ?")
 	public void auto() {
 		try {
 			crawlerService.addData("https://www.insight.co.kr/section/life-style");
-//			crawlerService.addData("https://www.insight.co.kr/section/weird-news");
+			crawlerService.addData("https://www.insight.co.kr/section/weird-news");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

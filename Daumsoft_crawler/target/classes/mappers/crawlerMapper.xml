@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="crawler">
+	<!-- 데이터베이스 전체 게시글 수 -->
+	<select id="count" resultType="int">
+		select count(*) from crawler
+	</select>
+	
+	<!-- 최신 기사(게시글) 고유 번호 가져오기 -->
+	<select id="top_idx" resultType="String">
+		select idx from crawler where tno = (select count(*) from crawler)
+	</select>
+	
+	<!-- DB에 있는 데이터면 나머지 기사(게시글) 업데이트 -->
+	<update id="update" parameterType="com.daumsoft.test4.model.dto.CrawlerDTO">
+		update crawler set title = #{title}, content = #{content}, writer = #{writer}, email = #{email}
+		where idx = #{idx}
+	</update>
+	
+	<!-- 처음 시작 했을 때 모든 데이터 INSERT -->
+	<insert id="insert" parameterType="com.daumsoft.test4.model.dto.CrawlerDTO">
+		insert into crawler (idx, type, category, title, content, writer, email, url, regDate) values
+		 (#{idx}, #{type}, #{category}, #{title}, #{content}, #{writer}, #{email}, #{url}, #{regDate})
+	</insert>
+</mapper>

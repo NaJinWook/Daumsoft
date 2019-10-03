@@ -28,10 +28,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 	}
 	
 	@Override
-	public int count() throws Exception {
-		int count = crawlerDao.count();
-		int loop = (int) Math.ceil(count * 1.0 / 15);
-		return loop;
+	public int count(int category) throws Exception {
+		int count = crawlerDao.count(category);
+		//int loop = (int) Math.ceil(count * 1.0 / 15);
+		return count;
 	}
 	
 	@Override
@@ -47,11 +47,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 	@Override
 	public void getData(String categoryURL) throws Exception {
-		String URL = "https://www.insight.co.kr"+categoryURL;
+		String URL = categoryURL;
 		String info = null; // 전체 목록 페이지에서 작성자 · 날짜 변수
 		int info_length = 0; // 전체 목록 페이지에서 작성자 · 날짜 변수 길이 구해서 substring 하기 위해
 		
-		//String today = null; // 현재 날짜
 		String weekAgo = null; // 일주일 전
 		boolean endLine = false;
 		CrawlerDTO dto = null;
@@ -60,6 +59,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 		String idx = null; // 고유 번호
 		int type = 1; // 1은 인사이트를 의미함
 		String category = null;
+		int categoryNum = 0;
 		String title = null;
 		String content = null;
 		String writer = null;
@@ -71,15 +71,18 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 		try {
 			list = new ArrayList<CrawlerDTO>();
-			for (int i = 1; i < 1000; i++) {
+			for (int i = 1; i < 100; i++) {
 				weekAgo = getTime(); // 일주일 전
 				
-				Document list_doc = Jsoup.connect(URL + page(i)).get(); // URL로 부터 Document를 가져옴
+				Document list_doc = Jsoup.connect(URL + "?" + page(i)).get(); // URL로 부터 Document를 가져옴
 
-				Elements subject_elements = list_doc.select(".nav .nav-ul > li > a[title='생활일반']");
+				Elements subject_elements = list_doc.select(".nav .nav-ul > li > a[href="+URL+"]");
 				category = subject_elements.text();
+				
 				if(category.equals("생활일반")) {
-					category = "1";
+					categoryNum = 1;
+				} else if(category.equals("사건사고")) {
+					categoryNum = 2;
 				}
 				
 				System.out.println("주제어 : " + category);
@@ -122,7 +125,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 					System.out.println("URL : " + detailURL);
 					System.out.println("작성일 : " + regDate);
 					System.out.println("======================================================");
-					dto = new CrawlerDTO(idx, type, Integer.parseInt(category), title, content, writer, email, detailURL, regDate);
+					dto = new CrawlerDTO(idx, type, categoryNum, title, content, writer, email, detailURL, regDate);
 					list.add(dto);
 				}
 				if(endLine) {
@@ -137,12 +140,11 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 	@Override
 	public void addData(String categoryURL) throws Exception {
-		String URL = "https://www.insight.co.kr"+categoryURL;
-		int loop = count(); // 페이지 반복 범위 지정
+		String URL = categoryURL;
+		//int loop = count(countNum); // 페이지 반복 범위 지정
 		String info = null; // 전체 목록 페이지에서 작성자 · 날짜 변수
 		int info_length = 0; // 전체 목록 페이지에서 작성자 · 날짜 변수 길이 구해서 substring 하기 위해
 
-		//String today = null; // 현재 날짜
 		String weekAgo = null; // 일주일 전
 		boolean endLine = false;
 		boolean switchList = false;
@@ -154,6 +156,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 		String top_idx = null; // 테이블 번호가 1인 idx 가져오기 위함
 		int type = 1; // 1은 인사이트를 의미함
 		String category = null;
+		int categoryNum = 0;
 		String title = null;
 		String content = null;
 		String writer = null;
@@ -166,18 +169,20 @@ public class CrawlerServiceImpl implements CrawlerService {
 		try {
 			add_list = new ArrayList<CrawlerDTO>();
 			update_list = new ArrayList<CrawlerDTO>();
-			for (int i = 1; i <= loop; i++) {
+			for (int i = 1; i <= 100; i++) {
 				weekAgo = getTime(); // ~~까지 업데이트
-				top_idx = crawlerDao.top_idx(); // 테이블 번호가 1인 최상위 idx 구하기 위함
 				
-				Document list_doc = Jsoup.connect(URL + page(i)).get(); // URL로 부터 Document를 가져옴
+				Document list_doc = Jsoup.connect(URL + "?" + page(i)).get(); // URL로 부터 Document를 가져옴
 
-				Elements subject_elements = list_doc.select(".nav .nav-ul > li > a[title='생활일반']");
+				Elements subject_elements = list_doc.select(".nav .nav-ul > li > a[href="+URL+"]");
 				category = subject_elements.text();
 				if(category.equals("생활일반")) {
-					category = "1";
+					categoryNum = 1;
+				} else if(category.equals("사건사고")) {
+					categoryNum = 2;
 				}
 				//System.out.println("주제어 : " + category);
+				top_idx = crawlerDao.top_idx(); // 테이블 번호가 1인 최상위 idx 구하기 위함
 				
 				Elements list_elements = list_doc.select(".section-list li");
 				for (Element list_data : list_elements) {
@@ -205,22 +210,11 @@ public class CrawlerServiceImpl implements CrawlerService {
 						break;
 					}
 					if(!idx.equals(top_idx) && !switchList) {
-						
-						//System.out.println("고유번호 : " + idx);
-						//System.out.println("사이트 종류 : " + type);
-						//System.out.println("카테고리 : " + category);
-						//System.out.println("제목 : " + title);
-						//System.out.println("내용 : " +  content);
-						//System.out.println("작성자 : " + writer);
-						//System.out.println("메일 : " + email);
-						//System.out.println("URL : " + detailURL);
-						//System.out.println("작성일 : " + regDate);
-						//System.out.println("======================================================");
-						dto = new CrawlerDTO(idx, type, Integer.parseInt(category), title, content, writer, email, detailURL, regDate);
+						dto = new CrawlerDTO(idx, type, categoryNum, title, content, writer, email, detailURL, regDate);
 						add_list.add(dto);
 					} else {
 						switchList = true;
-						dto = new CrawlerDTO(idx, type, Integer.parseInt(category), title, content, writer, email, detailURL, regDate);
+						dto = new CrawlerDTO(idx, type, categoryNum, title, content, writer, email, detailURL, regDate);
 						update_list.add(dto);
 					}
 				}

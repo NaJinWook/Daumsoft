@@ -9,5 +9,5 @@ public interface CrawlerDAO {
 	public void update_list(List<CrawlerDTO> update_list) throws Exception;
 	public void add_list(List<CrawlerDTO> add_list) throws Exception;
 	public String top_idx() throws Exception;
-	public int count() throws Exception;
+	public int count(int category) throws Exception;
 }

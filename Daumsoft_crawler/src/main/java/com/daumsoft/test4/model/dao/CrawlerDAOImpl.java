@@ -43,8 +43,8 @@ public class CrawlerDAOImpl implements CrawlerDAO {
 	}
 
 	@Override
-	public int count() throws Exception {
-		return sqlSession.selectOne("crawler.count");
+	public int count(int category) throws Exception {
+		return sqlSession.selectOne("crawler.count", category);
 	}
 
 }

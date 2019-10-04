@@ -1,6 +1,8 @@
 package com.daumsoft.test4.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -38,13 +40,19 @@ public class CrawlerDAOImpl implements CrawlerDAO {
 	}
 
 	@Override
-	public String top_idx(int category) throws Exception {
-		return sqlSession.selectOne("crawler.top_idx", category);
+	public String top_idx(int type, int category) throws Exception {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("type", type);
+		map.put("category", category);
+		return sqlSession.selectOne("crawler.top_idx", map);
 	}
 
 	@Override
-	public int count(int category) throws Exception {
-		return sqlSession.selectOne("crawler.count", category);
+	public int count(int type, int category) throws Exception {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("type", type);
+		map.put("category", category);
+		return sqlSession.selectOne("crawler.count", map);
 	}
 
 }

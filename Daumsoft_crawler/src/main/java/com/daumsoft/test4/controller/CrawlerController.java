@@ -18,11 +18,17 @@ public class CrawlerController {
 	@RequestMapping(value = "/main")
 	public String home() {
 		try {
-			if(crawlerService.count(1) == 0) {
+			if(crawlerService.count(1, 1) == 0) {
 				crawlerService.getInsightData("https://www.insight.co.kr/section/life-style");
 			}
-			if(crawlerService.count(2) == 0) {
+			if(crawlerService.count(1, 2) == 0) {
 				crawlerService.getInsightData("https://www.insight.co.kr/section/weird-news");
+			}
+			if(crawlerService.count(2, 1) == 0) {
+				crawlerService.getHuffingtonpostData("https://www.huffingtonpost.kr/news/sports/");
+			}
+			if(crawlerService.count(2, 2) == 0) {
+				crawlerService.getHuffingtonpostData("https://www.huffingtonpost.kr/news/movie/");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,11 +39,17 @@ public class CrawlerController {
 	@Scheduled(cron = "0 0/10 * * * ?")
 	public void auto() {
 		try {
-			if(crawlerService.count(1) != 0) {
+			if(crawlerService.count(1, 1) != 0) {
 				crawlerService.addInsightData("https://www.insight.co.kr/section/life-style");
 			}
-			if(crawlerService.count(2) != 0) {
+			if(crawlerService.count(1, 2) != 0) {
 				crawlerService.addInsightData("https://www.insight.co.kr/section/weird-news");
+			}
+			if(crawlerService.count(2, 1) != 0) {
+				crawlerService.addHuffingtonpostData("https://www.huffingtonpost.kr/news/sports/");
+			}
+			if(crawlerService.count(2, 2) != 0) {
+				crawlerService.addHuffingtonpostData("https://www.huffingtonpost.kr/news/movie/");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

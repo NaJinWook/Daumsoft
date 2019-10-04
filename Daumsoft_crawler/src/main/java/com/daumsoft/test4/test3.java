@@ -22,9 +22,8 @@ public class test3 {
 	private static PreparedStatement pstmt = null;
 	private static Statement stmt = null;
 	private static ResultSet rs = null;
-	
+	//private static String URL = "https://www.huffingtonpost.kr/news/tv/";
 	private static String URL = "https://www.insight.co.kr/section/life-style?";
-	
 	public static String page(int num) {
 		return "page=" + num;
 	}
@@ -118,7 +117,7 @@ public class test3 {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		crawling();
 	}
 }

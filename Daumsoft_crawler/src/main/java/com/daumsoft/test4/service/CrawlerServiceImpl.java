@@ -29,10 +29,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 	
 	@Override
 	public int count(int category) throws Exception {
-		System.out.println("여기는 서비스impl 넘어온 category 값 : " + category);
 		int count = crawlerDao.count(category);
-		//int loop = (int) Math.ceil(count * 1.0 / 15);
-		System.out.println("여기는 서비스impl DAO로부터 데이터 받아온 count 값 : " + count);
 		return count;
 	}
 	
@@ -46,7 +43,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 		weekAgo = fm.format(cal.getTime());
 		return weekAgo;
 	}
-
+	
 	@Override
 	public void getData(String categoryURL) throws Exception {
 		String URL = categoryURL;
@@ -143,7 +140,6 @@ public class CrawlerServiceImpl implements CrawlerService {
 	@Override
 	public void addData(String categoryURL) throws Exception {
 		String URL = categoryURL;
-		//int loop = count(countNum); // 페이지 반복 범위 지정
 		String info = null; // 전체 목록 페이지에서 작성자 · 날짜 변수
 		int info_length = 0; // 전체 목록 페이지에서 작성자 · 날짜 변수 길이 구해서 substring 하기 위해
 
@@ -167,7 +163,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 		String[] detailURL_split = null; // 글에 대한 세부 내용을 뽑아오기 위한 URL에서 고유 번호를 가져오기 위해
 		String regDate = null; // 작성일
 		//idx, type, category, title, content, writer, email, detailURL, regDate
-
+		
 		try {
 			add_list = new ArrayList<CrawlerDTO>();
 			update_list = new ArrayList<CrawlerDTO>();
@@ -184,8 +180,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 					categoryNum = 2;
 				}
 				//System.out.println("주제어 : " + category);
-				top_idx = crawlerDao.top_idx(); // 테이블 번호가 1인 최상위 idx 구하기 위함
-				
+				top_idx = crawlerDao.top_idx(categoryNum); // 최근에 들어온 글의 idx를 조회
 				Elements list_elements = list_doc.select(".section-list li");
 				for (Element list_data : list_elements) {
 					// 전체 목록 페이지에서 작성자 · 날짜 출력
@@ -225,11 +220,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 				}
 			}
 			System.out.println("추가 해야 될 게시글 수 : " + add_list.size() + "이고 수정되어야 될 게시글 수는 " + update_list.size());
-			//crawlerDao.update_list(update_list);
-			//crawlerDao.add_list(add_list);
+			crawlerDao.update_list(update_list);
+			crawlerDao.add_list(add_list);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

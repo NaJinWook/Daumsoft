@@ -38,13 +38,12 @@ public class CrawlerDAOImpl implements CrawlerDAO {
 	}
 
 	@Override
-	public String top_idx() throws Exception {
-		return sqlSession.selectOne("crawler.top_idx");
+	public String top_idx(int category) throws Exception {
+		return sqlSession.selectOne("crawler.top_idx", category);
 	}
 
 	@Override
 	public int count(int category) throws Exception {
-		System.out.println("여기는 DAOimpl 서비스로부터 받아온 category 값은 : " + category);
 		return sqlSession.selectOne("crawler.count", category);
 	}
 

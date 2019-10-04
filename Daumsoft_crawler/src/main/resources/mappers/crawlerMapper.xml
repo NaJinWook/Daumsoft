@@ -11,8 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 최신 기사(게시글) 고유 번호 가져오기 -->
-	<select id="top_idx" resultType="String">
-		select idx from crawler where tno = (select count(*) from crawler order by idx desc)
+	<select id="top_idx" parameterType="int" resultType="String">
+		select idx from crawler where category = #{category} order by regDate desc limit 1
 	</select>
 	
 	<!-- DB에 있는 데이터면 나머지 기사(게시글) 업데이트 -->

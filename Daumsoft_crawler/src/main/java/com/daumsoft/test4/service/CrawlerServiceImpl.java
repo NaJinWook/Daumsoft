@@ -45,7 +45,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 	}
 	
 	@Override
-	public void getData(String categoryURL) throws Exception {
+	public void getInsightData(String categoryURL) throws Exception {
 		String URL = categoryURL;
 		String info = null; // 전체 목록 페이지에서 작성자 · 날짜 변수
 		int info_length = 0; // 전체 목록 페이지에서 작성자 · 날짜 변수 길이 구해서 substring 하기 위해
@@ -132,7 +132,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 	}
 
 	@Override
-	public void addData(String categoryURL) throws Exception {
+	public void addInsightData(String categoryURL) throws Exception {
 		String URL = categoryURL;
 		String info = null; // 전체 목록 페이지에서 작성자 · 날짜 변수
 		int info_length = 0; // 전체 목록 페이지에서 작성자 · 날짜 변수 길이 구해서 substring 하기 위해

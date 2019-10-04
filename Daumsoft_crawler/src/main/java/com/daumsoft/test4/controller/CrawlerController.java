@@ -19,10 +19,10 @@ public class CrawlerController {
 	public String home() {
 		try {
 			if(crawlerService.count(1) == 0) {
-				crawlerService.getData("https://www.insight.co.kr/section/life-style");
+				crawlerService.getInsightData("https://www.insight.co.kr/section/life-style");
 			}
 			if(crawlerService.count(2) == 0) {
-				crawlerService.getData("https://www.insight.co.kr/section/weird-news");
+				crawlerService.getInsightData("https://www.insight.co.kr/section/weird-news");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -30,14 +30,14 @@ public class CrawlerController {
 		return "home";
 	}
 	
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/10 * * * ?")
 	public void auto() {
 		try {
 			if(crawlerService.count(1) != 0) {
-				crawlerService.addData("https://www.insight.co.kr/section/life-style");
+				crawlerService.addInsightData("https://www.insight.co.kr/section/life-style");
 			}
 			if(crawlerService.count(2) != 0) {
-				crawlerService.addData("https://www.insight.co.kr/section/weird-news");
+				crawlerService.addInsightData("https://www.insight.co.kr/section/weird-news");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

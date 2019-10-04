@@ -30,7 +30,7 @@ public class CrawlerController {
 		return "home";
 	}
 	
-	@Scheduled(cron = "0 0/10 * * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	public void auto() {
 		try {
 			if(crawlerService.count(1) != 0) {

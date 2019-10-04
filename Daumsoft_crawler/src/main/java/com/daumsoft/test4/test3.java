@@ -42,7 +42,7 @@ public class test3 {
 		try {
 			conn = dbConnect.conn; // DB 접속
 			if(conn != null) {
-				pstmt = conn.prepareStatement("insert into crawler (idx, type, category, title, content, writer, email, url, regDate) values (?,?,?,?,?,?,?,?,?)");
+				pstmt = conn.prepareStatement("insert into crawler (idx, type, category, title, content, url, regDate) values (?,?,?,?,?,?,?)");
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery("select regDate from crawler where idx = 1");
 				for(int i=1; i<100; i++) {
@@ -85,8 +85,8 @@ public class test3 {
 							System.out.println("카테고리 : " + subject);
 							System.out.println("제목 : " + detail_data.select(".news-header h1").text());
 							System.out.println("내용 : " + detail_data.select(".news-article-memo > p").text());
-							System.out.println("작성자 : " + detail_data.select(".news-byline-writer").text());
-							System.out.println("메일 : " + detail_data.select(".news-byline-mail").text());
+//							System.out.println("작성자 : " + detail_data.select(".news-byline-writer").text());
+//							System.out.println("메일 : " + detail_data.select(".news-byline-mail").text());
 							System.out.println("URL : " + detailURL);
 							System.out.println("작성일 : " + regDate);
 							System.out.println("======================================================");

@@ -61,12 +61,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 		int categoryNum = 0;
 		String title = null;
 		String content = null;
-		String writer = null;
-		String email = null;
 		String detailURL = null; // 글에 대한 세부 내용을 뽑아오기 위한 URL
 		String[] detailURL_split = null; // 글에 대한 세부 내용을 뽑아오기 위한 URL에서 고유 번호를 가져오기 위해
 		String regDate = null; // 작성일
-		//idx, type, category, title, content, writer, email, detailURL, regDate)
+		//idx, type, category, title, content, detailURL, regDate)
 
 		try {
 			list = new ArrayList<CrawlerDTO>();
@@ -111,20 +109,16 @@ public class CrawlerServiceImpl implements CrawlerService {
 					
 					title = detail_data.select(".news-header h1").text();
 					content = detail_data.select(".news-article-memo > p").text();
-					writer = detail_data.select(".news-byline-writer").text();
-					email = detail_data.select(".news-byline-mail").text();
 					System.out.println("weekAgo 날짜는 " + weekAgo);
 					System.out.println("고유번호 : " + idx);
 					System.out.println("사이트 종류 : " + type);
 					System.out.println("카테고리 : " + category);
 					System.out.println("제목 : " + title);
 					System.out.println("내용 : " +  content);
-					System.out.println("작성자 : " + writer);
-					System.out.println("메일 : " + email);
 					System.out.println("URL : " + detailURL);
 					System.out.println("작성일 : " + regDate);
 					System.out.println("======================================================");
-					dto = new CrawlerDTO(idx, type, categoryNum, title, content, writer, email, detailURL, regDate);
+					dto = new CrawlerDTO(idx, type, categoryNum, title, content, detailURL, regDate);
 					list.add(dto);
 				}
 				if(endLine) {
@@ -157,12 +151,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 		int categoryNum = 0;
 		String title = null;
 		String content = null;
-		String writer = null;
-		String email = null;
 		String detailURL = null; // 글에 대한 세부 내용을 뽑아오기 위한 URL
 		String[] detailURL_split = null; // 글에 대한 세부 내용을 뽑아오기 위한 URL에서 고유 번호를 가져오기 위해
 		String regDate = null; // 작성일
-		//idx, type, category, title, content, writer, email, detailURL, regDate
+		//idx, type, category, title, content, detailURL, regDate
 		
 		try {
 			add_list = new ArrayList<CrawlerDTO>();
@@ -197,8 +189,6 @@ public class CrawlerServiceImpl implements CrawlerService {
 					
 					title = detail_data.select(".news-header h1").text();
 					content = detail_data.select(".news-article-memo > p").text();
-					writer = detail_data.select(".news-byline-writer").text();
-					email = detail_data.select(".news-byline-mail").text();
 					
 					int compare = weekAgo.compareTo(regDate);
 					if (compare > 0) {
@@ -207,11 +197,11 @@ public class CrawlerServiceImpl implements CrawlerService {
 						break;
 					}
 					if(!idx.equals(top_idx) && !switchList) {
-						dto = new CrawlerDTO(idx, type, categoryNum, title, content, writer, email, detailURL, regDate);
+						dto = new CrawlerDTO(idx, type, categoryNum, title, content, detailURL, regDate);
 						add_list.add(dto);
 					} else {
 						switchList = true;
-						dto = new CrawlerDTO(idx, type, categoryNum, title, content, writer, email, detailURL, regDate);
+						dto = new CrawlerDTO(idx, type, categoryNum, title, content, detailURL, regDate);
 						update_list.add(dto);
 					}
 				}

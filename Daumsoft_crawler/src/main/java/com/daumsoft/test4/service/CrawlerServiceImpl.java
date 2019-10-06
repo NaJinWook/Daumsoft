@@ -270,13 +270,11 @@ public class CrawlerServiceImpl implements CrawlerService {
 					
 		            regDate = detail_data.select(".timestamp").text();
 		            
-		            if(!regDate.equals("")) {
-		            	regDate = regDate.substring(0, 21);
-		            	SimpleDateFormat original_format = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-		            	SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		            	Date original_date = original_format.parse(regDate);
-		            	regDate = new_format.format(original_date);
-		            }
+					regDate = regDate.substring(0, 21);
+					SimpleDateFormat original_format = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+					SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					Date original_date = original_format.parse(regDate);
+					regDate = new_format.format(original_date);
 		            
 		            int compare = weekAgo.compareTo(regDate);
 		            if (compare > 0) {
@@ -365,13 +363,13 @@ public class CrawlerServiceImpl implements CrawlerService {
 					
 		            regDate = detail_data.select(".timestamp").text();
 		            
-		            if(!regDate.equals("")) {
-		            	regDate = regDate.substring(0, 21);
-		            	SimpleDateFormat original_format = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
-		            	SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		            	Date original_date = original_format.parse(regDate);
-		            	regDate = new_format.format(original_date);
-		            }
+
+					regDate = regDate.substring(0, 21);
+					SimpleDateFormat original_format = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
+					SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Date original_date = original_format.parse(regDate);
+					regDate = new_format.format(original_date);
+
 		            
 		            int compare = weekAgo.compareTo(regDate);
 		            if (compare > 0) {

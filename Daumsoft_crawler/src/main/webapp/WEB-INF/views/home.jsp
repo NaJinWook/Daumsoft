@@ -6,9 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Home</title>
 </head>
-<body>
-<h1>
-	서버 가동중
-</h1>
+<body style="text-align:center">
+	<img src="../../../resources/images/working.gif" style="width:400px;height:212px"/>
 </body>
 </html>

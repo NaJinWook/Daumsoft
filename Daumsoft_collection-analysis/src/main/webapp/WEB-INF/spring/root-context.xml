@@ -18,7 +18,7 @@
 		<!-- 드라이버 클래스 이름이 변경됨 -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<!-- 연결문자열에 log4jdbc가 추가됨 -->
-		<property name="url" value="jdbc:log4jdbc:mariadb://localhost:3306/test" />
+		<property name="url" value="jdbc:log4jdbc:mariadb://localhost:3306/nlp" />
 		<property name="username" value="root" />
 		<property name="password" value="1234" />
 	</bean>
@@ -34,5 +34,5 @@
 	<!-- sqlSessionFactory DB 연결 & 종료 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-	</bean>		
+	</bean>
 </beans>

@@ -24,7 +24,7 @@
 	$(function() {
 	    //모든 datepicker에 대한 공통 옵션 설정
 	    $.datepicker.setDefaults({
-	        dateFormat: 'yymmdd' //Input Display Format 변경
+	        dateFormat: 'yy-mm-dd' //Input Display Format 변경
 	        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
 	        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
 	        ,changeYear: true //콤보박스에서 년 선택 가능
@@ -38,83 +38,40 @@
 	        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
 	        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
 	        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-	        ,minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-	        ,maxDate: "today" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
+	        ,minDate: "2019-10-07" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+	        ,maxDate: "2019-10-13" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 	        ,timeFormat:'HH:mm:ss'
 	        ,controlType:'select'
 	        ,oneLine:true
-	    });
-	    
-	    $("#startTime").timepicker({
-	        timeFormat: "p HH:mm",
-	        interval: 30,
-	        minTime: "00",
-	        maxTime: "23:30",
-	        defaultTime: "00:00",
-	        startTime: '00:00',
-	        dynamic: false,
-	        dropdown: true,
-	        scrollbar: true
-	    });
-	    $("#endTime").timepicker({
-	        timeFormat: "p HH:mm",
-	        interval: 30,
-	        minTime: "00",
-	        maxTime: "23:30",
-	        defaultTime: "23:30",
-	        startTime: '00:00',
-	        dynamic: false,
-	        dropdown: true,
-	        scrollbar: true
 	    });
 	  	//input을 datepicker로 선언
 	    $("#startDate").datepicker();                    
 	    $("#endDate").datepicker();
 	    
 	    //From의 초기값을 오늘 날짜로 설정
-	    $('#startDate').datepicker('setDate', '20190101'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+	    $('#startDate').datepicker('setDate', '2019-10-07'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 	    //To의 초기값을 내일로 설정
-	    $('#endDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+	    $('#endDate').datepicker('setDate', '2019-10-13'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 	    
-	     $("#logo").click(function(){
-	    	location.href = "main"
+	    $("#logo").click(function(){
+	    	location.href = "main";
 	    });
 	});
-
-	function Enter_Check() {
-		// 엔터키의 코드는 13입니다.
-		if (event.keyCode == 13) {
-			search(); // 실행할 이벤트
-		}
-	}
-	function search() {
-		var keyword = $.trim($("#keyword").val());
+	function search(){
+		var siteId = $("#siteId").val();
+		var categoryId = $("#categoryId").val();
 		var startDate = $("#startDate").val();
 		var endDate = $("#endDate").val();
-		if (keyword == "") {
-			alert('검색어를 입력하지 않았습니다.');
-			return;
-		} else if (startDate >= endDate) {
-			alert('기간을 다시 확인해주세요.');
-			return;
-		}
-		analysis();
-	}
-	function analysis() {
-		var source = $("#source").val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
-		var keyword = $("#keyword").val();
-		var period = $("#period").val();
+		var oId = $("#oId").val();
 		var param = {
-			"source" : source,
+			"siteId" : siteId,
+			"categoryId" : categoryId,
 			"startDate" : startDate,
 			"endDate" : endDate,
-			"keyword" : keyword,
-			"period" : period
+			"oId" : oId
 		};
 		$.ajax({
-			url : "view",
+			url : "search",
 			data : param,
 			statusCode : {
 				200 : function(result) {
@@ -148,32 +105,34 @@
 				<div class="search">
 					<div class="option">
 						<label><span style="font-weight: bold; color: gray;">사이트</span></label>
-						<select id="period" name="period" class="select">
-							<option value="daum" selected>다음뉴스</option>
-							<option value="naver">네이버뉴스</option>
-						</select> <label><span
-							style="font-weight: bold; color: gray; padding-left: 20px;">카테고리</span></label>
-						<select id="source" name="source" class="select">
-							<option value="politics" selected>정치</option>
-							<option value="economy">경제</option>
-							<option value="social">사회</option>
-							<option value="it">IT</option>
+						<select id="siteId" name="siteId" class="select">
+							<option value="1" selected>네이버뉴스</option>
+							<option value="2">다음뉴스</option>
+						</select>
+						<label><span style="font-weight: bold; color: gray; padding-left: 20px;">카테고리</span></label>
+						<select id="categoryId" name="categoryId" class="select">
+							<option value="all" selected>전체보기</option>
+							<option value="100">정치</option>
+							<option value="101">경제</option>
+							<option value="102">사회</option>
+						</select> 
+						<label><span style="font-weight: bold; color: gray; padding-left: 20px;">언론사</span></label>
+						<select id="oId" name="oId" class="select">
+							<option value="all" selected>전체보기</option>
+							<option value="001">연합뉴스</option>
+							<option value="003">뉴시스</option>
+							<option value="421">뉴스1</option>
+							<option value="277">아시아경제</option>
+							<option value="008">머니투데이</option>
+							<option value="014">파이낸셜뉴스</option>
+							<option value="018">이데일리</option>
 						</select> 
 						<label>
-							<span
-								style="font-weight: bold; color: gray; padding-left: 20px;">기간
-							</span>
+							<span style="font-weight: bold; color: gray; padding-left: 20px;">기간</span>
 						</label>
 						<input type="text" id="startDate" name="startDate" disabled/> 
 						<span style="font-weight: bold;">~</span>
 						<input type="text" id="endDate" name="endDate" disabled/> 
-						<label>
-							<span style="font-weight: bold; color: gray; padding-left: 20px;">시간
-						</span>
-						</label>
-						<input type="text" id="startTime" name="startTime"/>
-						<span style="font-weight: bold;">~</span>
-						<input type="text" id="endTime" name="endTime"/>
 					</div>
 					<div class="keyword">
 						<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요." autocomplete="off" onkeydown="JavaScript:Enter_Check()"/> 

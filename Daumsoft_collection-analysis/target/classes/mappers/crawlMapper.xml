@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="crawl">
+	<select id="selectOid" resultType="String">
+		select oId from press
+	</select>
+	
+	<insert id="insertOid" parameterType="dto">
+		insert into press values (#{oId}, #{oName})
+	</insert>
+	
+	<insert id="insertData" parameterType="map">
+		insert into article (aId, siteId, categoryId, oId, title, content, analysisData, url, regDate) values
+			<foreach collection="dtoList" item="dto" separator=",">
+				(#{dto.aId}, #{dto.siteId}, #{dto.categoryId}, #{dto.oId}, #{dto.title}, #{dto.content}, #{dto.analysisData}, #{dto.url}, #{dto.regDate})
+			</foreach>
+	</insert>
+	
+	<select id="countData" parameterType="dto" resultType="int">
+		select count(*) from article where aId = #{aId} and siteId = #{siteId} and categoryId = #{categoryId}
+	</select>
+	
+	<select id="selectData" parameterType="String" resultType="String">
+		select analysisData from article
+		where regDate like '2019-10-07%'
+	</select>
+	
+	<select id="selectCount" parameterType="map" resultType="map">
+		select date(regDate), count(regDate)from article
+		where siteId = #{siteId}
+		<if test="categoryId != 'all'">
+			and categoryId = #{categoryId}
+		</if>
+		<if test="oId != 'all'">
+			and oId = #{oId}
+		</if>
+		and Date(regDate) between #{startDate} and #{endDate}
+		group by date(regDate)
+	</select>
+</mapper>

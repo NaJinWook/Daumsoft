@@ -151,6 +151,27 @@
   position: relative;
   z-index: 0;
 }
+.section_head{
+  margin-left: 2px;
+  clear: both;
+  display: block;
+  height: 22px;
+  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+}
+.section_head > h2{
+  float: left;
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+.title_num{
+  float: left;
+  display: block;
+  color: rgb(102, 102, 102);
+  font-size: 12px;
+  margin-left: 10px;
+  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+}
 .result{
   padding: 7px;
   margin-bottom: 30px;

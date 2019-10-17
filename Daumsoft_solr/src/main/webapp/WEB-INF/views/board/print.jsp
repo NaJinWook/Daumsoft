@@ -32,6 +32,7 @@
 </head>
 <body>
 <body>
+	<div style="width:100%;height:10px;border-top:2px solid rgb(59, 157, 255);"></div>
 	<div class="layout">
 		<div class="search_section">
 			<div class="logo">
@@ -52,8 +53,8 @@
 							</a>
 							<div class="menu_list" id="menu_sort">
 								<ul>
-									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=desc">최신순</a></li>
-									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=asc">오래된순</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=desc&oName=${oName}">최신순</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=asc&oName=${oName}">오래된순</a></li>
 								</ul>
 							</div>
 						</li>
@@ -75,13 +76,19 @@
 						</a>
 							<div class="menu_list" id="menu_press">
 								<ul>
-									<li class="menu_btn"><a href="#">중앙일보</a></li>
-									<li class="menu_btn"><a href="#">연합뉴스</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=중앙일보">중앙일보</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=연합뉴스">연합뉴스</a></li>
 								</ul>
 							</div>
 						</li>
 					</ul>
 					<div class="contents">
+						<div class="section_head">
+							<h2>뉴스</h2>
+							<c:if test="${totalRecordsCount != 0}">
+								<span class="title_num">${(rows*(curPage-1))+1}-${rows*curPage} / ${totalRecordsCount}건</span>
+							</c:if>
+						</div>
 						<c:if test="${empty dataList}">
 							<div class="result">
 								<p style="font-weight: 700; font-size: 14px;">
@@ -111,6 +118,11 @@
 								</dl>
 							</div>
 						</c:forEach>
+						<div class="paging">
+						<c:forEach var="i" begin="${pager.startPageGroup}" end="${pager.endPageGroup}">
+							<a href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=${i}">${i}</a>
+						</c:forEach>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+	</settings>
+	<typeAliases>
+         <typeAlias alias="hashMap" type="java.util.HashMap" />
+         <typeAlias alias="map" type="java.util.Map" />
+         <typeAlias alias="dto" type="com.daumsoft.test6.model.dto.SolrDTO" />
+         <typeAlias alias="list" type="java.util.List" />
+         <typeAlias alias="arrayList" type="java.util.ArrayList" />
+	</typeAliases>
+</configuration>

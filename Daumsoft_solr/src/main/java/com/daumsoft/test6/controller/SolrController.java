@@ -2,6 +2,7 @@ package com.daumsoft.test6.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import com.daumsoft.test6.model.dto.PagerDTO;
 @RequestMapping("/*")
 public class SolrController {
 	final static int PAGEPERGROUP = 10; // 그룹 당 페이지 수
+	final static int ROWS = 10; // 보여질 게시글 수
 	
 	@RequestMapping("main")
 	public String main() {
@@ -34,20 +36,27 @@ public class SolrController {
 	public String search(HttpServletRequest request, Model model,
 			@RequestParam(value = "sort", required = false, defaultValue = "") String sort,
 			@RequestParam(value = "oName", required = false, defaultValue = "") String oName,
-			@RequestParam(value = "start", required = false, defaultValue = "0") int start,
-			@RequestParam(value = "rows", required = false, defaultValue = "10") int rows,
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String keyword = request.getParameter("keyword"); // 키워드 파라미터로 받음
 		SolrQuery query;
 		QueryResponse responseSolr;
 		SolrDocumentList results;
 		int totalRecordsCount;
+		int start = currentPage == 1 ? 0 : (currentPage-1) * 10;
 		PagerDTO pager = null; // 페이징 처리를 위함
 		
 		try {
 			if(!"".equals(keyword)) {
 				query = new SolrQuery(); // 쿼리 객체 생성
-				query.setQuery(keyword);
+				String keywordQuery = "title:" + keyword + " OR content:" + keyword;
+				query.set("q", keywordQuery);
+				
+				// hl=true&hl.fl=title&hl.simple.pre=<strong>&hl.simple.post=</strong>
+				query.setHighlight(true);
+				query.setParam("hl.fl", "content");
+				query.setParam("hl.simple.pre", "<span class=hl>");
+				query.setParam("hl.simple.post", "</span>");
+				
 				if(sort.equals("desc")) {
 					query.setSort("regDate", ORDER.desc);
 				} else if(sort.equals("asc")) {
@@ -57,29 +66,23 @@ public class SolrController {
 					query.addFilterQuery("oName : " + oName);
 				}
 				query.setStart(start);
-				query.setRows(rows);
+				query.setRows(ROWS);
 				
 				responseSolr = SolrJDriver.solr.query(".", query);
 				results = responseSolr.getResults();
 				totalRecordsCount = (int)results.getNumFound(); // 전체 게시글 수
 				
-				pager = new PagerDTO(rows, PAGEPERGROUP, currentPage, totalRecordsCount); // 페이징 처리 객체 생성
-				start = (int)pager.getStartRecord();
-				System.out.println("start값입니다 : " + start);
+				pager = new PagerDTO(ROWS, PAGEPERGROUP, currentPage, totalRecordsCount); // 페이징 처리 객체 생성
 				
-				if(start < 0) {
-					start = 0;
-				}
-				query.setStart(start);
-				responseSolr = SolrJDriver.solr.query(".", query);
-				results = responseSolr.getResults();
+				Map<String, Map<String, List<String>>> map = responseSolr.getHighlighting();
 				
+				model.addAttribute("map", map);
 				model.addAttribute("pager", pager);
 				model.addAttribute("totalRecordsCount", totalRecordsCount);
 				model.addAttribute("keyword", keyword);
 				model.addAttribute("sort", sort);
 				model.addAttribute("oName", oName);
-				model.addAttribute("rows", rows);
+				model.addAttribute("rows", ROWS);
 				model.addAttribute("currentPage", currentPage);
 				model.addAttribute("dataList", results.toArray());
 			}

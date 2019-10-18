@@ -1,217 +1,323 @@
-.layout{
-  text-align:center;
+.layout {
+	text-align: center;
 }
-.main_layout{
-  text-align:center;
-  background-color: #f2f4f7;
-}
-.main_section{
-  width: 1200px;
-  height: 100px;
-  display: inline-block;
-  margin-top: 50px;
-}
-.main_logo{
-  text-align: left;
-  height: 43px;
-  float: left;
-}
-#main_logo{
-  margin-top: 7px;
-  width: 200px;
-  height: 43px;
-  cursor: pointer;
-}
-.main_keyword{
-  height: 50px;
-  text-align: left;
-  float: left;
-  margin-left: 30px;
-}
-#main_keyword{
-  width: 600px;
-  height: 50px;
-  border: 2px solid rgb(59, 157, 255);
-  padding-left: 10px;
-  font-size: 15px;
-  float: left;
-  font-family: '돋움',dotum,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  font-weight: bold;
-}
-#main_search_btn{
-  border: 1px solid rgb(59, 157, 255);
-  background-color: rgb(59, 157, 255);
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  background-image: url("../images/search_icon.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  float: left;
-}
-.line{
-  border-top: 1px solid #e8e8e8;
-}
-.search_section{
-  width: 1200px;
-  height: 100px;
-  display: inline-block;
-}
-.logo{
-  text-align: left;
-  height: 100%;
-}
-#logo{
-  margin-top: 7px;
-  width: 100px;
-  height: 86px;
-  cursor: pointer;
-}
-.keyword{
-  height: 50px;
-  text-align: left;
-}
-#keyword{
-  width: 600px;
-  height: 40px;
-  border: 2px solid rgb(59, 157, 255);
-  padding-left: 10px;
-  font-size: 15px;
-  float: left;
-  font-family: '돋움',dotum,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  font-weight: bold;
-}
-#search_btn{
-  border: 1px solid rgb(59, 157, 255);
-  background-color: rgb(59, 157, 255);
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  background-image: url("../images/search_icon.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  float: left;
-}
-#print{
-  width: 1200px;
-  min-height: 500px;
-  clear:both;
-  text-align: left;
-}
-.nav{
-  height: 40px;
-  border-top: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
-}
-.menu{
-  float: left;
-  width: 100px;
-  padding: 12px 10px;
-}
-.menu > a{
-  text-decoration: none;
-  display: block;
-  font-family: '돋움',dotum,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  font-size: 15px;
-  color: #666;
-}
-.spim{
-  width: 10px;
-  height: 5px;
-}
-.menu_list{
-  display: none;
-  border: 1px solid black;
-  background-color: white;
-  position: absolute;
-  top: 191px;
-  width: 100px;
-  z-index: 1;
 
+.main_layout {
+	text-align: center;
+	background-color: #f2f4f7;
 }
-.menu_list li > a{
-  display: block;
-  height: 19px;
-  font-family: '돋움',dotum,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  font-size: 13px;
-  color: #666;
-  text-decoration: none;
-  padding: 10px;
+
+.main_section {
+	width: 1200px;
+	height: 100px;
+	display: inline-block;
+	margin-top: 50px;
 }
-.menu_btn:hover{
-  background-color:rgb(157, 206, 255);
+
+.main_logo {
+	text-align: left;
+	height: 43px;
+	float: left;
 }
-.contents{
-  width: 100%;
-  height: 500px;
-  margin-top: 20px;
-  display: inline-block;
-  position: relative;
-  z-index: 0;
+
+#main_logo {
+	margin-top: 7px;
+	width: 200px;
+	height: 43px;
+	cursor: pointer;
 }
-.section_head{
-  margin-left: 2px;
-  clear: both;
-  display: block;
-  height: 22px;
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+
+.main_keyword {
+	height: 50px;
+	text-align: left;
+	float: left;
+	margin-left: 30px;
 }
-.section_head > h2{
-  float: left;
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
+
+#main_keyword {
+	width: 600px;
+	height: 50px;
+	border: 2px solid rgb(59, 157, 255);
+	padding-left: 10px;
+	font-size: 15px;
+	float: left;
+	font-family: '돋움', dotum, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	font-weight: bold;
 }
-.title_num{
-  float: left;
-  display: block;
-  color: rgb(102, 102, 102);
-  font-size: 12px;
-  margin-left: 10px;
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+
+#main_search_btn {
+	border: 1px solid rgb(59, 157, 255);
+	background-color: rgb(59, 157, 255);
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	background-image: url("../images/search_icon.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	float: left;
 }
-.result{
-  padding: 7px;
-  margin-bottom: 30px;
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+
+.line {
+	border-top: 1px solid #e8e8e8;
 }
-.result li{
+
+.search_section {
+	width: 1200px;
+	height: 100px;
+	display: inline-block;
+}
+
+.logo {
+	text-align: left;
+	height: 100%;
+}
+
+#logo {
+	margin-top: 7px;
+	width: 100px;
+	height: 86px;
+	cursor: pointer;
+}
+
+.keyword {
+	height: 50px;
+	text-align: left;
+}
+
+#keyword {
+	width: 600px;
+	height: 40px;
+	border: 2px solid rgb(59, 157, 255);
+	padding-left: 10px;
+	font-size: 15px;
+	float: left;
+	font-family: '돋움', dotum, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	font-weight: bold;
+}
+
+#search_btn {
+	border: 1px solid rgb(59, 157, 255);
+	background-color: rgb(59, 157, 255);
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	background-image: url("../images/search_icon.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	float: left;
+}
+
+#print {
+	width: 1200px;
+	min-height: 500px;
+	clear: both;
+	text-align: left;
+}
+
+.nav {
+	height: 40px;
+	border-top: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e8e8e8;
+}
+
+.menu {
+	float: left;
+	width: 100px;
+	padding: 12px 10px;
+}
+
+.menu>a {
+	text-decoration: none;
+	display: block;
+	font-family: '돋움', dotum, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	font-size: 15px;
+	color: #666;
+}
+
+.spim {
+	width: 10px;
+	height: 5px;
+}
+
+.menu_list {
+	display: none;
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	top: 191px;
+	width: 100px;
+	z-index: 1;
+}
+
+.menu_list li>a {
+	display: block;
+	height: 19px;
+	font-family: '돋움', dotum, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	font-size: 13px;
+	color: #666;
+	text-decoration: none;
+	padding: 10px;
+}
+
+.menu_btn:hover {
+	background-color: rgb(157, 206, 255);
+}
+
+.contents {
+	width: 100%;
+	min-height: 500px;
+	margin-top: 20px;
+	display: inline-block;
+	position: relative;
+	z-index: 0;
+}
+
+.section_head {
+	margin-left: 2px;
+	clear: both;
+	display: block;
+	height: 22px;
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+}
+
+.section_head>h2 {
+	float: left;
+	display: block;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.title_num {
+	float: left;
+	display: block;
+	color: rgb(102, 102, 102);
+	font-size: 12px;
+	margin-left: 10px;
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+}
+
+.result {
+	padding: 7px;
+	margin-bottom: 30px;
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+}
+
+.result li {
 	list-style: disc;
 	padding: 5px 0;
 	font-size: 13px;
 	margin-left: 25px;
 }
-dt{
-  padding: 4px 0px;
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+dt {
+	padding: 4px 0px;
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
-dd{
-  margin-top: 4px;
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap:break-word;
+
+dd {
+	margin-top: 4px;
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap: break-word;
 }
-dt > span{
-  color: #666;
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
-  font-size: 13px;
+
+dt>span {
+	color: #666;
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+	font-size: 13px;
 }
-dd > a[alt='언론사']{
-  text-decoration: none;
-  color: #666;
+
+dd>a[alt='언론사'] {
+	text-decoration: none;
+	color: #666;
 }
-dd > a[alt='url']{
-  padding-left: 10px;
-  text-decoration: none;
-  color : rgb(59, 157, 255);
-  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+
+dd>a[alt='url'] {
+	padding-left: 10px;
+	text-decoration: none;
+	color: rgb(59, 157, 255);
+	font-family: '굴림', gulim, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+}
+
+.paging {
+	text-align: center;
+}
+
+.page_btn {
+	color: rgb(59, 157, 255);
+	display: inline-block;
+	position: relative;
+	padding: 4px 3px;
+	min-width: 19px;
+	margin-right: 1px;
+	border: 1px solid #fff;
+	font-family: tahoma, '굴림', gulim, sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	text-decoration: none;
+	vertical-align: top;
+	text-align: center;
+	color: #666;
+}
+
+.cur_page_btn {
+	color: rgb(59, 157, 255);
+	border: 1px solid rgb(157, 206, 255);
+	display: inline-block;
+	position: relative;
+	padding: 4px 3px;
+	min-width: 19px;
+	margin-right: 1px;
+	font-family: tahoma, '굴림', gulim, sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	text-decoration: none;
+	vertical-align: top;
+	text-align: center;
+}
+
+.page_btn:hover {
+	border: 1px solid rgb(232, 232, 232);
+}
+
+.top {
+	font-size: 12px;
+	color: #666;
+	text-decoration: none;
+}
+
+.group_btn {
+	color: #666;
+	border: 1px solid #e9e9e9;
+	display: inline-block;
+	position: relative;
+	padding: 4px 3px;
+	min-width: 19px;
+	margin-right: 1px;
+	font-weight: 400;
+	font-size: 12px;
+	text-decoration: none;
+	vertical-align: top;
+	text-align: center;
+	font-family: tahoma,'굴림',gulim,sans-serif;
 }

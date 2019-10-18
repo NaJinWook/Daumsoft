@@ -29,6 +29,13 @@
 		});
 	});
 </script>
+<style>
+.hl {
+	font-weight: bold;
+	font-family: '돋움', dotum, helvetica, '나눔바른고딕 옛한글',
+		'NanumBarunGothic YetHangul', '새굴림', sans-serif;
+}
+</style>
 </head>
 <body>
 <body>
@@ -48,9 +55,21 @@
 				<div class="nav">
 					<ul>
 						<li class="menu">
-							<a href="#" class="menu_selected" title="sort">정렬
+							<c:if test="${sort == '' || keyword == null}">
+								<a href="#" class="menu_selected" title="sort">정렬기준
 								<img class="spim" src="../../../resources/images/spim_btn.png" />
 							</a>
+							</c:if>
+							<c:if test="${sort == 'desc'}">
+								<a href="#" class="menu_selected" title="sort">최신순
+								<img class="spim" src="../../../resources/images/spim_btn.png" />
+							</a>
+							</c:if>
+							<c:if test="${sort == 'asc'}">
+								<a href="#" class="menu_selected" title="sort">오래된순
+								<img class="spim" src="../../../resources/images/spim_btn.png" />
+							</a>
+							</c:if>
 							<div class="menu_list" id="menu_sort">
 								<ul>
 									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=desc&oName=${oName}">최신순</a></li>
@@ -71,22 +90,33 @@
 							</div>
 						</li>
 						<li class="menu">
-						<a href="#" class="menu_selected" title="press">언론사
+						<c:if test="${oName == '' || keyword == null}">
+							<a href="#" class="menu_selected" title="press">언론사
+							<img class="spim" src="../../../resources/images/spim_btn.png" />
+						</a>
+						</c:if>
+						<a href="#" class="menu_selected" title="press">${oName}
 							<img class="spim" src="../../../resources/images/spim_btn.png" />
 						</a>
 							<div class="menu_list" id="menu_press">
 								<ul>
-									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=중앙일보">중앙일보</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}">전체</a></li>
 									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=연합뉴스">연합뉴스</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=뉴시스">뉴시스</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=뉴스1">뉴스1</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=아시아경제">아시아경제</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=머니투데이">머니투데이</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=이데일리">이데일리</a></li>
+									<li class="menu_btn"><a href="/search?keyword=${keyword}&sort=${sort}&oName=파이낸셜뉴스">파이낸셜뉴스</a></li>
 								</ul>
 							</div>
 						</li>
 					</ul>
 					<div class="contents">
 						<div class="section_head">
-							<h2>뉴스</h2>
-							<c:if test="${totalRecordsCount != 0}">
-								<span class="title_num">${(rows*(curPage-1))+1}-${rows*curPage} / ${totalRecordsCount}건</span>
+							<c:if test="${not empty pager && totalRecordsCount != 0}">
+								<h2>뉴스</h2>
+								<span class="title_num">${pager.startRecord+1}-${pager.startRecord+10} / ${totalRecordsCount}건</span>
 							</c:if>
 						</div>
 						<c:if test="${empty dataList}">
@@ -110,7 +140,7 @@
 										<a href="${data.url}" target="_blank">${data.title}</a>
 										<span>${data.regDate}</span>
 									</dt>
-									<dd>${data.content}</dd>
+										<dd>${map.get(data.id).get("content").get(0)}...</dd>
 									<dd>
 										<a href="#" alt="언론사">${data.oName}</a>
 										<a href="${data.url}" alt="url" target="_blank">${data.url}</a>
@@ -118,15 +148,38 @@
 								</dl>
 							</div>
 						</c:forEach>
-						<div class="paging">
-						<c:forEach var="i" begin="${pager.startPageGroup}" end="${pager.endPageGroup}">
-							<a href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=${i}">${i}</a>
-						</c:forEach>
-						</div>
+						<c:if test="${not empty pager}">
+							<div class="paging">
+								<c:if test="${pager.currentGroup > 0}">
+									<a class="group_btn" href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=1">&lt&lt</a>
+									<a class="group_btn" href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=${pager.startPageGroup-1}">&lt</a>
+								</c:if>
+								<c:forEach var="num" begin="${pager.startPageGroup}" end="${pager.endPageGroup}">
+									<c:choose>
+										<c:when test="${num == currentPage}">
+											<span class="cur_page_btn">${num}</span>
+										</c:when>
+										<c:otherwise>
+											<a class="page_btn" href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=${num}">${num}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${pager.endPageGroup < pager.totalPageCount}">
+									<a class="group_btn" href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=${pager.endPageGroup+1}">&gt</a>
+									<a class="group_btn" href="/search?keyword=${keyword}&sort=${sort}&oName=${oName}&currentPage=${pager.totalPageCount}">&gt&gt</a>	
+								</c:if>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
 		</div>
+		<c:if test="${not empty pager && totalRecordsCount != 0}">
+			<a href="#" class="top" onclick="window.scrollTo(0,0); document.querySelector('#wrap a').focus(); return false;">맨위로</a>
+		</c:if>
 	</div>
+	<c:if test="${totalRecordsCount != 0}">
+		<div style="width:100%;height:100px"></div>
+	</c:if>
 </body>
 </html>

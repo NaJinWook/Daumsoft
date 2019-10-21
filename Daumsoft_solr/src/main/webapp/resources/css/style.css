@@ -149,8 +149,8 @@
 	border: 1px solid black;
 	background-color: white;
 	position: absolute;
-	top: 191px;
-	width: 100px;
+	top: 203px;
+	width: 110px;
 	z-index: 1;
 }
 
@@ -320,4 +320,39 @@ dd>a[alt='url'] {
 	vertical-align: top;
 	text-align: center;
 	font-family: tahoma,'굴림',gulim,sans-serif;
+}
+
+/* 연관 검색어  */
+.relation_keyword{
+  margin-bottom: 50px;
+  width: 100%;
+}
+.tit_relate{
+  width: 100px;
+  float: left;
+  font-family: '굴림',gulim,helvetica,'나눔바른고딕 옛한글','NanumBarunGothic YetHangul','새굴림',sans-serif;
+  display: block;
+  font-weight: 700;
+  letter-spacing: -1px;
+  font-size: 13px;
+}
+.list_relate{
+  min-width: 300px;
+  float: left;
+}
+.list_relate li {
+  float: left;
+  padding-right: 20px;
+}
+.list_relate li a {
+  text-decoration:none;
+  color:#00c;
+  font-size: 13px;
+}
+.list_relate li a:hover {
+  text-decoration: underline;
+}
+#wtf{
+  width: 20px;
+  height: 20px;
 }

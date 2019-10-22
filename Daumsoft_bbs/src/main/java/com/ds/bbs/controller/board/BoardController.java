@@ -2,6 +2,12 @@ package com.ds.bbs.controller.board;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +15,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +38,7 @@ public class BoardController {
 
 	// 메인 화면
 	@RequestMapping("")
-	public String home() throws Exception {
+	public String home(HttpServletRequest request) throws Exception {
 		return "board/home";
 	}
 

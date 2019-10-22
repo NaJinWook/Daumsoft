@@ -1,5 +1,13 @@
 package com.ds.bbs.controller.member;
 
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.RSAPublicKeySpec;
+
+import javax.crypto.Cipher;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ds.bbs.model.member.dto.MemberDTO;
 import com.ds.bbs.service.member.MemberService;
@@ -21,7 +28,25 @@ public class MemberController {
 	
 	//회원가입창 이동
 	@RequestMapping(value = "/register", method=RequestMethod.GET)
-	public String register() throws Exception {
+	public String register(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+
+		// RSA 암호화
+		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+		generator.initialize(1024);
+		KeyPair keyPair = generator.genKeyPair();
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
+
+		session.setAttribute("_RSA_WEB_Key_", privateKey); // 세션에 RSA 개인키를 세션에 저장한다.
+		RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
+		String publicKeyModulus = publicSpec.getModulus().toString(16);
+		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+
+		request.setAttribute("RSAModulus", publicKeyModulus);
+		request.setAttribute("RSAExponent", publicKeyExponent);
+		
 		return "member/register";
 	}
 	
@@ -58,7 +83,17 @@ public class MemberController {
 	
 	//회원가입 완료
 	@RequestMapping(value = "/rgCommit", method = RequestMethod.POST)
-	public String register_commit(MemberDTO memberDto) throws Exception {
+	public String register_commit(HttpServletRequest request) throws Exception {
+		MemberDTO memberDto = new MemberDTO();
+		String userId = request.getParameter("userId");
+		String userName = request.getParameter("userName");
+		String userNikname = request.getParameter("userNikname");
+		String userPwd = request.getParameter("userPwd");
+		
+		memberDto.setUserId(userId);
+		memberDto.setUserName(userName);
+		memberDto.setUserNikname(userNikname);
+		memberDto.setUserPwd(userPwd);
 		memberService.registerMember(memberDto);
 		return "member/rgCommit";
 	}
@@ -66,8 +101,7 @@ public class MemberController {
 	//로그인 검사
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String loginCheck(HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
-		session = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		MemberDTO login = memberService.loginCheck(userId, userPwd);

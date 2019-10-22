@@ -49,6 +49,10 @@ $(function() {
 		var userNikname = $.trim($("#userNikname").val());
 		var userPwd = $.trim($("#userPwd").val());
 		var userPwd2 = $.trim($("#userPwd2").val());
+		
+		var rsa = new RSAKey();
+		rsa.setPublic($("#RSAModulus").val(), $("#RSAExponent").val());
+		
 		if (userId == "") {
 			alert("아이디를 입력하세요.");
 			$("#userId").focus();
@@ -69,7 +73,8 @@ $(function() {
 			alert("회원 정보를 올바르게 입력해주세요.");
 			return;
 		}
-		document.registerForm.action = "/member/rgCommit";
+		
+		$("#userPwd").val(rsa.encrypt(userPwd));
 		document.registerForm.submit();
 	});
 });
@@ -81,7 +86,7 @@ $(function() {
 		alert("로그인 후 이용 가능합니다.");
 	</script>
 </c:if>
-<form name="registerForm" method="post" autocomplete="off">
+<form name="registerForm" action="/member/rgCommit" method="post" autocomplete="off">
     <div class="join_layout">
       <div class="join_section" id="join_header">
         <span  id="join_title">회원가입</span>
@@ -118,6 +123,8 @@ $(function() {
         </div>
         <div class="join_info">
           <input type="password" class="info_txt" id="userPwd" name="userPwd" maxlength="20">
+          <input type="hidden" id="RSAModulus" value="${RSAModulus}"/>
+          <input type="hidden" id="RSAExponent" value="${RSAExponent}"/>
         </div>
       </div>
       <div class="join_section">

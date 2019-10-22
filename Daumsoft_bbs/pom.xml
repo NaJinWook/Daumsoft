@@ -34,6 +34,13 @@
 		</dependency>
 		
 		<!-- 여기서 부터 추가 -->
+		<!-- rsa -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-rsa</artifactId>
+		    <version>1.0.8.RELEASE</version>
+		</dependency>
+		
 		<!-- JACKSON -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

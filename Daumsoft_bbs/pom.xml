@@ -34,6 +34,13 @@
 		</dependency>
 		
 		<!-- 여기서 부터 추가 -->
+		<!-- JACKSON -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
 		<!-- 타일즈 관련 라이브러리 -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>

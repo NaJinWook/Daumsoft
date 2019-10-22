@@ -4,11 +4,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>다음소프트</title>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-	<c:set var="path" value="${pageContext.request.contextPath}" />
-	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<%@ include file="../include/comm.jsp"%>
 	<style>
 	#nav{
 	  background-color: rgb(23, 32, 40);
@@ -16,13 +12,64 @@
 	  height: 50px;
 	}
 	</style>
+	<script>
+		$(function() {
+			$("#home_login").click(function() {
+				$("#modal").fadeIn();
+			});
+			$("#modal_close_btn").click(function() {
+				$("#modal").fadeOut();
+			});
+			$("#register_btn").click(function() {
+				location.href = "/member/register";
+			});
+			$("#login_btn").click(function() {
+				document.loginForm.submit();
+			});
+			$("#home_logout").click(function() {
+				location.href = "/member/logout";
+			});
+		});
+	</script>
   </head>
   <body>
     <div id="top">
     	<a href="/board/">
     		<img id="logo" src="../../../resources/img/logo.png" alt="다음소프트" />
     	</a>
+    	<c:if test="${member == null}">
+	    	<a style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;" id="home_login" href="#">로그인</a>
+    	</c:if>
+    	<c:if test="${member != null}">
+	    	<a style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;" id="home_logout" href="#">로그아웃</a>
+    	</c:if>
     </div>
+    
+    <!-- 아래는 로그인 모달창 -->
     <div id="nav"></div>
+        <div id="modal">
+      <div class="modal_content">
+        <div style="text-align:right;">
+          <button type="button" id="modal_close_btn">X</button>
+        </div>
+        <form name="loginForm" action="/member/loginCheck" method="post">
+	        <div class="login_info">
+	          <div class="login_section">
+	            <p class="login_label"><label for="" id="label_id">아이디</label></p>
+	            <input class="login_input" type="text" name="userId" value="">
+	          </div>
+	          <div class="login_section">
+	            <p class="login_label"><label for="" id="label_pwd">비밀번호</label></p>
+	            <input style="letter-spacing: 5px;"type="password" name="userPwd" value="">
+	          </div>
+	          <div class="login_section">
+	            <button class="groupBtn" id="login_btn" type="button">로그인</button>
+	            <button class="groupBtn" id="register_btn" type="button">회원가입</button>
+	          </div>
+	        </div>
+        </form>
+      </div>
+      <div class="modal_layer"></div>
+    </div>
   </body>
 </html>

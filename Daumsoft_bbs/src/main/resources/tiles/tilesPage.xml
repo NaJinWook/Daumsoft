@@ -31,7 +31,27 @@
    </definition>
    
    <definition name="board/edit" extends="baseLayout">
-      <put-attribute name="title" value="게시글읽기" />
+      <put-attribute name="title" value="게시글수정" />
       <put-attribute name="body" value="/WEB-INF/views/board/edit.jsp" />
+   </definition>
+   
+   <definition name="member/register" extends="baseLayout">
+      <put-attribute name="title" value="회원가입" />
+      <put-attribute name="body" value="/WEB-INF/views/member/register.jsp" />
+   </definition>
+   
+   <definition name="member/rgCommit" extends="baseLayout">
+      <put-attribute name="title" value="회원가입완료" />
+      <put-attribute name="body" value="/WEB-INF/views/member/rgCommit.jsp" />
+   </definition>
+   
+   <definition name="member/loginCheck" extends="baseLayout">
+      <put-attribute name="title" value="로그인 성공" />
+      <put-attribute name="body" value="/WEB-INF/views/board/list.jsp" />
+   </definition>
+   
+   <definition name="member/logout" extends="baseLayout">
+      <put-attribute name="title" value="로그아웃" />
+      <put-attribute name="body" value="/WEB-INF/views/board/home.jsp" />
    </definition>
 </tiles-definitions>

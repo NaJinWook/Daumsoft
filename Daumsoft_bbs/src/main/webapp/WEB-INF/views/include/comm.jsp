@@ -4,10 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../../../resources/js/rsa.js"></script>
-<script type="text/javascript" src="../../../resources/js/jsbn.js"></script>
-<script type="text/javascript" src="../../../resources/js/prng4.js"></script>
-<script type="text/javascript" src="../../../resources/js/rng.js"></script>
+<script type="text/javascript" src="../../../resources/js/core.min.js"></script>
+<script type="text/javascript" src="../../../resources/js/sha256.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../../../resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 <link rel="stylesheet" type="text/css" href="../../../resources/css/style2.css">

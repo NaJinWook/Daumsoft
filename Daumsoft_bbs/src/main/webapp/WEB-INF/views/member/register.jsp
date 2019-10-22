@@ -74,6 +74,8 @@ $(function() {
 			alert("회원 정보를 올바르게 입력해주세요.");
 			return;
 		}
+		var shaPw = CryptoJS.SHA256($('#userPwd').val()).toString(); 
+		$("#userPwd").val(shaPw);
 		document.registerForm.submit();
 	});
 });

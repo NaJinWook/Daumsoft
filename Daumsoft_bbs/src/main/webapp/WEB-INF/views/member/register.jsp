@@ -50,9 +50,6 @@ $(function() {
 		var userPwd = $.trim($("#userPwd").val());
 		var userPwd2 = $.trim($("#userPwd2").val());
 		
-		var rsa = new RSAKey();
-		rsa.setPublic($("#RSAModulus").val(), $("#RSAExponent").val());
-		
 		if (userId == "") {
 			alert("아이디를 입력하세요.");
 			$("#userId").focus();
@@ -60,6 +57,10 @@ $(function() {
 		} else if (userName == "") {
 			alert("이름을 입력하세요.");
 			$("#userName").focus();
+			return;
+		} else if (userNikname == "") {
+			alert("닉네임을 입력하세요.");
+			$("#userNikname").focus();
 			return;
 		} else if (userPwd == "") {
 			alert("비밀번호를 입력하세요.");
@@ -73,8 +74,6 @@ $(function() {
 			alert("회원 정보를 올바르게 입력해주세요.");
 			return;
 		}
-		
-		$("#userPwd").val(rsa.encrypt(userPwd));
 		document.registerForm.submit();
 	});
 });
@@ -123,8 +122,6 @@ $(function() {
         </div>
         <div class="join_info">
           <input type="password" class="info_txt" id="userPwd" name="userPwd" maxlength="20">
-          <input type="hidden" id="RSAModulus" value="${RSAModulus}"/>
-          <input type="hidden" id="RSAExponent" value="${RSAExponent}"/>
         </div>
       </div>
       <div class="join_section">

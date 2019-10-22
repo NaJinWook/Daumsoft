@@ -29,24 +29,6 @@ public class MemberController {
 	//회원가입창 이동
 	@RequestMapping(value = "/register", method=RequestMethod.GET)
 	public String register(HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
-
-		// RSA 암호화
-		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-		generator.initialize(1024);
-		KeyPair keyPair = generator.genKeyPair();
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PublicKey publicKey = keyPair.getPublic();
-		PrivateKey privateKey = keyPair.getPrivate();
-
-		session.setAttribute("_RSA_WEB_Key_", privateKey); // 세션에 RSA 개인키를 세션에 저장한다.
-		RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
-		String publicKeyModulus = publicSpec.getModulus().toString(16);
-		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
-
-		request.setAttribute("RSAModulus", publicKeyModulus);
-		request.setAttribute("RSAExponent", publicKeyExponent);
-		
 		return "member/register";
 	}
 	

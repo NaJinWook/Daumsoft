@@ -7,6 +7,7 @@ public class MemberDTO {
 	private String userName;
 	private String userNikname;
 	private String userPwd;
+	private int verify;
 	private Date joinDate;
 	
 	public MemberDTO() {}
@@ -42,6 +43,14 @@ public class MemberDTO {
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
+	
+	public int getVerify() {
+		return verify;
+	}
+
+	public void setVerify(int verify) {
+		this.verify = verify;
+	}
 
 	public Date getJoinDate() {
 		return joinDate;
@@ -54,6 +63,6 @@ public class MemberDTO {
 	@Override
 	public String toString() {
 		return "MemberDTO [userId=" + userId + ", userName=" + userName + ", userNikname=" + userNikname + ", userPwd="
-				+ userPwd + ", joinDate=" + joinDate + "]";
+				+ userPwd + ", verify=" + verify + ", joinDate=" + joinDate + "]";
 	}
 }

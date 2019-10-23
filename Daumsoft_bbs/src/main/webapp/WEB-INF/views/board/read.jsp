@@ -34,10 +34,10 @@
 	<div id="bbs">
 		<div id="curTitle">
 			<span style="padding: 10px; line-height: 30px; font-weight: bold;">제목</span>
-			<span>${map.dto.title}</span>
+			<span style="margin-left:16px;">${map.dto.title}</span>
 		</div>
 		<div id="curName">
-			<span style="padding: 10px; line-height: 30px; font-weight: bold;">이름</span>
+			<span style="padding: 10px; line-height: 30px; font-weight: bold;">닉네임</span>
 			<span>${map.dto.writer}</span>
 		</div>
 		<div id="curInfo">
@@ -57,9 +57,11 @@
 		</div>
 		<div id="curOption">
 			<div id="option_btn">
-				<input type="button" id="list_btn" value="목록" style="cursor: pointer;" /> 
-				<input type="button" id="edit_btn" value="수정" style="cursor: pointer;" />
-				<input type="button" id="remove_btn" value="삭제" style="cursor: pointer;" />
+				<input type="button" id="list_btn" value="목록" style="cursor: pointer;" />
+				<c:if test="${member.userNikname == map.dto.writer || member.verify == 1}">
+					<input type="button" id="edit_btn" value="수정" style="cursor: pointer;" />
+					<input type="button" id="remove_btn" value="삭제" style="cursor: pointer;" />
+				</c:if>
 			</div>
 		</div>
 		<form name="editForm" action="/board/edit" method="post">

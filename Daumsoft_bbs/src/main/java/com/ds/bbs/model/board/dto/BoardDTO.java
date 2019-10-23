@@ -10,6 +10,7 @@ public class BoardDTO {
 	private Date regDate; // 작성일
 	private Date editDate; // 수정 시간
 	private String delYn; // 삭제 여부
+	private int fileCount; // 첨부파일 수
 	
 	public int getBno() {
 		return bno;
@@ -53,10 +54,16 @@ public class BoardDTO {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
+	public int getFileCount() {
+		return fileCount;
+	}
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
+	}
 	@Override
 	public String toString() {
 		return "BoardDTO [bno=" + bno + ", title=" + title + ", contents=" + contents + ", writer=" + writer
-				+ ", regDate=" + regDate + ", editDate=" + editDate + ", delYn=" + delYn + "]";
+				+ ", regDate=" + regDate + ", editDate=" + editDate + ", delYn=" + delYn + ", fileCount=" + fileCount
+				+ "]";
 	}
-	
 }

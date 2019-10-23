@@ -14,14 +14,6 @@ input:focus {
 	$(function() {
 		$("#alert-success").hide();
 		$("#alert-danger").hide();
-		$("#userName").keyup(function(){
-			var userName = $.trim($("#userName").val());
-			if(userName.length <= 1){
-				$("#userName").css("border", "2px solid red");
-			} else {
-				$("#userName").css("border", "2px solid green");
-			}
-		});
 		$("#userPwd, #userPwd2").keyup(function() {
 			var userPwd = $.trim($("#userPwd").val());
 			var userPwd2 = $.trim($("#userPwd2").val());
@@ -33,12 +25,17 @@ input:focus {
 				} else {
 					$("#alert-success").hide();
 					$("#alert-danger").show();
-					$("#reg_Btn").attr("disabled", "disabled");
+					$("#reg_Btn").attr("disabled", true);
 				}
 			}
 		});
 		$("#idCheck").click(function() {
 			var userId = $.trim($("#userId").val());
+			if(userId == ""){
+				alert("아이디를 입력해주세요.");
+				$("#userId").focus();
+				return;
+			}
 			var query = {
 				userId : userId
 			};
@@ -49,19 +46,22 @@ input:focus {
 				success : function(result) {
 					if (result == 1) {
 						alert("이미 존재하는 아이디입니다.");
-						$("#userId").css("border", "2px solid red");
 						$("#userId").val("");
 						$("#userId").focus();
 					} else {
 						alert("사용 가능한 아이디입니다.");
-						$("#userId").css("border", "2px solid green");
-						$("#userId").attr("readonly", true);
+						$("#idCheck").attr("disabled", true);
 					}
 				}
 			});
 		});
 		$("#niknameCheck").click(function() {
 			var userNikname = $.trim($("#userNikname").val());
+			if(userNikname == ""){
+				alert("닉네임을 입력해주세요.");
+				$("#userNikname").focus();
+				return;
+			}
 			var query = {
 				userNikname : userNikname
 			};
@@ -72,13 +72,11 @@ input:focus {
 				success : function(result) {
 					if (result == 1) {
 						alert("이미 존재하는 닉네임입니다.");
-						$("#userNikname").css("border", "2px solid red");
 						$("#userNikname").val("");
 						$("#userNikname").focus();
 					} else {
 						alert("사용 가능한 닉네임입니다.");
-						$("#userNikname").css("border", "2px solid green");
-						$("#userNikname").attr("readonly", true);
+						$("#niknameCheck").attr("disabled", true);
 					}
 				}
 			});
@@ -91,31 +89,31 @@ input:focus {
 			var userPwd2 = $.trim($("#userPwd2").val());
 
 			if (userId == "") {
-				alert("아이디를 입력하세요.");
+				alert("아이디를 입력해주세요.");
 				$("#userId").focus();
 				return;
 			} else if (userName == "" || userName.length <= 1) {
-				alert("2자 이상의 이름을 입력하세요.");
+				alert("2자 이상의 이름을 입력해주세요.");
 				$("#userName").focus();
 				return;
 			} else if (userNikname == "") {
-				alert("닉네임을 입력하세요.");
+				alert("닉네임을 입력해주세요.");
 				$("#userNikname").focus();
 				return;
 			} else if (userPwd == "" || userPwd.length < 4) {
-				alert("4자 이상의 비밀번호를 입력하세요.");
+				alert("4자 이상의 비밀번호를 입력해주세요.");
 				$("#userPwd").focus();
 				return;
 			} else if (userPwd2 == "") {
-				alert("비밀번호를 입력하세요.");
+				alert("비밀번호를 입력해주세요.");
 				$("#userPwd2").focus();
 				return;
 			}
 			
-			if(!$("#userId").attr("readonly")){
+			if($("#idCheck").attr("disabled") == false){
 				alert("아이디 중복검사를 해주세요.");
 				return;
-			} else if(!$("#userNikname").attr("readonly")) {
+			} else if($("#niknameCheck").attr("disabled") == false) {
 				alert("닉네임 중복검사를 해주세요.");
 				return;
 			}
@@ -125,6 +123,12 @@ input:focus {
 			document.registerForm.submit();
 		});
 	});
+	function onkeyupID(){
+		$("#idCheck").attr("disabled",false);
+	}
+	function onkeyupNIKNAME(){
+		$("#niknameCheck").attr("disabled",false);
+	}
 </script>
 </head>
 <body>
@@ -143,7 +147,7 @@ input:focus {
           <label for="userId">아이디</label>
         </div>
         <div class="join_info">
-          <input type="text" class="info_txt" id="userId" name="userId" maxlength="20" autocomplete="off" placeholder="영어 및 숫자만 최대 12자까지">
+          <input type="text" class="info_txt" id="userId" name="userId" onkeyup="onkeyupID();" maxlength="20" autocomplete="off" placeholder="영어 및 숫자만 최대 12자까지">
           <button type="button" class="overlapCheck_Btn" id="idCheck">중복검사</button>
         </div>
       </div>
@@ -152,7 +156,7 @@ input:focus {
           <label for="userName">이름</label>
         </div>
         <div class="join_info">
-          <input type="text" class="info_txt" id="userName" name="userName" maxlength="20">
+          <input type="text" class="info_txt" id="userName" name="userName" maxlength="20" autocomplete="off">
         </div>
       </div>
       <div class="join_section">
@@ -160,7 +164,7 @@ input:focus {
           <label for="userNikname">닉네임</label>
         </div>
         <div class="join_info">
-          <input type="text" class="info_txt" id="userNikname" name="userNikname" maxlength="20" autocomplete="off" placeholder="게시물 작성시 표시되는 필명">
+          <input type="text" class="info_txt" id="userNikname" name="userNikname" onkeyup="onkeyupNIKNAME();" maxlength="20" autocomplete="off" placeholder="게시물 작성시 표시되는 필명">
           <button type="button" class="overlapCheck_Btn" id="niknameCheck">중복검사</button>
         </div>
       </div>

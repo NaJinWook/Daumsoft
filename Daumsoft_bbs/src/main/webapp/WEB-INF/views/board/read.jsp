@@ -66,7 +66,7 @@
 		</div>
 		<form name="editForm" action="/board/edit" method="post">
 			<input type="hidden" name="bno" value="${map.dto.bno}" />
-			<input type="hidden" name="bno" value="${map.dto.bno}" />
+			<input type="hidden" name="writer" value="${map.dto.writer}"/>
 			<input type="hidden" name="curPage" value="${map.curPage}" />
 			<input type="hidden" name="search_option" value="${map.search_option}" />
 			<input type="hidden" name="keyword" value="${map.keyword}" />

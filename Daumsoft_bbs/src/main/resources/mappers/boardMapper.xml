@@ -58,13 +58,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 게시글 삭제시 첨부파일도 삭제하기 위한 쿼리  -->
 	<delete id="delete2" parameterType="int">
-		update bbs_fileStore SET fileDelYn = 'Y'
+		delete from bbs_fileStore
 		where bno = #{bno}
 	</delete>
 	
 	<!-- 게시글 첨부파일 삭제 -->
 	<delete id="delFile" parameterType="hashMap">
-		update bbs_fileStore SET fileDelYn = 'Y'
+		delete from bbs_fileStore
 		WHERE bno = #{bno} and fileNo NOT IN
 		<foreach collection="fileNos" item="fileNo" index="index" separator="," open="(" close=")">
 			${fileNo}
@@ -84,13 +84,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="listPage" parameterType="hashMap"
 		resultType="com.ds.bbs.model.board.dto.BoardDTO">
-		select *
-		from bbs
+		select b.*, COUNT(f.fileNo) AS fileCount
+		from bbs b LEFT JOIN bbs_filestore f
+		ON (b.bno = f.bno)
 		where (
 		<include refid="search" />
 		)
 		and delYn = 'N'
-		order by bno desc
+		group by b.bno
+		order by b.bno desc
 		limit #{startNum}, #{postNum}
 	</select>
 
@@ -109,6 +111,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="upload" parameterType="com.ds.bbs.model.board.dto.FileDTO">
 		INSERT INTO bbs_fileStore (bno, saveName, fileName, filePath, fileSize, fileUserName) VALUES
-		((SELECT COUNT(*) FROM bbs), #{saveName}, #{fileName}, #{filePath}, #{fileSize}, #{fileUserName});
+		(#{bno}, #{saveName}, #{fileName}, #{filePath}, #{fileSize}, #{fileUserName});
 	</insert>
 </mapper>

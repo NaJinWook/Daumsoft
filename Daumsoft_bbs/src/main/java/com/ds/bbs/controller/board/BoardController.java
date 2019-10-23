@@ -89,7 +89,7 @@ public class BoardController {
 		long fileSize = 0;
 		UUID uuid = null;
 		FileDTO f_dto = null;
-
+		
 		String title = request.getParameter("title");
 		String contents = request.getParameter("contents");
 		String writer = request.getParameter("writer");
@@ -106,7 +106,7 @@ public class BoardController {
 				saveName = uuid + "_" + fileName;
 				fileSize = file.getSize();
 				file.transferTo(new File(f_dto.SAVE_FILE_PATH + saveName));
-				f_dto = new FileDTO(saveName, fileName, fileSize, dto.getWriter());
+				f_dto = new FileDTO(dto.getBno(), saveName, fileName, fileSize, dto.getWriter());
 				boardService.fileUpload(f_dto);
 			}
 		}
@@ -176,8 +176,9 @@ public class BoardController {
 		String title = request.getParameter("title");
 		String contents = request.getParameter("contents");
 		String writer = request.getParameter("writer");
-		map.put("bno", dto.getBno());
+		map.put("bno", bno);
 		map.put("fileNos", fileNos);
+		dto.setBno(bno);
 		dto.setTitle(encoding(title));
 		dto.setContents(encoding(contents));
 		dto.setWriter(encoding(writer));
@@ -193,7 +194,7 @@ public class BoardController {
 					saveName = uuid + "_" + fileName;
 					fileSize = file.getSize();
 					file.transferTo(new File(f_dto.SAVE_FILE_PATH + saveName));
-					f_dto = new FileDTO(saveName, fileName, fileSize, dto.getWriter());
+					f_dto = new FileDTO(bno, saveName, fileName, fileSize, dto.getWriter());
 					boardService.fileUpload(f_dto);
 				}
 			}

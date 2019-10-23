@@ -5,6 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="../include/comm.jsp"%>
+<style>
+#file_icon{
+	width:14px;
+	height:14px;
+}
+</style>
 <script>
 	$(function(){
 		$("#search_btn").click(function() {
@@ -53,6 +59,12 @@
 						<td class="bbs_contents" scope="col" width="10%">${list.bno}</td>
 						<td class="bbs_contents" scope="col" width="45%"><a
 							href="/board/read?bno=${list.bno}&curPage=${map.curPage}&search_option=${map.search_option}&keyword=${map.keyword}">${list.title}</a>
+							<c:if test="${list.fileCount != 0}">
+								<span style="font-size:13px;color:rgb(255,78,57);font-weight:bold;">
+									<img src="../../resources/img/file_icon.PNG" id="file_icon"/>
+									+${list.fileCount}
+								</span>
+							</c:if>
 						</td>
 						<td class="bbs_contents" scope="col" width="15%">${list.writer}</td>
 						<td class="bbs_contents" scope="col" width="20%"><fmt:formatDate

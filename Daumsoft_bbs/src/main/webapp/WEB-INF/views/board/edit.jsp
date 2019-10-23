@@ -19,11 +19,7 @@
 				alert("내용을 입력하세요.");
 				$("#contents").focus();
 				return;
-			} else if (writer == "") {
-				alert("이름을 입력하세요.");
-				$("#writer").focus();
-				return;
-			}
+			} 
 			document.updateForm.submit();
 		});
 		$("#delBtn_0").click(function(e){
@@ -80,8 +76,7 @@
 				<c:forEach var="i" begin="1" end="${loop}">
 					<input type="file" id="uploadFile" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
 				</c:forEach>
-				<input type="text" id="writer" name="writer"
-					placeholder="이름을 입력하세요" maxlength="7" value="${dto.writer}" autocomplete="off" />
+				<input type="hidden" name="writer" value="${dto.writer}"/>
 			</div>
 			<div id="btn_section">
 				<button type="button" id="list_back">돌아가기</button>

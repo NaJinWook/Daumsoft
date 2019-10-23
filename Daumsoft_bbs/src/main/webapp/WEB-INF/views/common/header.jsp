@@ -52,15 +52,15 @@
         <div style="text-align:right;">
           <button type="button" id="modal_close_btn">X</button>
         </div>
-        <form name="loginForm" action="/member/loginCheck" method="post">
+        <form name="loginForm" action="/member/loginCheck" method="get">
 	        <div class="login_info">
 	          <div class="login_section">
-	            <p class="login_label"><label for="" id="label_id">아이디</label></p>
-	            <input class="login_input" type="text" name="userId" value="">
+	            <p class="login_label"><label for="login_id" id="label_id">아이디</label></p>
+	            <input class="login_input" id="login_id" type="text" name="login_id" autocomplete="off">
 	          </div>
 	          <div class="login_section">
-	            <p class="login_label"><label for="" id="label_pwd">비밀번호</label></p>
-	            <input style="letter-spacing: 5px;"type="password" name="userPwd" value="">
+	            <p class="login_label"><label for="login_pwd" id="label_pwd">비밀번호</label></p>
+	            <input style="letter-spacing: 5px;" id="login_pwd" type="password" name="login_pwd">
 	          </div>
 	          <div class="login_section">
 	            <button class="groupBtn" id="login_btn" type="button">로그인</button>

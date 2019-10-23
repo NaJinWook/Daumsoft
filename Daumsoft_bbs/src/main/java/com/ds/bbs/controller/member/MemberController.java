@@ -81,11 +81,11 @@ public class MemberController {
 	}
 	
 	//로그인 검사
-	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.GET)
 	public String loginCheck(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(true);
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
+		String userId = request.getParameter("login_id");
+		String userPwd = request.getParameter("login_pwd");
 		MemberDTO login = memberService.loginCheck(userId, userPwd);
 		if(login != null) {
 			session.setAttribute("member", login);

@@ -54,7 +54,9 @@
     	<a style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;" id="home_login" href="#">로그인</a>
    	</c:if>
    	<c:if test="${member != null}">
-    	<a style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;" id="home_logout" href="#">로그아웃</a>
+   		<span style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;">${member.userNikname} |
+    		<a style="text-decoration: none; color:#fff; font-weight:bold;" id="home_logout" href="#">로그아웃</a>
+    	</span>
    	</c:if>
    </div>
    

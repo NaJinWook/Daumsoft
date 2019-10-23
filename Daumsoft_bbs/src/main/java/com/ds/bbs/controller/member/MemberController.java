@@ -63,7 +63,10 @@ public class MemberController {
 		String userName = request.getParameter("userName");
 		String userNikname = request.getParameter("userNikname");
 		String userPwd = request.getParameter("userPwd");
-		
+//		System.out.println("userId 값은 : " + userId);
+//		System.out.println("userName 값은 : " + userName);
+//		System.out.println("userNikname 값은 : " + userNikname);
+//		System.out.println("userPwd 값은 : " + userPwd);
 		memberDto.setUserId(userId);
 		memberDto.setUserName(userName);
 		memberDto.setUserNikname(userNikname);

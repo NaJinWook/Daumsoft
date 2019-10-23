@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 로그인 -->
 	<select id="loginCheck" resultType="com.ds.bbs.model.member.dto.MemberDTO">
-		select userId, userNikname
+		select userId, userNikname, verify
 		from member
 		where userId=#{userId} and userPwd=#{userPwd}
 	</select>

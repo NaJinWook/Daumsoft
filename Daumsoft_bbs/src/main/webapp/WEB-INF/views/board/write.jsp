@@ -10,7 +10,6 @@
 		$("#write_commit").click(function() {
 			var title = $.trim($("#title").val());
 			var contents = $.trim($("#contents").val());
-			var writer = $.trim($("#writer").val());
 			if (title == "") {
 				alert("제목을 입력하세요.");
 				$("#title").focus();
@@ -18,10 +17,6 @@
 			} else if (contents == "") {
 				alert("내용을 입력하세요.");
 				$("#contents").focus();
-				return;
-			} else if (writer == "") {
-				alert("이름을 입력하세요.");
-				$("#writer").focus();
 				return;
 			}
 			document.sendForm.submit();
@@ -42,13 +37,12 @@
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents"></textarea>
+				<input type="hidden" name="writer" value="${member.userNikname}" />
 			</div>
 			<div id="writer_section">
 				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
 				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
 				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
-				<input type="text" id="writer" name="writer"
-					placeholder="이름을 입력하세요" maxlength="7" autocomplete="off" style="display:inline"/>
 			</div>
 			<div id="btn_section">
 				<button type="button" id="write_commit">등록</button>

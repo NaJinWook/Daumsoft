@@ -46,13 +46,13 @@ $(function() {
 			data : query,
 			success : function(result) {
 				if (result == 1) {
-					alert("이미 존재하는 아이디 입니다.");
+					alert("이미 존재하는 아이디입니다.");
 					$("#id_success").css("display","none");
 					$("#id_fail").css("display","inline");
 					$("#userId").val("");
 					$("#userId").focus();
 				} else {
-					alert("사용 가능한 아이디 입니다.");
+					alert("사용 가능한 아이디입니다.");
 					$("#id_fail").css("display","none");
 					$("#id_success").css("display","inline");
 					$("#userId").attr("disabled", "disabled");
@@ -71,13 +71,13 @@ $(function() {
 			data : query,
 			success : function(result) {
 				if (result == 1) {
-					alert("이미 존재하는 닉네임 입니다.");
+					alert("이미 존재하는 닉네임입니다.");
 					$("#nikname_success").css("display","none");
 					$("#nikname_fail").css("display","inline");
 					$("#userNikname").val("");
 					$("#userNikname").focus();
 				} else {
-					alert("사용 가능한 닉네임 입니다.");
+					alert("사용 가능한 닉네임입니다.");
 					$("#nikname_fail").css("display","none");
 					$("#nikname_success").css("display","inline");
 					$("#userNikname").attr("disabled", "disabled");

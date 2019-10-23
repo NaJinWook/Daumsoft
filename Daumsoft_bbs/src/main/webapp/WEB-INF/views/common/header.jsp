@@ -24,6 +24,19 @@
 				location.href = "/member/register";
 			});
 			$("#login_btn").click(function() {
+				var login_id = $.trim($("#login_id").val());
+				var login_pwd = $.trim($("#login_pwd").val());
+				if(login_id == ""){
+					alert("아이디를 입력해주세요.");
+					$("#login_id").focus();
+					return;
+				} else if(login_pwd == ""){
+					alert("비밀번호를 입력해주세요.");
+					$("#login_pwd").focus();
+					return;
+				}
+				var shaPw = CryptoJS.SHA256($('#login_pwd').val()).toString(); 
+				$("#login_pwd").val(shaPw);
 				document.loginForm.submit();
 			});
 			$("#home_logout").click(function() {
@@ -52,7 +65,7 @@
         <div style="text-align:right;">
           <button type="button" id="modal_close_btn">X</button>
         </div>
-        <form name="loginForm" action="/member/loginCheck" method="get">
+        <form name="loginForm" action="/member/loginCheck" method="post">
 	        <div class="login_info">
 	          <div class="login_section">
 	            <p class="login_label"><label for="login_id" id="label_id">아이디</label></p>

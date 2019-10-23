@@ -7,6 +7,11 @@
 <%@ include file="../include/comm.jsp"%>
 </head>
 <body>
+<c:if test="${param.message == 'nologin'}">
+	<script>
+		alert("로그인 정보가 일치하지 않습니다.");
+	</script>
+</c:if>
 	<div id="info">Daumsoft</div>
 	<div id="bbs">
 		<img id="ds" src="../../../resources/img/ds.png" alt="다음소프트"

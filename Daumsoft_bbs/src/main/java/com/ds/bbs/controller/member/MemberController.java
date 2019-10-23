@@ -1,13 +1,5 @@
 package com.ds.bbs.controller.member;
 
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.RSAPublicKeySpec;
-
-import javax.crypto.Cipher;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -81,7 +73,7 @@ public class MemberController {
 	}
 	
 	//로그인 검사
-	@RequestMapping(value = "/loginCheck", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String loginCheck(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(true);
 		String userId = request.getParameter("login_id");
@@ -89,6 +81,8 @@ public class MemberController {
 		MemberDTO login = memberService.loginCheck(userId, userPwd);
 		if(login != null) {
 			session.setAttribute("member", login);
+		} else {
+			return "redirect:/board?message=nologin";
 		}
 		return "redirect:/board/list";
 	}

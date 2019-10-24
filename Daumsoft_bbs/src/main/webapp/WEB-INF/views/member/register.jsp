@@ -118,8 +118,13 @@ input:focus {
 				return;
 			}
 
-			var shaPw = CryptoJS.SHA256($('#userPwd').val()).toString();
-			$("#userPwd").val(shaPw);
+	        var rsa = new RSAKey();
+	        rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+	        
+	        $("#USER_PW").val(rsa.encrypt(userPwd));
+	        $("#userPwd").val("");
+	        $("#userPwd2").val("");
+
 			document.registerForm.submit();
 		});
 	});
@@ -138,6 +143,8 @@ input:focus {
 	</script>
 </c:if>
 <form name="registerForm" action="/member/rgCommit" method="post">
+	<input type="hidden" id="RSAModulus" value="${RSAModulus}"/>
+    <input type="hidden" id="RSAExponent" value="${RSAExponent}"/>  
     <div class="join_layout">
       <div class="join_section" id="join_header">
         <span  id="join_title">회원가입</span>
@@ -174,6 +181,7 @@ input:focus {
         </div>
         <div class="join_info">
           <input type="password" class="info_txt" id="userPwd" name="userPwd" maxlength="20">
+          <input type="hidden" id="USER_PW" name="USER_PW">
         </div>
       </div>
       <div class="join_section">

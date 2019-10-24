@@ -1,5 +1,8 @@
 package com.ds.bbs.controller.member;
 
+import java.security.MessageDigest;
+import java.security.PrivateKey;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ds.bbs.cripto.CriptoClass;
 import com.ds.bbs.model.member.dto.MemberDTO;
 import com.ds.bbs.service.member.MemberService;
 
@@ -18,9 +22,18 @@ public class MemberController {
 	@Inject
 	MemberService memberService;
 	
+	CriptoClass cripto = new CriptoClass();
+	
 	//회원가입창 이동
 	@RequestMapping(value = "/register", method=RequestMethod.GET)
 	public String register(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		
+		// 개인키 삭제
+    	session.removeAttribute(CriptoClass.RSA_WEB_KEY);
+
+		// RSA 키 생성
+    	cripto.initRsa(request);
 		return "member/register";
 	}
 	
@@ -62,25 +75,43 @@ public class MemberController {
 		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
 		String userNikname = request.getParameter("userNikname");
-		String userPwd = request.getParameter("userPwd");
-//		System.out.println("userId 값은 : " + userId);
-//		System.out.println("userName 값은 : " + userName);
-//		System.out.println("userNikname 값은 : " + userNikname);
-//		System.out.println("userPwd 값은 : " + userPwd);
-		memberDto.setUserId(userId);
+		String userPwd = null;
+		String USER_PW = request.getParameter("USER_PW"); // rsa로 변환한 pw
+		
+		HttpSession session = request.getSession();
+        
+		/* **************************************암호화************************************ */
+		PrivateKey privateKey = (PrivateKey) session.getAttribute(CriptoClass.RSA_WEB_KEY);
+        // rsa 암호화 된 패스워드 복호화하여 평문 만들기
+        userPwd = cripto.decryptRsa(privateKey, USER_PW);
+        // 평문을 sha256을 통해 암호화 변경 후 DB 입력
+        userPwd = cripto.transBySHA256(userPwd);
+
+        memberDto.setUserId(userId);
 		memberDto.setUserName(userName);
 		memberDto.setUserNikname(userNikname);
 		memberDto.setUserPwd(userPwd);
 		memberService.registerMember(memberDto);
-		return "member/rgCommit";
+		return "redirect:/board?message=success";
 	}
 	
 	//로그인 검사
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String loginCheck(HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		String userId = request.getParameter("login_id");
-		String userPwd = request.getParameter("login_pwd");
+		String userPwd = null;
+		String LOGIN_USER_PW = request.getParameter("LOGIN_USER_PW");
+		System.out.println("받아온 PW : " + LOGIN_USER_PW);
+		
+		/* **************************************암호화************************************ */
+        PrivateKey privateKey = (PrivateKey) session.getAttribute(CriptoClass.RSA_WEB_KEY); // 개인키
+        // rsa 암호화 된 패스워드 복호화하여 평문 만들기
+        userPwd = cripto.decryptRsa(privateKey, LOGIN_USER_PW);
+		System.out.println("평문 PW : " + userPwd);
+		// 평문을 SHA256 형식으로 변환
+		userPwd = cripto.transBySHA256(userPwd);
+		
 		MemberDTO login = memberService.loginCheck(userId, userPwd);
 		if(login != null) {
 			session.setAttribute("member", login);
@@ -92,8 +123,15 @@ public class MemberController {
 	
 	//로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception {
-		session.invalidate();
+	public String logout(HttpSession session, HttpServletRequest request) throws Exception {
+		session.invalidate(); // 세션 삭제
+		
+		session = request.getSession();
+		// 개인키 삭제
+    	session.removeAttribute(CriptoClass.RSA_WEB_KEY);
+		// RSA 키 생성
+    	cripto.initRsa(request);
+    	
 		return "board/home"; //페이지 이동
 	}
 }

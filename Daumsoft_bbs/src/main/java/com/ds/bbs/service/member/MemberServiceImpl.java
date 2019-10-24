@@ -1,8 +1,5 @@
 package com.ds.bbs.service.member;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -27,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public void registerMember(MemberDTO memberDto) {
+		
 		memberDao.registerMember(memberDto);
 	}
 

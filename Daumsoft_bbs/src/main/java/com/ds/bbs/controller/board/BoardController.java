@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ds.bbs.cripto.CriptoClass;
 import com.ds.bbs.model.board.dto.BoardDTO;
 import com.ds.bbs.model.board.dto.FileDTO;
 import com.ds.bbs.model.board.dto.Pager;
@@ -36,9 +37,18 @@ public class BoardController {
 	@Inject
 	BoardService boardService;
 
+	CriptoClass cripto = new CriptoClass();
+	
 	// 메인 화면
 	@RequestMapping("")
 	public String home(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		
+		// 개인키 삭제
+    	session.removeAttribute(CriptoClass.RSA_WEB_KEY);
+
+		// RSA 키 생성
+    	cripto.initRsa(request);
 		return "board/home";
 	}
 
@@ -46,8 +56,14 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage,
 			@RequestParam(value = "search_option", required = false, defaultValue = "all") String search_option,
-			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, ModelAndView mav)
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, ModelAndView mav,
+			HttpServletRequest request)
 			throws Exception {
+		HttpSession session = request.getSession();
+		// 개인키 삭제
+    	session.removeAttribute(CriptoClass.RSA_WEB_KEY);
+		// RSA 키 생성
+    	cripto.initRsa(request);
 		int count = boardService.count(search_option, keyword); // 총 게시물 수
 		Pager pager = new Pager(count, curPage);
 		int start = pager.getPageBegin(); // 시작점

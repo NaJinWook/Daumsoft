@@ -35,8 +35,11 @@
 				$("#login_pwd").focus();
 				return;
 			}
-			var shaPw = CryptoJS.SHA256($('#login_pwd').val()).toString(); 
-			$("#login_pwd").val(shaPw);
+			var rsa = new RSAKey();
+	        rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+	        $("#LOGIN_USER_PW").val(rsa.encrypt(login_pwd));
+	        $("#login_pwd").val("");
+			
 			document.loginForm.submit();
 		});
 		$("#home_logout").click(function() {
@@ -68,6 +71,8 @@
          <button type="button" id="modal_close_btn">X</button>
        </div>
        <form name="loginForm" action="/member/loginCheck" method="post">
+       	<input type="hidden" id="RSAModulus" value="${RSAModulus}"/>
+    	<input type="hidden" id="RSAExponent" value="${RSAExponent}"/>  
         <div class="login_info">
           <div class="login_section">
             <p class="login_label"><label for="login_id" id="label_id">아이디</label></p>
@@ -76,6 +81,7 @@
           <div class="login_section">
             <p class="login_label"><label for="login_pwd" id="label_pwd">비밀번호</label></p>
             <input style="letter-spacing: 5px;" id="login_pwd" type="password" name="login_pwd">
+            <input type="hidden" id="LOGIN_USER_PW" name="LOGIN_USER_PW">
           </div>
           <div class="login_section">
             <button class="groupBtn" id="login_btn" type="button">로그인</button>

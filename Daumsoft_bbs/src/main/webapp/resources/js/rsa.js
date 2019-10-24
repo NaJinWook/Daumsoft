@@ -34,7 +34,6 @@ function pkcs1pad2(s,n) {
   var i = s.length - 1;
   while(i >= 0 && n > 0) {
     var c = s.charCodeAt(i--);
-    
     if(c < 128) { // encode using utf-8
       ba[--n] = c;
     }

@@ -12,6 +12,11 @@
 		alert("로그인 정보가 일치하지 않습니다.");
 	</script>
 </c:if>
+<c:if test="${param.message == 'success'}">
+	<script>
+		alert("회원 가입이 완료되었습니다.\n로그인 후 이용해주세요.");
+	</script>
+</c:if>
 	<div id="info">Daumsoft</div>
 	<div id="bbs">
 		<img id="ds" src="../../../resources/img/ds.png" alt="다음소프트"

@@ -1,7 +1,5 @@
 package com.ds.bbs.service.member;
 
-import java.util.Map;
-
 import com.ds.bbs.model.member.dto.MemberDTO;
 
 public interface MemberService {

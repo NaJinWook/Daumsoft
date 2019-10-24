@@ -68,8 +68,13 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void fileUpload(FileDTO f_dto) throws Exception {
-		sqlSession.insert("board.upload", f_dto);
+	public void insert_fileUpload(FileDTO f_dto) throws Exception {
+		sqlSession.insert("board.insert_upload", f_dto);
+	}
+	
+	@Override
+	public void update_fileUpload(FileDTO f_dto) throws Exception {
+		sqlSession.insert("board.update_upload", f_dto);
 	}
 
 	@Override

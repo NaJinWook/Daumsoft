@@ -52,8 +52,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void fileUpload(FileDTO f_dto) throws Exception {
-		boardDao.fileUpload(f_dto);
+	public void insert_fileUpload(FileDTO f_dto) throws Exception {
+		boardDao.insert_fileUpload(f_dto);
+	}
+	
+	@Override
+	public void update_fileUpload(FileDTO f_dto) throws Exception {
+		boardDao.update_fileUpload(f_dto);
 	}
 
 	@Override

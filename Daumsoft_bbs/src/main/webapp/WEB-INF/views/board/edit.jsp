@@ -15,9 +15,8 @@
 				alert("제목을 입력하세요.");
 				$("#title").focus();
 				return;
-			} else if (contents == "") {
-				alert("내용을 입력하세요.");
-				$("#contents").focus();
+			} else if(CKEDITOR.instances.contents.getData().length < 1){
+				alert("내용을 입력해주세요.");
 				return;
 			} 
 			document.updateForm.submit();
@@ -63,6 +62,12 @@
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents">${dto.contents}</textarea>
+				<script>
+				//id가 description인 태그에 ckeditor를 적용시킴
+		    	 CKEDITOR.replace("contents", {
+		    		 height:450
+		         });
+				</script>
 			</div>
 			<div id="writer_section">
 				<c:forEach items="${f_dto}" var="file" varStatus="status">

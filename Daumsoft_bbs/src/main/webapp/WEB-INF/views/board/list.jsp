@@ -50,7 +50,9 @@
 					<th class="bbs_title" scope="col" width="10%">번호</th>
 					<th class="bbs_title" scope="col" width="45%">제목</th>
 					<th class="bbs_title" scope="col" width="15%">작성자</th>
-					<th class="bbs_title" scope="col" width="20%">등록일</th>
+					<th class="bbs_title" scope="col" width="20%">
+						<a style="text-decoration:none;color:black;"href="#">등록일</a>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -67,8 +69,9 @@
 							</c:if>
 						</td>
 						<td class="bbs_contents" scope="col" width="15%">${list.writer}</td>
-						<td class="bbs_contents" scope="col" width="20%"><fmt:formatDate
-								pattern="yyyy-MM-dd HH:mm:ss" value="${list.regDate}" /></td>
+						<td class="bbs_contents" scope="col" width="20%">
+							<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.regDate}" />
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -13,7 +13,8 @@ public interface BoardService {
 	public void update(BoardDTO dto) throws Exception; // 게시글 수정
 	public void delete(int bno) throws Exception; // 게시글 삭제
 	public void delete2(int bno) throws Exception; // 게시글 삭제시 첨부파일도 같이 삭제
-	public void fileUpload(FileDTO f_dto) throws Exception; // 게시글 등록
+	public void insert_fileUpload(FileDTO f_dto) throws Exception; // 게시글 등록
+	public void update_fileUpload(FileDTO f_dto) throws Exception; // 게시글 등록
 	public int count(String search_option, String keyword) throws Exception;
 	public List<FileDTO> f_read(int bno) throws Exception;
 	public FileDTO selectFile(int fileNo) throws Exception;

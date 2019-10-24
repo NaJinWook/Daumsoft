@@ -13,13 +13,12 @@ public class FileDTO {
 	
 	public FileDTO() {}
 
-	public FileDTO(int bno, String saveName, String fileName, long fileSize, String fileUserName) {
+	public FileDTO(int bno, String saveName, String fileName, long fileSize) {
 		this.bno = bno;
 		this.saveName = saveName;
 		this.fileName = fileName;
 		this.filePath = SAVE_FILE_PATH;
 		this.fileSize = fileSize;
-		this.fileUserName = fileUserName;
 	}
 
 	public int getFileNo() {

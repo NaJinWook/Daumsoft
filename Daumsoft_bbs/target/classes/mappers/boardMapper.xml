@@ -109,8 +109,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 	</sql>
 
-	<insert id="upload" parameterType="com.ds.bbs.model.board.dto.FileDTO">
-		INSERT INTO bbs_fileStore (bno, saveName, fileName, filePath, fileSize, fileUserName) VALUES
-		(#{bno}, #{saveName}, #{fileName}, #{filePath}, #{fileSize}, #{fileUserName});
+	<insert id="insert_upload" parameterType="com.ds.bbs.model.board.dto.FileDTO">
+		INSERT INTO bbs_fileStore (bno, saveName, fileName, filePath, fileSize) VALUES
+		((SELECT COUNT(*) FROM bbs), #{saveName}, #{fileName}, #{filePath}, #{fileSize})
+	</insert>
+	
+	<insert id="update_upload" parameterType="com.ds.bbs.model.board.dto.FileDTO">
+		INSERT INTO bbs_fileStore (bno, saveName, fileName, filePath, fileSize) VALUES
+		(#{bno}, #{saveName}, #{fileName}, #{filePath}, #{fileSize})
 	</insert>
 </mapper>

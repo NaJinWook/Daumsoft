@@ -18,8 +18,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시글 목록
 	@Override
-	public List<BoardDTO> list(int startNum, int postNum, String search_option, String keyword) throws Exception {
-		return boardDao.list(startNum, postNum, search_option, keyword);
+	public List<BoardDTO> list(int startNum, int postNum, String search_option, String keyword, String sort) throws Exception {
+		return boardDao.list(startNum, postNum, search_option, keyword, sort);
 	}
 	
 	// 게시글 등록

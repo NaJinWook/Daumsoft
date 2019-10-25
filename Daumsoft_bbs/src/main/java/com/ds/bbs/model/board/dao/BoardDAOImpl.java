@@ -20,12 +20,13 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	// 게시글 목록
 	@Override
-	public List<BoardDTO> list(int startNum, int postNum, String search_option, String keyword) throws Exception {
+	public List<BoardDTO> list(int startNum, int postNum, String search_option, String keyword, String sort) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("startNum", startNum);
 		map.put("postNum", postNum);
 		map.put("search_option", search_option);
 		map.put("keyword", keyword);
+		map.put("sort", sort);
 		return sqlSession.selectList("board.listPage", map);
 	}
 	

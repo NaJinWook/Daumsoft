@@ -40,7 +40,7 @@
 			history.back();
 		});
 		$("#list_back").click(function() {
-			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}";
+			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}&postNum=${postNum}";
 		});
 		function fn_delFile(obj){
 			obj.parent().remove();
@@ -59,6 +59,7 @@
 			<div id="title_section">
 				<input type="text" id="title" name="title" maxlength="45"
 					placeholder="제목을 입력하세요" value="${dto.title}" autocomplete="off" />
+				<input style="visibility:hidden; width:0px" />
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents">${dto.contents}</textarea>

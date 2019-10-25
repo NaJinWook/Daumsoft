@@ -8,25 +8,25 @@
 <script>
 	$(function() {
 		$("#list_btn").click(function() {
-			location.href = "/board/list?curPage=${map.curPage}&search_option=${map.search_option}&keyword=${map.keyword}";
+			location.href = "/board/list?curPage=${map.curPage}&search_option=${map.search_option}&keyword=${map.keyword}&postNum=${map.postNum}";
 		});
 		$("#edit_btn").click(function() {
 			document.editForm.submit();
 		});
 		$("#remove_btn").click(function() {
-			if (confirm("삭제하시겠습니까?")) {
+			if (confirm("정말로 삭제하시겠습니까?")) {
 				document.removeForm.submit();
 			}
 		});
 	});
 </script>
 <style>
-	#file_icon{
-		width:20px;
-		height:20px;
-		padding-top: 5px;
-		padding-left: 5px;
-	}
+#file_icon{
+	width:20px;
+	height:20px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
 </style>
 </head>
 <body>
@@ -38,7 +38,15 @@
 		</div>
 		<div id="curName">
 			<span style="padding: 10px; line-height: 30px; font-weight: bold;">닉네임</span>
-			<span>${map.dto.writer}</span>
+			<c:choose>
+				<c:when test="${map.dto.writer eq '운영자'}">
+					<span style="color: rgb(255, 78, 57); font-weight: bold;">
+					<img src="../../../resources/img/admin.png" style="width: 15px; height: 15px;" />${map.dto.writer}</span>
+				</c:when>
+				<c:otherwise>
+					<span>${map.dto.writer}</span>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div id="curInfo">
 			<div id="info_date">
@@ -58,7 +66,7 @@
 		<div id="curOption">
 			<div id="option_btn">
 				<input type="button" id="list_btn" value="목록" style="cursor: pointer;" />
-				<c:if test="${member.userNikname == map.dto.writer || member.verify == 1}">
+				<c:if test="${member.verify == 2 || (member.verify == 1 && map.dto.writer ne '운영자') || member.userNikname == map.dto.writer}">
 					<input type="button" id="edit_btn" value="수정" style="cursor: pointer;" />
 					<input type="button" id="remove_btn" value="삭제" style="cursor: pointer;" />
 				</c:if>

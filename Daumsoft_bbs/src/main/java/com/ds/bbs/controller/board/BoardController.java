@@ -2,12 +2,6 @@ package com.ds.bbs.controller.board;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.RSAPublicKeySpec;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +24,7 @@ import com.ds.bbs.cripto.CriptoClass;
 import com.ds.bbs.model.board.dto.BoardDTO;
 import com.ds.bbs.model.board.dto.FileDTO;
 import com.ds.bbs.model.board.dto.Pager;
+import com.ds.bbs.model.member.dto.MemberDTO;
 import com.ds.bbs.service.board.BoardService;
 
 @Controller
@@ -56,7 +52,9 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage,
 			@RequestParam(value = "search_option", required = false, defaultValue = "all") String search_option,
-			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, ModelAndView mav,
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, 
+			@RequestParam(value = "sort", required = false, defaultValue = "regDate") String sort, ModelAndView mav,
+			@RequestParam(value = "postNum", required = false, defaultValue = "10") int postNum,
 			HttpServletRequest request)
 			throws Exception {
 		HttpSession session = request.getSession();
@@ -64,16 +62,21 @@ public class BoardController {
     	session.removeAttribute(CriptoClass.RSA_WEB_KEY);
 		// RSA 키 생성
     	cripto.initRsa(request);
+    	
 		int count = boardService.count(search_option, keyword); // 총 게시물 수
-		Pager pager = new Pager(count, curPage);
+		Pager pager = new Pager(count, curPage, postNum);
 		int start = pager.getPageBegin(); // 시작점
-		int postNum = pager.getPageEnd(); // 출력할 게시물 수
+		postNum = pager.getPageEnd(); // 출력할 게시물 수
+		System.out.println("출력할 수 : " + postNum);
 
 		List<BoardDTO> list = null;
-		list = boardService.list(start, postNum, search_option, keyword);
+		System.out.println("파라미터로 받은 sort값 : " + sort);
+		list = boardService.list(start, postNum, search_option, keyword, sort);
 		Map<String, Object> map = new HashMap<>();
 		mav.setViewName("board/list");
+		map.put("postNum", postNum);
 		map.put("list", list);
+		map.put("sort", sort);
 		map.put("count", count);
 		map.put("search_option", search_option);
 		map.put("keyword", keyword);
@@ -87,8 +90,10 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write(@RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage,
 			@RequestParam(value = "search_option", required = false, defaultValue = "all") String search_option,
-			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model)
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model,
+			@RequestParam(value = "postNum", required = false, defaultValue = "10") int postNum)
 			throws Exception {
+		model.addAttribute("postNum", postNum);
 		model.addAttribute("curPage", curPage);
 		model.addAttribute("search_option", search_option);
 		model.addAttribute("keyword", keyword);
@@ -134,15 +139,18 @@ public class BoardController {
 	public ModelAndView read(@RequestParam(value = "bno") int bno,
 			@RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage,
 			@RequestParam(value = "search_option", required = false, defaultValue = "all") String search_option,
-			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, ModelAndView mav)
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, ModelAndView mav,
+			@RequestParam(value = "postNum", required = false, defaultValue = "10") int postNum)
 			throws Exception {
 		BoardDTO dto = null;
 		List<FileDTO> f_dto = null;
 		dto = boardService.read(bno);
 		//f_dto = boardService.getFileInfo(bno);
 		f_dto = boardService.f_read(bno);
+		System.out.println("꺼낸 내용 : "+dto.getContents());
 		Map<String, Object> map = new HashMap<>();
 		mav.setViewName("board/read");
+		map.put("postNum", postNum);
 		map.put("curPage", curPage);
 		map.put("search_option", search_option);
 		map.put("keyword", keyword);
@@ -156,12 +164,14 @@ public class BoardController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ModelAndView modify(@RequestParam(value = "bno") int bno, @RequestParam(value = "curPage") int curPage,
 			@RequestParam(value = "search_option") String search_option,
-			@RequestParam(value = "keyword") String keyword, Model model, ModelAndView mav) throws Exception {
+			@RequestParam(value = "keyword") String keyword, Model model, ModelAndView mav,
+			@RequestParam(value = "postNum", required = false, defaultValue = "10") int postNum) throws Exception {
 		BoardDTO dto = null;
 		List<FileDTO> f_dto = null;
 		f_dto = boardService.f_read(bno);
 		int loop = 3 - (f_dto.size());
 		dto = boardService.read(bno);
+		model.addAttribute("postNum", postNum);
 		model.addAttribute("curPage", curPage);
 		model.addAttribute("search_option", search_option);
 		model.addAttribute("keyword", keyword);
@@ -229,6 +239,24 @@ public class BoardController {
 		boardService.delete2(bno);
 		return "redirect:/board/list?curPage=" + curPage + "&search_option=" + search_option + "&keyword="
 				+ enc_keyword;
+	}
+	
+	// 게시글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
+	public int select_delete(@RequestParam(value="chbox[]") List<String> chArr, HttpSession session) throws Exception {
+		Object loginCheck = session.getAttribute("member");
+		int result = 0;
+		int bno = 0;
+		if(loginCheck != null) {
+			for(String i : chArr) {
+				bno = Integer.parseInt(i);
+				boardService.delete(bno);
+				boardService.delete2(bno);
+			}
+			result = 1;
+		}
+		return result;
 	}
 
 	public String encoding(String str) {

@@ -46,6 +46,9 @@
 			location.href = "/member/logout";
 		});
 	});
+	function login(){
+		$("#login_btn").click();
+	}
 </script>
  </head>
  <body>
@@ -80,7 +83,7 @@
           </div>
           <div class="login_section">
             <p class="login_label"><label for="login_pwd" id="label_pwd">비밀번호</label></p>
-            <input style="letter-spacing: 5px;" id="login_pwd" type="password" name="login_pwd">
+            <input style="letter-spacing: 5px;" id="login_pwd" type="password" name="login_pwd" onkeydown="if(event.keyCode == 13) { login();}">
             <input type="hidden" id="LOGIN_USER_PW" name="LOGIN_USER_PW">
           </div>
           <div class="login_section">

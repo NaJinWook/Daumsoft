@@ -7,6 +7,23 @@
 <%@ include file="../include/comm.jsp"%>
 <script>
 	$(function() {
+ 		//id가 description인 태그에 ckeditor를 적용시킴
+		CKEDITOR.replace("contents", {
+			height : 450,
+			filebrowserImageUploadUrl : '/community/imageUpload'
+		});
+		CKEDITOR.on('dialogDefinition', function(ev) {
+			var dialogName = ev.data.name;
+			var dialogDefinition = ev.data.definition;
+
+			switch (dialogName) {
+			case 'image': //Image Properties dialog
+				//dialogDefinition.removeContents('info');
+				dialogDefinition.removeContents('Link');
+				dialogDefinition.removeContents('advanced');
+				break;
+			}
+		});
 		$("#write_commit").click(function() {
 			var title = $.trim($("#title").val());
 			var contents = $.trim($("#contents").val());
@@ -14,15 +31,17 @@
 				alert("제목을 입력해주세요.");
 				$("#title").focus();
 				return;
-			} else if(CKEDITOR.instances.contents.getData().length < 1){
+			} else if (CKEDITOR.instances.contents.getData().length < 1) {
 				alert("내용을 입력해주세요.");
 				return;
 			}
 			document.sendForm.submit();
 		});
-		$("#write_cancel").click(function() {
-			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}";
-		});
+		$("#write_cancel")
+				.click(
+						function() {
+							location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}&postNum=${postNum}";
+						});
 	});
 </script>
 </head>
@@ -33,15 +52,10 @@
 			<div id="title_section">
 				<input type="text" id="title" name="title" maxlength="45"
 					placeholder="제목을 입력하세요" autocomplete="off" />
+					<input style="visibility:hidden; width:0px" />
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents"></textarea>
-				<script>
-	    	 	 //id가 description인 태그에 ckeditor를 적용시킴
-		    	 CKEDITOR.replace("contents", {
-		    		 height:450
-		         });
-	    		</script>
 				<input type="hidden" name="writer" value="${member.userNikname}" />
 			</div>
 			<div id="writer_section">

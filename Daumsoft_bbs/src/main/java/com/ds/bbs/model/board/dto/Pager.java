@@ -1,7 +1,7 @@
 package com.ds.bbs.model.board.dto;
 
 public class Pager {
-	public static final int PAGE_SCALE = 10; // 페이지당 게시물수
+//	public static final int PAGE_SCALE = 10; // 페이지당 게시물수
 	public static final int BLOCK_SCALE = 10;// 화면당 페이지수
 	private int curPage; // 현재 페이지
 	private int prevPage;// 이전 페이지
@@ -15,8 +15,19 @@ public class Pager {
 	private int pageEnd; // #{end} 변수에 전달될 값
 	private int blockBegin; // 블록의 시작페이지 번호
 	private int blockEnd; // 블록의 끝페이지 번호
+	private int postNum;
 
 	public Pager() {
+	}
+	
+	public Pager(int count, int curPage, int postNum) {
+		this.postNum = postNum;
+		curBlock = 1; // 현재블록 번호
+		this.curPage = curPage; // 현재 페이지 번호
+		setTotPage(count); // 전체 페이지 갯수 계산
+		setPageRange(); // limit 값 계산
+		setTotBlock(); // 전체 블록 갯수 계산
+		setBlockRange(); // 블록의 시작,끝 번호 계산
 	}
 
 	// 생성자
@@ -80,7 +91,7 @@ public class Pager {
 	// 전체 페이지 갯수 계산
 	public void setTotPage(int count) {
 		// Math.ceil() 올림
-		totPage = (int) Math.ceil(count * 1.0 / PAGE_SCALE);
+		totPage = (int) Math.ceil(count * 1.0 / postNum);
 	}
 	
 	// 블록의 갯수 계산
@@ -91,8 +102,8 @@ public class Pager {
 	public void setPageRange() {
 		// 시작번호=(현재페이지-1)x페이지당 게시물수
 		// 페이지 보여질 수=10
-		pageBegin = (curPage - 1) * PAGE_SCALE;
-		pageEnd = PAGE_SCALE;
+		pageBegin = (curPage - 1) * postNum;
+		pageEnd = postNum;
 	}
 
 	public int getTotBlock() {

@@ -92,7 +92,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 		and delYn = 'N'
 		group by b.bno
-		order by b.bno desc
+		<if test="sort == 'regDate'">
+			order by b.regDate desc
+		</if>
+		<if test="sort == 'editDate'">
+			order by b.editDate desc
+		</if>
 		limit #{startNum}, #{postNum}
 	</select>
 

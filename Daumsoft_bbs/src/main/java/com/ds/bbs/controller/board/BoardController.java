@@ -1,6 +1,9 @@
 package com.ds.bbs.controller.board;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +12,10 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +29,8 @@ import com.ds.bbs.cripto.CriptoClass;
 import com.ds.bbs.model.board.dto.BoardDTO;
 import com.ds.bbs.model.board.dto.FileDTO;
 import com.ds.bbs.model.board.dto.Pager;
-import com.ds.bbs.model.member.dto.MemberDTO;
 import com.ds.bbs.service.board.BoardService;
+import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("/board*")
@@ -34,6 +39,9 @@ public class BoardController {
 	BoardService boardService;
 
 	CriptoClass cripto = new CriptoClass();
+	
+	@Value("#{'${whiteList}'.split(',')}")
+    private List<String> whiteList;
 	
 	// 메인 화면
 	@RequestMapping("")
@@ -93,6 +101,7 @@ public class BoardController {
 			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model,
 			@RequestParam(value = "postNum", required = false, defaultValue = "10") int postNum)
 			throws Exception {
+		model.addAttribute("whiteList", whiteList);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("curPage", curPage);
 		model.addAttribute("search_option", search_option);
@@ -171,6 +180,7 @@ public class BoardController {
 		f_dto = boardService.f_read(bno);
 		int loop = 3 - (f_dto.size());
 		dto = boardService.read(bno);
+		model.addAttribute("whiteList", whiteList);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("curPage", curPage);
 		model.addAttribute("search_option", search_option);
@@ -258,7 +268,59 @@ public class BoardController {
 		}
 		return result;
 	}
+	
+	// CK에디터 이미지 파일 업로드 컨트롤러
+	@ResponseBody
+	@SuppressWarnings("resource")
+	@RequestMapping(value = "/ckUpload")
+	public void ckFileUpload(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam MultipartFile upload) throws Exception {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html); charset=utf-8");
 
+		OutputStream out = null;
+		PrintWriter printWriter = null;
+
+		String fileName = upload.getOriginalFilename(); // 첨부파일 이름
+		byte[] bytes = upload.getBytes(); // 첨부파일을 바이트 배열로 저장
+
+		// 업로드할 디렉토리 경로 + fileName //물리적 실제 저장소
+		String uploadPath = UploadPath.path(request) + fileName;
+
+		out = new FileOutputStream(new File(uploadPath));
+		out.write(bytes);
+
+		printWriter = response.getWriter();
+
+		// URL상에서 볼 수 있는 이미지 경로
+		String fileUrl = "/resources/ckupload/" + fileName;
+
+		JsonObject json = new JsonObject();
+
+		json.addProperty("uploaded", 1);
+		json.addProperty("fileName", fileName);
+		json.addProperty("url", fileUrl);
+
+		printWriter.println(json);
+		printWriter.flush();
+	}
+
+	public static class UploadPath {
+		public static String attach_path = "/resources/ckupload/";
+
+		public static String path(HttpServletRequest request) {
+			String uploadPath = "/";
+			try {
+				String root_path = request.getSession().getServletContext().getRealPath("/resources/ckupload/");
+				return root_path;
+			} catch (Exception e) {
+				e.printStackTrace();
+
+				return uploadPath;
+			}
+		}
+	}
+	
 	public String encoding(String str) {
 		if (str != null && str.length() > 0) {
 			return str.replace("<", "&lt").replace(">", "&gt").replace("\r\n", "<br/>");

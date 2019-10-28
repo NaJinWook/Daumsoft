@@ -54,4 +54,9 @@
       <put-attribute name="title" value="로그아웃" />
       <put-attribute name="body" value="/WEB-INF/views/board/home.jsp" />
    </definition>
+   
+   <definition name="member/management" extends="baseLayout">
+      <put-attribute name="title" value="회원관리" />
+      <put-attribute name="body" value="/WEB-INF/views/member/management.jsp" />
+   </definition>
 </tiles-definitions>

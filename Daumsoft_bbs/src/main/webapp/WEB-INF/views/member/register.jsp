@@ -87,7 +87,7 @@ input:focus {
 			var userNikname = $.trim($("#userNikname").val());
 			var userPwd = $.trim($("#userPwd").val());
 			var userPwd2 = $.trim($("#userPwd2").val());
-
+			
 			if (userId == "") {
 				alert("아이디를 입력해주세요.");
 				$("#userId").focus();
@@ -110,13 +110,16 @@ input:focus {
 				return;
 			}
 			
-			if($("#idCheck").attr("disabled") == false){
+			if($("#idCheck").prop("disabled") == false){
 				alert("아이디 중복검사를 해주세요.");
 				return;
-			} else if($("#niknameCheck").attr("disabled") == false) {
+			}
+			if($("#niknameCheck").prop("disabled") == false) {
 				alert("닉네임 중복검사를 해주세요.");
 				return;
 			}
+			
+
 
 	        var rsa = new RSAKey();
 	        rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());

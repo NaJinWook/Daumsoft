@@ -35,7 +35,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
-	
+	config.filebrowserImageUploadUrl = '/board/ckUpload'; // 파일업로드 목록 추가
 	CKEDITOR.dtd.$removeEmpty['i'] = false; // 빈태그 삭제 방지
 	config.enterMode = CKEDITOR.ENTER_BR; // p태그를 br태그로 변환
 	config.fillEmptyBlocks = false; // 자동으로 공백문자 추가 제거

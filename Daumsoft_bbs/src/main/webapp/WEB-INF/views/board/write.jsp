@@ -6,24 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="../include/comm.jsp"%>
 <script>
+	var i = 0;
+	var list = new Array();
+	<c:forEach items="${whiteList}" var="item">
+	   list.push("${item}");
+	</c:forEach>
 	$(function() {
  		//id가 description인 태그에 ckeditor를 적용시킴
 		CKEDITOR.replace("contents", {
-			height : 450,
-			filebrowserImageUploadUrl : '/community/imageUpload'
+			height : 300,
+			filebrowserImageUploadUrl : '/board/ckUpload'
 		});
-		CKEDITOR.on('dialogDefinition', function(ev) {
-			var dialogName = ev.data.name;
-			var dialogDefinition = ev.data.definition;
-
-			switch (dialogName) {
-			case 'image': //Image Properties dialog
-				//dialogDefinition.removeContents('info');
-				dialogDefinition.removeContents('Link');
-				dialogDefinition.removeContents('advanced');
-				break;
-			}
-		});
+		
 		$("#write_commit").click(function() {
 			var title = $.trim($("#title").val());
 			var contents = $.trim($("#contents").val());
@@ -37,12 +31,48 @@
 			}
 			document.sendForm.submit();
 		});
-		$("#write_cancel")
-				.click(
-						function() {
-							location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}&postNum=${postNum}";
-						});
+		$("#write_cancel").click(function() {
+			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}&postNum=${postNum}";
+		});
 	});
+
+	function fn_fileAdd() {
+		var str = "<input type='file' id='uploadFile_"
+				+ i
+				+ "'name='uploadFile' style='padding-left:5px;display:block;' value='' onchange='checkExt(this);' multiple />";
+		$(".fileDrop").append(str);
+	}
+
+	function checkExt(file) {
+		var fileName = file.value;
+		var fileID = '#' + file.id
+		var files = $(fileID).prop("files");
+		var names = $.map(files, function(val) {
+			return val.name;
+		});
+		for (var j = 0; j < names.length; j++) {
+			if (names[j].length > 50) {
+				alert("파일명: " + names[j] + "\n파일명은 50자까지 가능합니다.");
+				file.type = 'radio';
+				file.type = 'file';
+				return;
+			}
+			if (list.indexOf(names[j].substring(names[j].lastIndexOf('.') + 1).toLowerCase()) < 0) {
+				alert("파일명: "
+						+ names[j]
+						+ "\n확장자가 올바르지 않습니다.\n엑셀(xls,xlsx) / 파워포인트(ppt.pptx,pdf) / 워드(txt,hwp,doc,docx,xml)파일만 첨부가능합니다.");
+				file.type = 'radio';
+				file.type = 'file';
+				/*
+				fileDoc.select();
+				document.selection.clear();
+				 */
+				return;
+			}
+		}
+		i++;
+		fn_fileAdd();
+	}
 </script>
 </head>
 <body>
@@ -58,10 +88,8 @@
 				<textarea id="contents" name="contents"></textarea>
 				<input type="hidden" name="writer" value="${member.userNikname}" />
 			</div>
-			<div id="writer_section">
-				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
-				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
-				<input type="file" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
+			<div class="fileDrop" id="writer_section">
+				<input type="file" id="uploadFile_0" name="uploadFile" style="padding-left:5px;display:block;" multiple  onchange="checkExt(this);"/>
 			</div>
 			<div id="btn_section">
 				<button type="button" id="write_commit">등록</button>

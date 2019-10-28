@@ -56,4 +56,9 @@
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 	</interceptors>
+	
+     <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <beans:property name="location" value="/WEB-INF/config/config.properties"/>
+        <beans:property name="fileEncoding" value="UTF-8" />
+    </beans:bean>
 </beans:beans>

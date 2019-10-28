@@ -6,7 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="../include/comm.jsp"%>
 <script>
+	var i = 0;
+	var list = new Array();
+	<c:forEach items="${whiteList}" var="item">
+	   list.push("${item}");
+	</c:forEach>
 	$(function() {
+		//id가 description인 태그에 ckeditor를 적용시킴
+		CKEDITOR.replace("contents", {
+			height : 300,
+			filebrowserImageUploadUrl : '/board/ckUpload'
+		});
 		$("#update_commit").click(function() {
 			var title = $.trim($("#title").val());
 			var contents = $.trim($("#contents").val());
@@ -15,41 +25,63 @@
 				alert("제목을 입력하세요.");
 				$("#title").focus();
 				return;
-			} else if(CKEDITOR.instances.contents.getData().length < 1){
+			} else if (CKEDITOR.instances.contents.getData().length < 1) {
 				alert("내용을 입력해주세요.");
 				return;
-			} 
+			}
 			document.updateForm.submit();
 		});
-		$("#delBtn_0").click(function(e){
-			e.preventDefault();
-			fn_delFile($(this));
-			fn_fileAdd();
-		});
-		$("#delBtn_1").click(function(e){
-			e.preventDefault();
-			fn_delFile($(this));
-			fn_fileAdd();
-		});
-		$("#delBtn_2").click(function(e){
-			e.preventDefault();
-			fn_delFile($(this));
-			fn_fileAdd();
-		});
+		$('.fileDeleteBtn').on("click",function(){
+			fn_delFile($(this));   
+	    });
 		$("#update_cancel").click(function() {
 			history.back();
 		});
 		$("#list_back").click(function() {
 			location.href = "/board/list?curPage=${curPage}&search_option=${search_option}&keyword=${keyword}&postNum=${postNum}";
 		});
-		function fn_delFile(obj){
+		function fn_delFile(obj) {
 			obj.parent().remove();
 		}
-		function fn_fileAdd(){
-			var str = "<input type='file' id='uploadFile' name='uploadFile' style='padding-left:5px;display:block;'/>";
-			$("#file_add").append(str);
-		}
 	});
+	
+	function fn_fileAdd() {
+		var str = "<input type='file' id='uploadFile_"
+				+ i
+				+ "'name='uploadFile' style='padding-left:5px;display:block;' value='' onchange='checkExt(this);' multiple />";
+		$(".fileDrop").append(str);
+	}
+
+	function checkExt(file) {
+		var fileName = file.value;
+		var fileID = '#' + file.id
+		var files = $(fileID).prop("files");
+		var names = $.map(files, function(val) {
+			return val.name;
+		});
+		for (var j = 0; j < names.length; j++) {
+			if (names[j].length > 50) {
+				alert("파일명: " + names[j] + "\n파일명은 50자까지 가능합니다.");
+				file.type = 'radio';
+				file.type = 'file';
+				return;
+			}
+			if (list.indexOf(names[j].substring(names[j].lastIndexOf('.') + 1).toLowerCase()) < 0) {
+				alert("파일명: "
+						+ names[j]
+						+ "\n확장자가 올바르지 않습니다.\n엑셀(xls,xlsx) / 파워포인트(ppt.pptx,pdf) / 워드(txt,hwp,doc,docx,xml)파일만 첨부가능합니다.");
+				file.type = 'radio';
+				file.type = 'file';
+				/*
+				fileDoc.select();
+				document.selection.clear();
+				 */
+				return;
+			}
+		}
+		i++;
+		fn_fileAdd();
+	}
 </script>
 </head>
 <body>
@@ -63,25 +95,19 @@
 			</div>
 			<div id="contents_section">
 				<textarea id="contents" name="contents">${dto.contents}</textarea>
-				<script>
-				//id가 description인 태그에 ckeditor를 적용시킴
-		    	 CKEDITOR.replace("contents", {
-		    		 height:450
-		         });
-				</script>
 			</div>
 			<div id="writer_section">
 				<c:forEach items="${f_dto}" var="file" varStatus="status">
 				<div id="file_add"></div>
-				<div>
+				<div style="padding-left:15px;">
 					${file.fileName}
-					<button type="button" id="delBtn_${status.index}">삭제</button>
+					<button type="button" class="fileDeleteBtn" id="delBtn_${status.index}">삭제</button>
 					<input type="hidden" name="fileNo" value="${file.fileNo}" />
 				</div>
 				</c:forEach>
-				<c:forEach var="i" begin="1" end="${loop}">
-					<input type="file" id="uploadFile" name="uploadFile" style="padding-left:5px;display:block;" multiple/>
-				</c:forEach>
+				<div class="fileDrop">
+					<input type="file" id="uploadFile_0" name="uploadFile" style="padding-left:5px;display:block;" multiple  onchange="checkExt(this);"/>
+				</div>
 				<input type="hidden" name="writer" value="${dto.writer}"/>
 			</div>
 			<div id="btn_section">

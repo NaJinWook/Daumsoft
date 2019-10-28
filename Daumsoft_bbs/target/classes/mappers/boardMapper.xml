@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 게시글에 넘겨줄 첨부파일 읽기 -->
 	<select id="f_read" parameterType="int" resultType="com.ds.bbs.model.board.dto.FileDTO">
-		select * from bbs_fileStore where bno=#{bno} and fileDelYn = 'N'
+		select * from bbs_fileStore where bno=#{bno}
 	</select>
 	
 	<!-- 첨부파일 한건의 정보를 가져온다. -->

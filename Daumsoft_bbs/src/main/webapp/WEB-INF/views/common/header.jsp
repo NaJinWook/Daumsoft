@@ -16,6 +16,7 @@
 	$(function() {
 		$("#home_login").click(function() {
 			$("#modal").fadeIn();
+			$("#login_id").focus();
 		});
 		$("#modal_close_btn").click(function() {
 			$("#modal").fadeOut();
@@ -45,6 +46,9 @@
 		$("#home_logout").click(function() {
 			location.href = "/member/logout";
 		});
+		$("#administrate").click(function() {
+			location.href = "/member/management";
+		});
 	});
 	function login(){
 		$("#login_btn").click();
@@ -60,8 +64,11 @@
     	<a style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;" id="home_login" href="#">로그인</a>
    	</c:if>
    	<c:if test="${member != null}">
-   		<span style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;">${member.userNikname} |
-    		<a style="text-decoration: none; color:#fff; font-weight:bold;" id="home_logout" href="#">로그아웃</a>
+   		<span style="float:right;padding-right:10px;padding-top:10px;text-decoration: none; color:#fff; font-weight:bold;">${member.userNikname}
+	    	<c:if test="${member.userId == 'admin'}">
+	    		<a style="text-decoration: none; color:#fff; font-weight:bold;" id="administrate" href="#">| 회원관리</a>
+	    	</c:if>
+    		<a style="text-decoration: none; color:#fff; font-weight:bold;" id="home_logout" href="#">| 로그아웃</a>
     	</span>
    	</c:if>
    </div>
@@ -79,7 +86,7 @@
         <div class="login_info">
           <div class="login_section">
             <p class="login_label"><label for="login_id" id="label_id">아이디</label></p>
-            <input class="login_input" id="login_id" type="text" name="login_id" autocomplete="off">
+            <input class="login_input" id="login_id" type="text" name="login_id" autocomplete="off" maxlength="20">
           </div>
           <div class="login_section">
             <p class="login_label"><label for="login_pwd" id="label_pwd">비밀번호</label></p>

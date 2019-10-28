@@ -6,7 +6,6 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- ckeditor 사용을 위해 js 파일 연결 -->
 <script src="/resources/ckeditor/ckeditor.js"></script>
-<script src="/resources/ckfinder/ckfinder.js"></script>
 <!-- 순서에 유의 -->
 <script type="text/javascript" src="/resources/js/jsbn.js"></script>
 <script type="text/javascript" src="/resources/js/rsa.js"></script>

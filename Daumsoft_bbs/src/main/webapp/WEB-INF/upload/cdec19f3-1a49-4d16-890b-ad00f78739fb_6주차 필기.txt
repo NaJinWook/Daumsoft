@@ -1,0 +1,17 @@
+1. 검색엔진이란
+데이터에 대한 명확한 정보를 찾는 것이 아닌 
+Keyword 단위로 쪼개 저장하여 저장된 정보를
+찾아주는 것을 도와주는 검색 시스템이다.
+
+2. 솔라(Solr)
+Apache Lucene을 기반으로 하는 오픈소스 검색 플랫폼
+
+3. Lucene(루씬)
+아파치 최상위 Project 중에 하나이며,
+자바로 개발된 오픈소스 정보검색(IR, Information Retrieval) 라이브러리이다.
+
+4. 색인 작업
+검색엔진에서 가장 중요한 부분으로써 좋은 검색엔진을 만들기 위한 핵심 부분
+
+C:\Users\Daumsoft\solr\server\solr\solrBoard\conf
+

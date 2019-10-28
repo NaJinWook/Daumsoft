@@ -1,0 +1,5 @@
+1. 날짜 포맷
+SimpleDateFormat original_format = new SimpleDateFormat("yyyy.mm.dd. a h:mm");
+SimpleDateFormat new_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+Date original_date = original_format.parse(regDate);
+regDate = new_format.format(original_date);

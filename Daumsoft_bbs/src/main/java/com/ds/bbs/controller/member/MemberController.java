@@ -1,6 +1,5 @@
 package com.ds.bbs.controller.member;
 
-import java.security.MessageDigest;
 import java.security.PrivateKey;
 
 import javax.inject.Inject;
@@ -8,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -133,5 +133,10 @@ public class MemberController {
     	cripto.initRsa(request);
     	
 		return "board/home"; //페이지 이동
+	}
+	
+	@RequestMapping(value = "/management", method = RequestMethod.GET)
+	public String management() throws Exception {
+		return "member/management";
 	}
 }
